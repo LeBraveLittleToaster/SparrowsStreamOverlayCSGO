@@ -43,7 +43,11 @@ class RoundEndEvent {
     }
 
     getJsonResponse(){
-        return JSON.stringify(this);
+        let rsp = {
+            type: "end_round",
+            data: this
+        }
+        return JSON.stringify(rsp);
     }
 }
 
