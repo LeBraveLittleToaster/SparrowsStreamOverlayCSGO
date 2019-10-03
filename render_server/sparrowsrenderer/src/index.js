@@ -4,13 +4,18 @@ import './index.css';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import EventRenderer from './EventRenderer';
+import EventRenderer from './ingamerender/EventRenderer';
+import AdminConsole from './adminconsole/AdminConsole';
+import WaitStore from './store/Store';
+
+const waitStore = new WaitStore();
 
 const routing = (
     <Router>
         <div>
             <Route path="/wait" component={App}/>
             <Route path="/ingame" component={EventRenderer}/>
+            <Route path="/console" component={AdminConsole}/>
         </div>
     </Router>
 )

@@ -16,6 +16,9 @@ wss.on('connection', function connection(ws) {
     console.log("New Suscriber connected")
     ws.on('message', function incoming(message) {
         console.log('received: %s', message);
+        wss.clients.forEach(client => {
+            client.send(Date.now().toString())
+        })
     });
 });
 

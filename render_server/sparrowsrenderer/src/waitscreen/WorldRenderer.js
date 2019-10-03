@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import * as THREE from 'three';
 
-import logoObj from './assets/ChickenWings.obj';
-import logoMat from './assets/ChickenWings.mtl'
+import logoObj from '../assets/ChickenWings.obj';
+import logoMat from '../assets/ChickenWings.mtl'
 import OBJLoader from 'three-obj-loader';
 import MTTLoader from 'three-mtl-loader';
 import { Math, Vector3 } from 'three';
