@@ -12,6 +12,33 @@
     display: inline-block;
 }
 
+#bottom-bar {
+    position: absolute;
+    bottom: 50px;
+    width: 40%;
+    margin-left:auto;
+    margin-right:auto;
+    left: 0;
+    right: 0;
+}
+
+#col-spacer{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#map-one-info{
+    background-color: aqua;
+}
+
+#map-two-info{
+    background-color: red;
+}
+
+#map-three-info{
+    background-color: green;
+}
+
 a {
     font-size: 30px;
     color: white;

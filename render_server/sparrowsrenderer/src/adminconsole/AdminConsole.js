@@ -1,16 +1,15 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './AdminConsole.scss'
-import MapSelection from '../waitscreen/MapSelection';
 import MapChangerView from './MapChangerView';
-import {observer} from 'mobx-react';
-import {toJS} from 'mobx';
+import { observer } from 'mobx-react';
+import { Row, Col, Container } from 'reactstrap';
 
 
-const AdminConsole = observer(class AdminConsole extends Component{
+const AdminConsole = observer(class AdminConsole extends Component {
 
     ws = new WebSocket('ws://localhost:8080/ws')
 
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             text: "HelloWorld"
@@ -18,7 +17,7 @@ const AdminConsole = observer(class AdminConsole extends Component{
         this.store = props.store;
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.ws.onopen = () => {
             console.log("Connected")
         }
@@ -27,16 +26,16 @@ const AdminConsole = observer(class AdminConsole extends Component{
             const message = evt.data
             let msg = JSON.parse(message)
             console.log(msg)
-            if(msg.type === "init"){
+            if (msg.type === "init") {
                 this.props.store.injectInitData(msg.data);
             }
-            
+
             this.setState({
                 text: message
             })
         }
 
-        this.ws.onclose= () => {
+        this.ws.onclose = () => {
             console.log("Disconnected")
         }
     }
@@ -44,7 +43,7 @@ const AdminConsole = observer(class AdminConsole extends Component{
     onSyncNeed = () => {
         console.log("SYNC")
         let store_state = {
-            type: "maps_update", 
+            type: "maps_update",
             maps: [
                 this.props.store.retrieveFirstMap,
                 this.props.store.retrieveSecondMap,
@@ -56,15 +55,22 @@ const AdminConsole = observer(class AdminConsole extends Component{
     }
 
 
-    render(){
-        const store = this.props.store;
-        let firstMap = toJS(store.retrieveFirstMap);
+    render() {
         return (
             <div>
-                <MapSelection socket={this.ws} timermillis={100000}/>
-                <a>{this.state.text}</a><br/>
-                <a>{firstMap.name}</a>
-                <MapChangerView store={this.props.store} callback={this.onSyncNeed.bind()}/>
+                <Container>
+                    <Row>
+                        <Col>
+                            <MapChangerView store={this.props.store} map_number={0} callback={this.onSyncNeed.bind()} />
+                        </Col>
+                        <Col>
+                            <MapChangerView store={this.props.store} map_number={1} callback={this.onSyncNeed.bind()} />
+                        </Col>
+                        <Col>
+                            <MapChangerView store={this.props.store} map_number={2} callback={this.onSyncNeed.bind()} />
+                        </Col>
+                    </Row>
+                </Container>
             </div>
         );
     }

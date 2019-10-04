@@ -11,8 +11,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const waitStore = new WaitStore();
 
-
-
 const routing = (
     <Router>
         <div>
