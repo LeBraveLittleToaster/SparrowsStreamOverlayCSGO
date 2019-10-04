@@ -26,6 +26,11 @@
 #overlayimg{
   position: absolute;
 }
+#overlayinfo{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
 
 #size_wrapper{
  width: 100vh;

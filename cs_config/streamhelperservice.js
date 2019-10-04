@@ -13,9 +13,14 @@ let eventHandler = new EventHandler(gameConfig, [RoundEndEvent]);
 const wss = new WebSocket.Server({ port: 8080 });
 
 wss.on('connection', function connection(ws) {
-    console.log("New Suscriber connected")
+    console.log("new Subscriber")
+    console.log("Sending gameconfig: " + JSON.stringify(gameConfig.getJsonResponse()))
+    ws.send(JSON.stringify({type:"init" , data: gameConfig.getJsonResponse()}));
     ws.on('message', function incoming(message) {
-        console.log('received: %s', message);
+        let data = JSON.parse(message);
+        console.log(data)
+        if(data.type==="maps_update") gameConfig.setMapData(data);
+        if(data.type==="teamnames_update") gameConfig.setTeamNames(data);
     });
 });
 

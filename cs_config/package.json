@@ -1,0 +1,15 @@
+{
+  "name": "cs_config",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gameconfig.js",
+  "scripts": {
+    "start": "node streamhelperservice.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "^7.1.2"
+  }
+}
