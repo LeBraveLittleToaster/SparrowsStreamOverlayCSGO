@@ -4,6 +4,7 @@ import './WaitScreenInfoDisplay.scss';
 import CountdownWrapper from '../CountdownWrapper';
 import { availableMaps } from '../store/Store';
 import { Row, Col } from 'reactstrap';
+import MapSelection from './MapSelection';
 
 const WaitScreenInfoDisplay = observer(class WaitScreenInfoDisplay extends Component {
 
@@ -49,24 +50,7 @@ const WaitScreenInfoDisplay = observer(class WaitScreenInfoDisplay extends Compo
                 </div>
 
                 <div id="bottom-bar">
-                    <Row>
-                        <Col id="col-spacer">
-                            <div id="map-one-info">
-                                <a id="map_text">{availableMaps[mapOneIndex]}</a>
-                            </div>
-
-                        </Col>
-                        <Col id="col-spacer">
-                            <div id="map-two-info">
-                            <a id="map_text">{availableMaps[mapTwoIndex]}</a>
-                            </div>
-                        </Col>
-                        <Col id="col-spacer">
-                            <div id="map-three-info">
-                            <a id="map_text">{availableMaps[mapThreeIndex]}</a>
-                            </div>
-                        </Col>
-                    </Row>
+                    <MapSelection maps={[mapOneIndex, mapTwoIndex, mapThreeIndex]}/>
                 </div>
 
             </div>

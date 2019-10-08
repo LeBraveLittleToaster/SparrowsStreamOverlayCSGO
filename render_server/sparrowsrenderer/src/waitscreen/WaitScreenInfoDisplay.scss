@@ -14,7 +14,8 @@
 
 #bottom-bar {
     position: absolute;
-    bottom: 50px;
+    bottom: 0px;
+    height: 130px;
     width: 40%;
     margin-left:auto;
     margin-right:auto;
@@ -22,9 +23,18 @@
     right: 0;
 }
 
+div.row{
+    height: 100%;
+}
+
 #col-spacer{
     margin-left: 20px;
     margin-right: 20px;
+    
+}
+
+#maps_container{
+    height: 100%;
 }
 
 #map-one-info{
