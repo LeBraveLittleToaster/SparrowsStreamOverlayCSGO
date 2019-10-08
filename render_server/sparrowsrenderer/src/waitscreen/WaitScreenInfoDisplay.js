@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import {observer} from 'mobx-react';
 import './WaitScreenInfoDisplay.scss';
 import CountdownWrapper from '../CountdownWrapper';
-import { availableMaps } from '../store/Store';
-import { Row, Col } from 'reactstrap';
 import MapSelection from './MapSelection';
 
 const WaitScreenInfoDisplay = observer(class WaitScreenInfoDisplay extends Component {

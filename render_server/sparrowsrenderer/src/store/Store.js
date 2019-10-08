@@ -1,6 +1,7 @@
 import {observable, computed, decorate, action} from 'mobx';
 
-export const availableMaps = ["Inferno", "Overpass", "Vertigo", "Train", "Nuke"]
+export const availableMaps = ["Inferno", "Overpass", "Vertigo", "Train", "Nuke", "Dust2", "Mirage"]
+export const availableMapsPins = ["inferno.png", "overpass.png", "vertigo.png", "train.png", "nuke.png", "dust2.png", "mirage.png"]
 
 class WaitStore {
     firstMap = {map_index: 2, score:{ct:0, t:0}, picked_by:"unknown"};

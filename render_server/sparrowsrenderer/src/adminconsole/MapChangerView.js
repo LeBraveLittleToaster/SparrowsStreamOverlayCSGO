@@ -74,6 +74,8 @@ export default class MapChangerView extends Component {
                         <option>{availableMaps[2]}</option>
                         <option>{availableMaps[3]}</option>
                         <option>{availableMaps[4]}</option>
+                        <option>{availableMaps[5]}</option>
+                        <option>{availableMaps[6]}</option>
                     </Input>
 
                     <br />
