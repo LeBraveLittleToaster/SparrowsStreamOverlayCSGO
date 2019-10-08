@@ -18,7 +18,7 @@ const WaitScreenInfoDisplay = observer(class WaitScreenInfoDisplay extends Compo
     render() {
         let mapOneIndex = this.props.store.retrieveFirstMap.map_index;
         let mapTwoIndex = this.props.store.retrieveSecondMap.map_index;
-        let mapThreeIndex = this.props.store.retrieveThirdMap;
+        let mapThreeIndex = this.props.store.retrieveThirdMap.map_index;
         console.log("Indexes:[ " + mapOneIndex + " , " + mapTwoIndex + " , " + JSON.stringify(mapThreeIndex) + " ]");
         return (
             <div id="container">
@@ -52,18 +52,18 @@ const WaitScreenInfoDisplay = observer(class WaitScreenInfoDisplay extends Compo
                     <Row>
                         <Col id="col-spacer">
                             <div id="map-one-info">
-                                <a id="map_text">{availableMaps[this.props.store.retrieveFirstMap.map_index]}</a>
+                                <a id="map_text">{availableMaps[mapOneIndex]}</a>
                             </div>
 
                         </Col>
                         <Col id="col-spacer">
                             <div id="map-two-info">
-                            <a id="map_text">{availableMaps[this.props.store.retrieveSecondMap.map_index]}</a>
+                            <a id="map_text">{availableMaps[mapTwoIndex]}</a>
                             </div>
                         </Col>
                         <Col id="col-spacer">
                             <div id="map-three-info">
-                            <a id="map_text">{availableMaps[this.props.store.retrieveThirdMap.map_index]}</a>
+                            <a id="map_text">{availableMaps[mapThreeIndex]}</a>
                             </div>
                         </Col>
                     </Row>

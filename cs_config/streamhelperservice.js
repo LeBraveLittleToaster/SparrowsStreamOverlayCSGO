@@ -19,10 +19,25 @@ wss.on('connection', function connection(ws) {
     ws.on('message', function incoming(message) {
         let data = JSON.parse(message);
         console.log(data)
-        if(data.type==="maps_update") gameConfig.setMapData(data);
-        if(data.type==="teamnames_update") gameConfig.setTeamNames(data);
+        if(data.type==="maps_update") {
+            gameConfig.setMapData(data);
+            broadcastGameConfigChange(data);
+        }else if(data.type==="teamnames_update"){
+            gameConfig.setTeamNames(data);
+        }
     });
 });
+
+function broadcastGameConfigChange(changeJson){
+    console.log("Broadcasting change: " + changeJson);
+    changeJson.type = "broadcast_" + changeJson.type;
+    console.log("ChangeJSON: " + changeJson);
+    wss.clients.forEach(function each(client) {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(changeJson));
+        }
+    });
+}
 
 function broadcastGameEvents(rsps) {
     rsps.forEach((rsp) => {
