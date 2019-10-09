@@ -8,6 +8,15 @@ class WaitStore {
     secondMap = {map_index: 3, score:{ct:0, t:0}, picked_by:"unknown"};
     thirdMap = {map_index: 4, score:{ct:0, t:0}, picked_by:"unknown"};
     teamnames = {ct: "Loading ct name", t: "Loading t name"};
+    countdown = {initValue: 10000};
+    teamPictures = {
+        tUrl: "http://localhost:4000/img/logo_opponent.png",
+        ctUrl: "http://localhost:4000/img/logo_sparrows.png" 
+    };
+    infoPictures = {
+        upLeftUrl: "http://localhost:4000/img/logo_up_left.png",
+        upRightUrl: "http://localhost:4000/img/logo_up_right.png"
+    };
 
     constructor(){
         console.log("Creating store")
@@ -27,6 +36,18 @@ class WaitStore {
 
     get retrieveTeamnames(){
         return this.teamnames;
+    }
+
+    get retrieveCountdown(){
+        return this.countdown;
+    }
+
+    get retrieveInfoPictures(){
+        return this.infoPictures;
+    }
+
+    get retrieveTeamPictures(){
+        return this.teamPictures;
     }
 
     injectInitData(data){
@@ -66,6 +87,35 @@ class WaitStore {
         if(score_t !== undefined && score_t !== this.thirdMap.score.ct) this.thirdMap.score.t = score_t;
         if(picked_by !== undefined && picked_by !== this.thirdMap.picked_by) this.thirdMap.picked_by = picked_by;
     }
+
+    adjustCountdown(initValue){
+        console.log("Updating initValue for countdown")
+        if(initValue > 0){
+            this.countdown.initValue = initValue;
+        }
+    }
+
+    adjustInfoPictures(upLeftUrl, upRightUrl){
+        console.log("Adjust info pictures")
+        if(upLeftUrl !== undefined){
+            this.infoPictures.upLeftUrl = upLeftUrl;
+        }
+        if(upRightUrl !== undefined){
+            this.infoPictures.upRightUrl = upRightUrl;
+        }
+    }
+
+    adjustTeamPictures(ctUrl, tUrl){
+        console.log("Updating team pictures")
+        if(this.teamPictures.ctUrl !== undefined){
+            this.teamPictures.ctUrl = ctUrl;
+        }
+        if(this.teamPictures.tUrl !== undefined){
+            this.teamPictures.tUrl = tUrl;
+        }
+    }
+
+    
 }
 
 decorate(WaitStore,{
@@ -73,14 +123,23 @@ decorate(WaitStore,{
     secondMap: observable,
     thirdMap: observable,
     teamnames: observable,
+    countdown: observable,
+    infoPictures: observable,
+    teamPictures: observable,
     retrieveFirstMap: computed,
     retrieveSecondMap: computed,
     retrieveThirdMap: computed,
     retrieveTeamnames: computed,
+    retrieveCountdown: computed,
+    retrieveTeamPictures: computed,
+    retrieveInfoPictures: computed,
+    adjustCountdown: action,
     adjustTeamnames: action,
     adjustFirstMap: action,
     adjustSecondMap: action,
     adjustThirdMap: action,
+    adjustInfoPictures: action,
+    adjustTeamPictures: action,
     injectInitData: action
 });
 export default WaitStore

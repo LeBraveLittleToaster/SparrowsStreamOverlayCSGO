@@ -4,6 +4,7 @@ import MapChangerView from './MapChangerView';
 import { observer } from 'mobx-react';
 import { Row, Col, Container } from 'reactstrap';
 import TimerView from './TimerView';
+import Teamnames from './Teamnames';
 
 
 const AdminConsole = observer(class AdminConsole extends Component {
@@ -41,8 +42,8 @@ const AdminConsole = observer(class AdminConsole extends Component {
         }
     }
 
-    onSyncNeed = () => {
-        console.log("SYNC")
+    onMapSyncNeed = () => {
+        console.log("Sync map")
         let store_state = {
             type: "maps_update",
             maps: [
@@ -55,6 +56,26 @@ const AdminConsole = observer(class AdminConsole extends Component {
         this.ws.send(JSON.stringify(store_state))
     }
 
+    onTimerSyncNeed = () => {
+        console.log("Sync Timer")
+        let store_state = {
+            type: "timer_update",
+            timer_millis: this.props.store.retrieveCountdown.initValue
+        }
+        console.log("SENDING: " + JSON.stringify(store_state))
+        this.ws.send(JSON.stringify(store_state))
+    }
+
+    onTeamnamesSyncNeed = () => {
+        console.log("Sync Teamnames")
+        let store_state = {
+            type: "teamnames_update",
+            teamnames: this.props.store.retrieveTeamnames
+        }
+        console.log("SENDING: " + JSON.stringify(store_state))
+        this.ws.send(JSON.stringify(store_state))
+    }
+
 
     render() {
         return (
@@ -62,17 +83,24 @@ const AdminConsole = observer(class AdminConsole extends Component {
                 <Container>
                     <Row>
                         <Col>
-                            <MapChangerView store={this.props.store} map_number={0} callback={this.onSyncNeed.bind()} />
+                            <MapChangerView store={this.props.store} map_number={0} callback={this.onMapSyncNeed.bind()} />
                         </Col>
                         <Col>
-                            <MapChangerView store={this.props.store} map_number={1} callback={this.onSyncNeed.bind()} />
+                            <MapChangerView store={this.props.store} map_number={1} callback={this.onMapSyncNeed.bind()} />
                         </Col>
                         <Col>
-                            <MapChangerView store={this.props.store} map_number={2} callback={this.onSyncNeed.bind()} />
+                            <MapChangerView store={this.props.store} map_number={2} callback={this.onMapSyncNeed.bind()} />
                         </Col>
                     </Row>
                     <Row>
-                        <TimerView store={this.props.store}/>
+                        <Col>
+                            <TimerView store={this.props.store} callback={this.onTimerSyncNeed.bind()}/>    
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Teamnames store={this.props.store} callback={this.onTeamnamesSyncNeed.bind()}/>
+                        </Col>
                     </Row>
                 </Container>
             </div>

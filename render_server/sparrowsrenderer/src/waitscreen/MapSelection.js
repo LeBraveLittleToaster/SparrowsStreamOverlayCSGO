@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import Countdown from 'react-countdown-now';
+import { observer } from 'mobx-react';
 import './WaitScreenInfoDisplay.scss';
 import { availableMaps, availableMapsPins } from '../store/Store';
 import { Row, Col } from 'reactstrap';
 
-class MapSelection extends Component {
+const MapSelection = observer(class MapSelection extends Component {
 
     constructor(props) {
         super(props)
@@ -69,6 +69,6 @@ class MapSelection extends Component {
             </Row>
         </div>);
     }
-}
+});
 
 export default MapSelection;

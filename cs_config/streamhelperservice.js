@@ -24,17 +24,42 @@ wss.on('connection', function connection(ws) {
             broadcastGameConfigChange(data);
         } else if (data.type === "teamnames_update") {
             gameConfig.setTeamNames(data);
+            broadcastTeamnnames(data);
+        } else if(data.type === "timer_update"){
+            broadcastTimerChange(data);
         }
     });
 });
 
 function broadcastGameConfigChange(changeJson) {
-    console.log("Broadcasting change: " + changeJson);
+    console.log("Broadcasting change: " + JSON.stringify(changeJson));
     changeJson.type = "broadcast_" + changeJson.type;
-    console.log("ChangeJSON: " + changeJson);
+    console.log("ChangeJSON: " + JSON.stringify(changeJson));
     wss.clients.forEach(function each(client) {
         if (client.readyState === WebSocket.OPEN) {
             client.send(JSON.stringify(changeJson));
+        }
+    });
+}
+
+function broadcastTimerChange(timerJson){
+    console.log("Broadcasting change: " + JSON.stringify(timerJson));
+    timerJson.type = "broadcast_" + timerJson.type;
+    console.log("TimerJSON: " + JSON.stringify(timerJson));
+    wss.clients.forEach(function each(client) {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(timerJson));
+        }
+    });
+}
+
+function broadcastTeamnnames(teamnamesJson){
+    console.log("Broadcasting change: " + JSON.stringify(teamnamesJson));
+    teamnamesJson.type = "broadcast_" + teamnamesJson.type;
+    console.log("teamnamesJson: " + JSON.stringify(teamnamesJson));
+    wss.clients.forEach(function each(client) {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(teamnamesJson));
         }
     });
 }

@@ -16,8 +16,8 @@ class CsgoGameConfig{
     }
 
     setTeamNames(data){
-        this.ct_name = data.names.ct;
-        this.t_name = data.names.t;
+        this.ct_name = data.teamnames.ct;
+        this.t_name = data.teamnames.t;
 
     }
 
