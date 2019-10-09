@@ -2,10 +2,86 @@
     text-align: center;
 }
 
+#countdown-font{
+    color: #cfcfcf;
+}
 
+#up-right-info img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#up-left-info img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#mid-left-picture img {
+    max-width: 80%;
+    max-height: 80%;
+}
+
+#up-middle-info{
+    width: 400px;
+    height: 55px;
+    margin-top: 10px;
+}
+
+#mid-right-picture img {
+    max-width: 80%;
+    max-height: 80%;
+}
+
+#mid-left-picture{
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    left: 20px;
+    top: 425px;
+}
+
+#mid-left-info{
+    width: 300px;
+    height: 50px;
+    position: absolute;
+    left: 20px;
+    top: 610px;
+    text-align: start;
+    color: #cfcfcf;
+}
+
+#mid-right-picture{
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    right: 20px;
+    top: 425px;
+}
+
+#mid-right-info{
+    width: 300px;
+    height: 50px;
+    position: absolute;
+    right: 20px;
+    top: 610px;
+    text-align: end;
+    color: #cfcfcf;
+}
 
 #up-left-info {
-    
+    width: 250px;
+    height: 65px;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
+#up-right-info {
+    width: 250px;
+    height: 65px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
 }
 
 #up-middle-info {

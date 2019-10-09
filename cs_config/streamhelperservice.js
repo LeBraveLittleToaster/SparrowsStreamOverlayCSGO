@@ -15,20 +15,20 @@ const wss = new WebSocket.Server({ port: 8080 });
 wss.on('connection', function connection(ws) {
     console.log("new Subscriber")
     console.log("Sending gameconfig: " + JSON.stringify(gameConfig.getJsonResponse()))
-    ws.send(JSON.stringify({type:"init" , data: gameConfig.getJsonResponse()}));
+    ws.send(JSON.stringify({ type: "init", data: gameConfig.getJsonResponse() }));
     ws.on('message', function incoming(message) {
         let data = JSON.parse(message);
         console.log(data)
-        if(data.type==="maps_update") {
+        if (data.type === "maps_update") {
             gameConfig.setMapData(data);
             broadcastGameConfigChange(data);
-        }else if(data.type==="teamnames_update"){
+        } else if (data.type === "teamnames_update") {
             gameConfig.setTeamNames(data);
         }
     });
 });
 
-function broadcastGameConfigChange(changeJson){
+function broadcastGameConfigChange(changeJson) {
     console.log("Broadcasting change: " + changeJson);
     changeJson.type = "broadcast_" + changeJson.type;
     console.log("ChangeJSON: " + changeJson);
@@ -50,28 +50,21 @@ function broadcastGameEvents(rsps) {
     });
 }
 
-const server = http.createServer((req, res) => {
+const express = require('express');
+const app = express();
+app.use(express.json());
+app.use(express.static('public'));
+
+app.post("/", (req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/html' });
-
-    let eventInfo = '';
-
-    req.on('data', (data) => {
-        console.log("Handling payload")
-        let rsps = eventHandler.checkAndHandleEvents(JSON.parse(data.toString()))
-        broadcastGameEvents(rsps)
-    });
-
-    req.on('end', () => {
-        if (eventInfo !== '') {
-            console.log(eventInfo);
-        }
-
-        res.end('');
-    });
+    console.log("Handling payload")
+    let rsps = eventHandler.checkAndHandleEvents(JSON.parse(req.body.toString()))
+    broadcastGameEvents(rsps)
 });
 
+app.listen(port, () => {
+    console.log("Opening server...");
+})
 
-
-server.listen(port, host);
 
 console.log('Monitoring CS:GO rounds');

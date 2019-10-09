@@ -3,6 +3,7 @@ import './AdminConsole.scss'
 import MapChangerView from './MapChangerView';
 import { observer } from 'mobx-react';
 import { Row, Col, Container } from 'reactstrap';
+import TimerView from './TimerView';
 
 
 const AdminConsole = observer(class AdminConsole extends Component {
@@ -69,6 +70,9 @@ const AdminConsole = observer(class AdminConsole extends Component {
                         <Col>
                             <MapChangerView store={this.props.store} map_number={2} callback={this.onSyncNeed.bind()} />
                         </Col>
+                    </Row>
+                    <Row>
+                        <TimerView store={this.props.store}/>
                     </Row>
                 </Container>
             </div>

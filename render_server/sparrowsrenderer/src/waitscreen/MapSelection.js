@@ -8,9 +8,6 @@ class MapSelection extends Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-            socket: props.socket
-        }
     }
 
     render() {
@@ -21,15 +18,13 @@ class MapSelection extends Component {
                     <div id="map-one-info">
                         <Row>
                             <Col>
-                                <img src={availableMapsPins[this.props.maps[0]]} alt="helloWorld2" />
+                                <img src={availableMapsPins[this.props.store.retrieveFirstMap.map_index]} alt="helloWorld2" />
                             </Col>
                             <Col>
                                 <Col>
                                     <Row id="vert">
-                                        <a id="map-text">{availableMaps[this.props.maps[0]]}</a>
-                                    </Row>
-                                    <Row>
-                                        <a id="score-text">{this.props.scores[0]}</a>
+                                        <a id="map-text">{availableMaps[this.props.store.retrieveFirstMap.map_index]}</a>
+                                        <a id="score-text">{this.props.store.retrieveFirstMap.score.ct} : {this.props.store.retrieveFirstMap.score.t}</a>
                                     </Row>
                                 </Col>
                             </Col>
@@ -41,13 +36,13 @@ class MapSelection extends Component {
                     <div id="map-two-info">
                         <Row>
                             <Col>
-                                <img src={availableMapsPins[this.props.maps[1]]} alt="helloWorld2" />
+                                <img src={availableMapsPins[this.props.store.retrieveSecondMap.map_index]} alt="helloWorld2" />
                             </Col>
                             <Col>
                                 <Col>
                                     <Row>
-                                        <a id="map-text">{availableMaps[this.props.maps[1]]}</a>
-                                        <a id="score-text">{this.props.scores[1]}</a>
+                                        <a id="map-text">{availableMaps[this.props.store.retrieveSecondMap.map_index]}</a>
+                                        <a id="score-text">{this.props.store.retrieveSecondMap.score.ct} : {this.props.store.retrieveSecondMap.score.t}</a>
                                     </Row>
                                 </Col>
                             </Col>
@@ -58,13 +53,13 @@ class MapSelection extends Component {
                     <div id="map-three-info">
                         <Row>
                             <Col>
-                                <img src={availableMapsPins[this.props.maps[2]]} alt="helloWorld2" />
+                                <img src={availableMapsPins[this.props.store.retrieveThirdMap.map_index]} alt="helloWorld2" />
                             </Col>
                             <Col>
                                 <Col>
                                     <Row>
-                                        <a id="map-text">{availableMaps[this.props.maps[2]]}</a>
-                                        <a id="score-text">{this.props.scores[2]}</a>
+                                        <a id="map-text">{availableMaps[this.props.store.retrieveThirdMap.map_index]}</a>
+                                        <a id="score-text">{this.props.store.retrieveThirdMap.score.ct} : {this.props.store.retrieveThirdMap.score.t}</a>
                                     </Row>
                                 </Col>
                             </Col>

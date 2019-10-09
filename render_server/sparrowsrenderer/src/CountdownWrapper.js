@@ -9,9 +9,21 @@ const renderer = ({ hours, minutes, seconds, completed }) => {
     if (completed) {
         // Render a completed state
         return <Completionist />;
-    } else {
+    } else{
+        console.log(hours)
+        console.log(minutes)
+        console.log(seconds)
+        let out = "";
+        if(hours > 0){
+            out += hours.toString() + "h ";
+        }
+        if(minutes > 0){
+            out += minutes.toString() + "m ";
+        }
+        out += seconds.toString() + "s";
+        console.log(out)
         // Render a countdown
-        return <a>Stream starts in {hours}:{minutes}:{seconds}</a>;
+        return <a id="countdown-font">Stream starts in {out}</a>;
     }
 };
 
@@ -26,10 +38,8 @@ export default class CountdownWrapper extends Component {
     }
 
     render() {
-        return (
-            <div id="up-middle-info">
-                <Countdown date={Date.now() + this.props.timermillis} renderer={renderer}></Countdown>
-            </div>
+        return (            
+            <Countdown date={Date.now() + this.props.timermillis} renderer={renderer}></Countdown>
         );
     };
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {observer} from 'mobx-react';
+import { observer } from 'mobx-react';
 import './WaitScreenInfoDisplay.scss';
 import CountdownWrapper from '../CountdownWrapper';
 import MapSelection from './MapSelection';
@@ -24,34 +24,34 @@ const WaitScreenInfoDisplay = observer(class WaitScreenInfoDisplay extends Compo
         console.log("Indexes:[ " + mapOneIndex + " , " + mapTwoIndex + " , " + JSON.stringify(mapThreeIndex) + " ]");
         return (
             <div id="container">
-                <h1>{mapOneIndex}</h1>
                 <div id="up-left-info">
-
+                    <img src="http://localhost:4000/img/logo_up_left.png" />
                 </div>
-
-                <CountdownWrapper isNetworkUpdate={this.props.isNetworkUpdate} timermillis={this.state.timermillis} />
-
+                <div id="up-middle-info">
+                    <CountdownWrapper isNetworkUpdate={this.props.isNetworkUpdate} timermillis={this.state.timermillis} />
+                </div>
                 <div id="up-right-info">
-
+                    <img src="http://localhost:4000/img/logo_up_right.png" />
                 </div>
 
                 <div id="mid-left-info">
-
+                    <a>{this.props.store.teamnames.t}</a>
                 </div>
                 <div id="mid-left-picture">
-
+                    <img src="http://localhost:4000/img/logo_sparrows.png" />
                 </div>
 
-                <div id="mid-right-info">
 
+                <div id="mid-right-info">
+                    <a>{this.props.store.teamnames.ct}</a>
                 </div>
 
                 <div id="mid-right-picture">
-
+                    <img src="http://localhost:4000/img/logo_opponent.png" />
                 </div>
 
                 <div id="bottom-bar">
-                    <MapSelection maps={[mapOneIndex, mapTwoIndex, mapThreeIndex]} scores={[scoreMapOne, scoreMapSecond, scoreMapThree]}/>
+                    <MapSelection store={this.props.store}  />
                 </div>
 
             </div>
