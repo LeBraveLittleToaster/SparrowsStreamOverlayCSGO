@@ -19,21 +19,56 @@ class MapSelection extends Component {
             <Row>
                 <Col id="col-spacer">
                     <div id="map-one-info">
-                        <a id="map_text">{availableMaps[this.props.maps[0]]}</a>
-                        <img src={availableMapsPins[this.props.maps[0]]} alt="helloWorld2"/>
+                        <Row>
+                            <Col>
+                                <img src={availableMapsPins[this.props.maps[0]]} alt="helloWorld2" />
+                            </Col>
+                            <Col>
+                                <Col>
+                                    <Row id="vert">
+                                        <a id="map-text">{availableMaps[this.props.maps[0]]}</a>
+                                    </Row>
+                                    <Row>
+                                        <a id="score-text">{this.props.scores[0]}</a>
+                                    </Row>
+                                </Col>
+                            </Col>
+                        </Row>
                     </div>
 
                 </Col>
                 <Col id="col-spacer">
                     <div id="map-two-info">
-                        <a id="map_text">{availableMaps[this.props.maps[1]]}</a>
-                        <img src={availableMapsPins[this.props.maps[1]]} alt="helloWorld2"/>
+                        <Row>
+                            <Col>
+                                <img src={availableMapsPins[this.props.maps[1]]} alt="helloWorld2" />
+                            </Col>
+                            <Col>
+                                <Col>
+                                    <Row>
+                                        <a id="map-text">{availableMaps[this.props.maps[1]]}</a>
+                                        <a id="score-text">{this.props.scores[1]}</a>
+                                    </Row>
+                                </Col>
+                            </Col>
+                        </Row>
                     </div>
                 </Col>
                 <Col id="col-spacer">
                     <div id="map-three-info">
-                        <a id="map_text">{availableMaps[this.props.maps[2]]}</a>
-                        <img src={availableMapsPins[this.props.maps[2]]} alt="helloWorld2"/>
+                        <Row>
+                            <Col>
+                                <img src={availableMapsPins[this.props.maps[2]]} alt="helloWorld2" />
+                            </Col>
+                            <Col>
+                                <Col>
+                                    <Row>
+                                        <a id="map-text">{availableMaps[this.props.maps[2]]}</a>
+                                        <a id="score-text">{this.props.scores[2]}</a>
+                                    </Row>
+                                </Col>
+                            </Col>
+                        </Row>
                     </div>
                 </Col>
             </Row>

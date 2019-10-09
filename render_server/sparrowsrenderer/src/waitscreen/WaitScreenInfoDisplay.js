@@ -18,6 +18,9 @@ const WaitScreenInfoDisplay = observer(class WaitScreenInfoDisplay extends Compo
         let mapOneIndex = this.props.store.retrieveFirstMap.map_index;
         let mapTwoIndex = this.props.store.retrieveSecondMap.map_index;
         let mapThreeIndex = this.props.store.retrieveThirdMap.map_index;
+        let scoreMapOne = this.props.store.retrieveFirstMap.score.ct + " : " + this.props.store.retrieveFirstMap.score.t;
+        let scoreMapSecond = this.props.store.retrieveSecondMap.score.ct + " : " + this.props.store.retrieveSecondMap.score.t;
+        let scoreMapThree = this.props.store.retrieveThirdMap.score.ct + " : " + this.props.store.retrieveThirdMap.score.t;
         console.log("Indexes:[ " + mapOneIndex + " , " + mapTwoIndex + " , " + JSON.stringify(mapThreeIndex) + " ]");
         return (
             <div id="container">
@@ -48,7 +51,7 @@ const WaitScreenInfoDisplay = observer(class WaitScreenInfoDisplay extends Compo
                 </div>
 
                 <div id="bottom-bar">
-                    <MapSelection maps={[mapOneIndex, mapTwoIndex, mapThreeIndex]}/>
+                    <MapSelection maps={[mapOneIndex, mapTwoIndex, mapThreeIndex]} scores={[scoreMapOne, scoreMapSecond, scoreMapThree]}/>
                 </div>
 
             </div>
