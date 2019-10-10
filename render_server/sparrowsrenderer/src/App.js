@@ -54,11 +54,10 @@ const App = observer(class App extends Component {
         <div id="overlayinfo">
           <WaitScreenInfoDisplay store={this.props.store} />
         </div>
-        {/*
         <div id="size_wrapper">
           <WorldRenderer />
         </div>
-        */}
+        
       </div>
     );
   }
