@@ -5,7 +5,7 @@ import logoObj from '../assets/ChickenWings.obj';
 import logoMat from '../assets/ChickenWings.mtl'
 import OBJLoader from 'three-obj-loader';
 import MTTLoader from 'three-mtl-loader';
-import { Math, Vector3 } from 'three';
+import { Math, Vector3} from 'three';
 
 OBJLoader(THREE);
 
@@ -53,7 +53,7 @@ class WorldRenderer extends Component {
             })
         });
         var axesHelper = new THREE.AxesHelper(5);
-        this.scene.add(axesHelper);
+        //this.scene.add(axesHelper);
 
         var directLightR = new THREE.DirectionalLight(0xeabe85, 2);
         directLightR.position.z = 15;
@@ -61,14 +61,14 @@ class WorldRenderer extends Component {
         directLightR.position.x = 15;
         directLightR.rotateOnWorldAxis(new Vector3(1,0,0), Math.degToRad(45))
         directLightR.rotateOnWorldAxis(new Vector3(0,1,0), Math.degToRad(45))
-        this.scene.add(new THREE.DirectionalLightHelper(directLightR, 1))
+        //this.scene.add(new THREE.DirectionalLightHelper(directLightR, 1))
         this.scene.add(directLightR);
 
         var directLightM = new THREE.DirectionalLight(0xffffff, 3);
         directLightM.position.z = 15;
         directLightM.position.y = 15;
         directLightM.rotateOnWorldAxis(new Vector3(1,0,0), Math.degToRad(45))
-        this.scene.add(new THREE.DirectionalLightHelper(directLightM, 1))
+        //this.scene.add(new THREE.DirectionalLightHelper(directLightM, 1))
         this.scene.add(directLightM);
 
         var directLightL = new THREE.DirectionalLight(0x81bbea, 2);
@@ -77,11 +77,12 @@ class WorldRenderer extends Component {
         directLightL.position.x = -15;
         directLightL.rotateOnWorldAxis(new Vector3(1,0,0), Math.degToRad(45))
         directLightL.rotateOnWorldAxis(new Vector3(0,1,0), Math.degToRad(-45))
-        this.scene.add(new THREE.DirectionalLightHelper(directLightL, 1))
+        //this.scene.add(new THREE.DirectionalLightHelper(directLightL, 1))
         this.scene.add(directLightL);
 
         this.start()
     }
+
 
     componentWillUnmount() {
         this.stop()

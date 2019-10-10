@@ -48,13 +48,17 @@ const App = observer(class App extends Component {
   render() {
     return (
       <div id="gradientbg">
+        
         <img alt="missing" id="overlayimg" src="OverlaySparrowsV2.png"></img>
+         
         <div id="overlayinfo">
           <WaitScreenInfoDisplay store={this.props.store} />
         </div>
+        
         <div id="size_wrapper">
           <WorldRenderer />
         </div>
+        
       </div>
     );
   }
