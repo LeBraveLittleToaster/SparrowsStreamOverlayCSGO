@@ -90,9 +90,9 @@
 
 #bottom-bar {
     position: absolute;
-    bottom: 0px;
-    height: 135px;
-    width: 50%;
+    bottom: 20px;
+    height: 115px;
+    width: 1100px;
     margin-left:auto;
     margin-right:auto;
     left: 0;
@@ -108,10 +108,14 @@ div.row{
     height: 100%;
 }
 
+div.col{
+    height: 100%;
+}
+
 #col-spacer{
     margin-left: 20px;
     margin-right: 20px;
-    
+    height: 100%;
 }
 
 #maps_container{
@@ -119,38 +123,43 @@ div.row{
 }
 
 #map-one-info{
-    
+    height: 100%;
 }
 
-#map-one-info img {
+#map-one-picture {
     max-width: 100%;
     max-height: 100%;
-    
+    vertical-align: center;
 }
 
 #map-two-info{
-    
+    height: 100%;
 }
 
-#map-two-info img {
+#map-two-picture {
     max-width: 100%;
     max-height: 100%;
     
 }
 
 #map-three-info{
-    
+    height: 100%;
 }
 
-#map-three-info img {
+#map-three-picture {
     max-width: 100%;
     max-height: 100%;
     
 }
 
 #score-text{
-    font-size: 1.5em;
-    color: #eeeeee;
+    font-size: 2.5em;
+    color: #cfcfcf;
+}
+
+#map-text{
+    font-size: 1.8em;
+    color: #cfcfcf;
 }
 
 a {

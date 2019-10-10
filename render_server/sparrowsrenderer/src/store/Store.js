@@ -4,9 +4,9 @@ export const availableMaps = ["Inferno", "Overpass", "Vertigo", "Train", "Nuke",
 export const availableMapsPins = ["inferno.png", "overpass.png", "vertigo.png", "train.png", "nuke.png", "dust2.png", "mirage.png"]
 
 class WaitStore {
-    firstMap = {map_index: 2, score:{ct:0, t:0}, picked_by:"unknown"};
-    secondMap = {map_index: 3, score:{ct:0, t:0}, picked_by:"unknown"};
-    thirdMap = {map_index: 4, score:{ct:0, t:0}, picked_by:"unknown"};
+    firstMap = {map_index: 2, score:{ct:0, t:0}, picked_by:"unknown", isActive: true};
+    secondMap = {map_index: 3, score:{ct:0, t:0}, picked_by:"unknown", isActive: true};
+    thirdMap = {map_index: 4, score:{ct:0, t:0}, picked_by:"unknown", isActive: true};
     teamnames = {ct: "Loading ct name", t: "Loading t name"};
     countdown = {initValue: 10000};
     teamPictures = {
@@ -53,9 +53,9 @@ class WaitStore {
     injectInitData(data){
         console.log("Injecting server data")
         console.log(JSON.stringify(data))
-        this.adjustFirstMap(data.maps[0].map_index, data.maps[0].score.ct, data.maps[0].score.t, data.maps[0].picked_by)
-        this.adjustSecondMap(data.maps[1].map_index, data.maps[1].score.ct, data.maps[1].score.t, data.maps[1].picked_by)
-        this.adjustThirdMap(data.maps[2].map_index, data.maps[2].score.ct, data.maps[2].score.t, data.maps[2].picked_by)
+        this.adjustFirstMap(data.maps[0].map_index, data.maps[0].score.ct, data.maps[0].score.t, data.maps[0].picked_by, data.maps[0].isActive)
+        this.adjustSecondMap(data.maps[1].map_index, data.maps[1].score.ct, data.maps[1].score.t, data.maps[1].picked_by, data.maps[1].isActive)
+        this.adjustThirdMap(data.maps[2].map_index, data.maps[2].score.ct, data.maps[2].score.t, data.maps[2].picked_by, data.maps[2].isActive)
 
     }
 
@@ -64,28 +64,31 @@ class WaitStore {
         if(t_name !== undefined && t_name !== this.teamnames.t) this.teamnames.t = t_name;
     }
 
-    adjustFirstMap(map_index, score_ct, score_t, picked_by){
+    adjustFirstMap(map_index, score_ct, score_t, picked_by, isActive){
         console.log("Updating first map")
         if(map_index !== undefined && map_index !== this.firstMap.map_index) this.firstMap.map_index = map_index;
         if(score_ct !== undefined && score_ct !== this.firstMap.score.ct) this.firstMap.score.ct = score_ct;
         if(score_t !== undefined && score_t !== this.firstMap.score.ct) this.firstMap.score.t = score_t;
         if(picked_by !== undefined && picked_by !== this.firstMap.picked_by) this.firstMap.picked_by = picked_by;
+        if(isActive !== undefined && isActive !== this.firstMap.isActive) this.firstMap.isActive = isActive;
     }
 
-    adjustSecondMap(map_index, score_ct, score_t, picked_by){
+    adjustSecondMap(map_index, score_ct, score_t, picked_by, isActive){
         console.log("Updating second map")
         if(map_index !== undefined && map_index !== this.secondMap.map_index) this.secondMap.map_index = map_index;
         if(score_ct !== undefined && score_ct !== this.secondMap.score.ct) this.secondMap.score.ct = score_ct;
         if(score_t !== undefined && score_t !== this.secondMap.score.ct) this.secondMap.score.t = score_t;
         if(picked_by !== undefined && picked_by !== this.secondMap.picked_by) this.secondMap.picked_by = picked_by;
+        if(isActive !== undefined && isActive !== this.secondMap.isActive) this.secondMap.isActive = isActive;
     }
 
-    adjustThirdMap(map_index, score_ct, score_t, picked_by){
+    adjustThirdMap(map_index, score_ct, score_t, picked_by, isActive){
         console.log("Updating third map")
         if(map_index !== undefined && map_index !== this.thirdMap.map_index) this.thirdMap.map_index = map_index;
         if(score_ct !== undefined && score_ct !== this.thirdMap.score.ct) this.thirdMap.score.ct = score_ct;
         if(score_t !== undefined && score_t !== this.thirdMap.score.ct) this.thirdMap.score.t = score_t;
         if(picked_by !== undefined && picked_by !== this.thirdMap.picked_by) this.thirdMap.picked_by = picked_by;
+        if(isActive !== undefined && isActive !== this.thirdMap.isActive) this.thirdMap.isActive = isActive;
     }
 
     adjustCountdown(initValue){

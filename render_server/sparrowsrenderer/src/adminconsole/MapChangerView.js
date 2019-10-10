@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { toJS } from 'mobx';
-import { FormGroup, Col, Row, Container, Label, Input } from 'reactstrap';
+import { FormGroup, Col, Row, CustomInput, Label, Input } from 'reactstrap';
 import './AdminConsole.scss';
 import { availableMaps } from '../store/Store';
 
@@ -11,7 +10,7 @@ export default class MapChangerView extends Component {
         super(props)
         this.state = {
             map_number: this.props.map_number,
-            map: { map_index: 0, score: { ct: 0, t: 0 }, picked_by: "Loading" }
+            map: { map_index: 0, score: { ct: 0, t: 0 }, picked_by: "Loading" , isActive:true}
         }
     }
 
@@ -26,15 +25,23 @@ export default class MapChangerView extends Component {
 
     mapPickedBy(value) {
         console.log("Map " + this.state.map_number + " picked by: " + value)
-        this.adjustMap(undefined, undefined, undefined, value)
+        this.adjustMap(undefined, undefined, undefined, value, undefined)
         let map = { ...this.state.map }
         map.picked_by = value;
         this.setState({ map })
     }
 
+    mapIsActive(value){
+        console.log("Map " + this.state.map_number + " isActive: " + value)
+        this.adjustMap(undefined, undefined, undefined, undefined, value)
+        let map = { ...this.state.map }
+        map.isActive = value;
+        this.setState({ map })
+    }
+
     scoreCtChanged(value) {
         console.log("Map " + this.state.map_number + " score ct: " + value)
-        this.adjustMap(undefined, value, undefined, undefined)
+        this.adjustMap(undefined, value, undefined, undefined, undefined)
         let map = { ...this.state.map }
         map.score.ct = value;
         this.setState({ map })
@@ -42,31 +49,42 @@ export default class MapChangerView extends Component {
 
     scoreTChanged(value) {
         console.log("Map " + this.state.map_number + " score t: " + value)
-        this.adjustMap(undefined, undefined, value, undefined)
+        this.adjustMap(undefined, undefined, value, undefined, undefined)
         let map = { ...this.state.map }
         map.score.t = value;
         this.setState({ map })
     }
 
-    adjustMap(map_index, score_ct, score_t, picked_by) {
+    adjustMap(map_index, score_ct, score_t, picked_by, isActive) {
         let map_number = this.state.map_number;
         if (map_number === 0) {
-            this.props.store.adjustFirstMap(map_index, score_ct, score_t, picked_by);
+            this.props.store.adjustFirstMap(map_index, score_ct, score_t, picked_by, isActive);
         } else if (map_number === 1) {
-            this.props.store.adjustSecondMap(map_index, score_ct, score_t, picked_by);
+            this.props.store.adjustSecondMap(map_index, score_ct, score_t, picked_by, isActive);
         } else if (map_number === 2) {
-            this.props.store.adjustThirdMap(map_index, score_ct, score_t, picked_by);
+            this.props.store.adjustThirdMap(map_index, score_ct, score_t, picked_by, isActive);
         }
         this.props.callback();
     }
 
     render() {
+        let switch_id = "switch" + this.props.map_number
         return (
             <div id="select_container">
                 <FormGroup>
 
                     <h1>Map {this.props.map_number}</h1>
 
+                    <br/>
+                    <CustomInput 
+                        type="switch" 
+                        id={switch_id}
+                        name="customSwitch" 
+                        label="Show Map"
+                        defaultChecked={this.state.map.isActive}
+                        onChange={(e) => this.mapIsActive(e.target.checked)}
+                        />
+                    <br/>
                     <Label for="first_map_select">Select first map</Label>
                     <Input value={availableMaps[this.state.map.map_index]} onChange={(e) => this.mapSelect(e.target.selectedIndex)} type="select" name="select" id="first_map_select">
                         <option>{availableMaps[0]}</option>
