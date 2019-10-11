@@ -16,9 +16,12 @@ const TimerView = observer(class TimerView extends Component {
     }
 
     setTimer = () => {
-        let totalMillis = this.state.seconds + this.state.minutes * 60 + this.state.hours * 60 * 60
-        totalMillis *= 1000;
-        console.log(totalMillis)
+        console.log("S:" + this.state.seconds)
+        console.log("M:" + this.state.minutes)
+        console.log("H:" + this.state.hours)
+        let totalMillis = this.state.seconds * 1000;
+        totalMillis += this.state.minutes * 60 * 1000;
+        totalMillis += this.state.hours * 3600 * 1000;
         this.props.store.adjustCountdown(totalMillis);
         this.props.callback()
     }
@@ -50,6 +53,7 @@ const TimerView = observer(class TimerView extends Component {
                                 name="number"
                                 min="0"
                                 step="1"
+                                max="59"
                                 value={this.state.minutes}
                                 id="timer_minutes"
                                 placeholder="Insert minutes"
@@ -62,6 +66,7 @@ const TimerView = observer(class TimerView extends Component {
                                 type="number"
                                 name="number"
                                 min="0"
+                                max="59"
                                 step="1"
                                 value={this.state.seconds}
                                 id="timer_seconds"

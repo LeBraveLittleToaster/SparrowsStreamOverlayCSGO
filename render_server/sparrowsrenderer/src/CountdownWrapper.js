@@ -31,9 +31,10 @@ const CountdownWrapper = observer(class CountdownWrapper extends Component {
     }
     
     render() {
-        console.log("LOL")
+        console.log("LOL" + Date.now().toString())
+        let date = Date.now() + this.props.store.retrieveCountdown.initValue;
         return (            
-            <Countdown date={Date.now() + this.props.store.retrieveCountdown.initValue} renderer={renderer}></Countdown>
+            <Countdown date={date} renderer={renderer} autoStart={true}/>
         );
     };
 });
