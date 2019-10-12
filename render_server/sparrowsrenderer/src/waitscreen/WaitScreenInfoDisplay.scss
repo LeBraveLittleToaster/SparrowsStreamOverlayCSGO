@@ -116,11 +116,13 @@ div.col{
     margin-left: 20px;
     margin-right: 20px;
     height: 100%;
+    max-width: 336px;
 }
 
 #maps_container{
     height: 100%;
 }
+
 
 #map-one-info{
     height: 100%;
@@ -160,6 +162,18 @@ div.col{
 #map-text{
     font-size: 1.8em;
     color: #cfcfcf;
+}
+
+#map-text-mode{
+    font-size: 2.2em;
+    color: #cfcfcf;
+    margin-bottom: 0px;
+}
+
+#map-text-alternative{
+    font-size: 1.35em;
+    color: #cfcfcf;
+    margin-top: 0px;
 }
 
 a {

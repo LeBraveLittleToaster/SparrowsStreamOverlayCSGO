@@ -10,11 +10,14 @@ export default class MapChangerView extends Component {
         super(props)
         this.state = {
             map_number: this.props.map_number,
-            map: { map_index: 0, score: { ct: 0, t: 0 }, picked_by: "Loading" , isActive:true}
+            map: this.props.map
         }
     }
 
+    componentDidMount(){
+    }
 
+    
     mapSelect(value) {
         console.log("Map " + this.state.map_number + " : " + value)
         this.adjustMap(value, undefined, undefined, undefined)
@@ -81,7 +84,7 @@ export default class MapChangerView extends Component {
                         id={switch_id}
                         name="customSwitch" 
                         label="Show Map"
-                        defaultChecked={this.state.map.isActive}
+                        checked={this.state.map.isActive}
                         onChange={(e) => this.mapIsActive(e.target.checked)}
                         />
                     <br/>
@@ -94,6 +97,7 @@ export default class MapChangerView extends Component {
                         <option>{availableMaps[4]}</option>
                         <option>{availableMaps[5]}</option>
                         <option>{availableMaps[6]}</option>
+                        <option>{availableMaps[7]}</option>
                     </Input>
 
                     <br />

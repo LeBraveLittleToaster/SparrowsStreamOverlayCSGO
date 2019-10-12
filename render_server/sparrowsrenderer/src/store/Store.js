@@ -1,14 +1,14 @@
 import {observable, computed, decorate, action} from 'mobx';
 
-export const availableMaps = ["Inferno", "Overpass", "Vertigo", "Train", "Nuke", "Dust2", "Mirage"]
-export const availableMapsPins = ["inferno.png", "overpass.png", "vertigo.png", "train.png", "nuke.png", "dust2.png", "mirage.png"]
+export const availableMaps = ["tbd" , "Inferno", "Overpass", "Vertigo", "Train", "Nuke", "Dust2", "Mirage"]
+export const availableMapsPins = ["unknown.png", "inferno.png", "overpass.png", "vertigo.png", "train.png", "nuke.png", "dust2.png", "mirage.png"]
 
 class WaitStore {
-    firstMap = {map_index: 2, score:{ct:0, t:0}, picked_by:"unknown", isActive: true};
-    secondMap = {map_index: 3, score:{ct:0, t:0}, picked_by:"unknown", isActive: true};
-    thirdMap = {map_index: 4, score:{ct:0, t:0}, picked_by:"unknown", isActive: true};
-    teamnames = {ct: "Loading ct name", t: "Loading t name"};
-    countdown = {initValue: 10000};
+    firstMap = {map_index: 0, score:{ct:0, t:0}, picked_by:"unknown", isActive: true};
+    secondMap = {map_index: 0, score:{ct:0, t:0}, picked_by:"unknown", isActive: true};
+    thirdMap = {map_index: 0, score:{ct:0, t:0}, picked_by:"unknown", isActive: true};
+    teamnames = {ct: "Ulmer Spatzierfragger", t: "Opponent"};
+    countdown = {initValue: 0};
     teamPictures = {
         tUrl: "http://localhost:4000/img/logo_opponent.png",
         ctUrl: "http://localhost:4000/img/logo_sparrows.png" 

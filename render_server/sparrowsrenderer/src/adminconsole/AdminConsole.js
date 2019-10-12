@@ -83,13 +83,13 @@ const AdminConsole = observer(class AdminConsole extends Component {
                 <Container>
                     <Row>
                         <Col>
-                            <MapChangerView store={this.props.store} map_number={0} callback={this.onMapSyncNeed.bind()} />
+                            <MapChangerView store={this.props.store} map_number={0} map={this.props.store.retrieveFirstMap} callback={this.onMapSyncNeed.bind()} />
                         </Col>
                         <Col>
-                            <MapChangerView store={this.props.store} map_number={1} callback={this.onMapSyncNeed.bind()} />
+                            <MapChangerView store={this.props.store} map_number={1} map={this.props.store.retrieveSecondMap} callback={this.onMapSyncNeed.bind()} />
                         </Col>
                         <Col>
-                            <MapChangerView store={this.props.store} map_number={2} callback={this.onMapSyncNeed.bind()} />
+                            <MapChangerView store={this.props.store} map_number={2} map={this.props.store.retrieveThirdMap} callback={this.onMapSyncNeed.bind()} />
                         </Col>
                     </Row>
                     <Row>
