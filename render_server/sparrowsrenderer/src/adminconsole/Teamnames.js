@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import { Input, Row, Col, FormGroup, Label } from 'reactstrap';
+import { Input, Row, Col, FormGroup, Button, Label } from 'reactstrap';
 import "./AdminConsole.scss";
 
 const Teamnames = observer(class Teamnames extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            name_ct: this.props.name_ct,
+            name_t: this.props.name_t
+        }
     }
 
-    onTTeamChanged(e) {
-        this.props.store.adjustTeamnames(undefined, e.target.value);
-        this.props.callback();
-    }
-
-    onCtTeamChanged(e) {
-        this.props.store.adjustTeamnames(e.target.value, undefined);
+    onNameChange(){
+        this.props.store.adjustTeamnames(this.state.name_ct, this.state.name_t)
         this.props.callback();
     }
 
@@ -23,6 +22,10 @@ const Teamnames = observer(class Teamnames extends Component {
             <div id="select_container">
                 <div>
                     <a>Teamnnames</a>
+                    <Button 
+                        color="success"
+                        onClick={(e) => this.onNameChange()}
+                        >Update names</Button>
                     <Row>
                         <Col>
                             <FormGroup>
@@ -32,10 +35,12 @@ const Teamnames = observer(class Teamnames extends Component {
                                     name="address"
                                     id="ctName"
                                     placeholder="Left Team"
-                                    value={this.props.store.retrieveTeamnames.ct}
-                                    onChange={(e) => this.onCtTeamChanged(e)}
+                                    value={this.state.name_ct}
+                                    onChange={(e) => this.setState({name_ct : e.target.value})}
                                 />
+                                
                             </FormGroup>
+                            
                         </Col>
                         <Col>
                             <FormGroup>
@@ -45,8 +50,8 @@ const Teamnames = observer(class Teamnames extends Component {
                                     name="address"
                                     id="tName"
                                     placeholder="Right Team"
-                                    value={this.props.store.retrieveTeamnames.t}
-                                    onChange={(e) => this.onTTeamChanged(e)}
+                                    value={this.state.name_t}
+                                    onChange={(e) => this.setState({name_t : e.target.value})}
                                 />
                             </FormGroup>
                         </Col>

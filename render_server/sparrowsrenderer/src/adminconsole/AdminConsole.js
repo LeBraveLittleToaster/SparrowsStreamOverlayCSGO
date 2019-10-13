@@ -99,7 +99,7 @@ const AdminConsole = observer(class AdminConsole extends Component {
                     </Row>
                     <Row>
                         <Col>
-                            <Teamnames store={this.props.store} callback={this.onTeamnamesSyncNeed.bind()}/>
+                            <Teamnames store={this.props.store} name_ct={this.props.store.retrieveTeamnames.ct} name_t={this.props.store.retrieveTeamnames.t} callback={this.onTeamnamesSyncNeed.bind()}/>
                         </Col>
                     </Row>
                 </Container>
