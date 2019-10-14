@@ -56,6 +56,7 @@ class WaitStore {
         this.adjustFirstMap(data.maps[0].map_index, data.maps[0].score.ct, data.maps[0].score.t, data.maps[0].picked_by, data.maps[0].isActive)
         this.adjustSecondMap(data.maps[1].map_index, data.maps[1].score.ct, data.maps[1].score.t, data.maps[1].picked_by, data.maps[1].isActive)
         this.adjustThirdMap(data.maps[2].map_index, data.maps[2].score.ct, data.maps[2].score.t, data.maps[2].picked_by, data.maps[2].isActive)
+        this.adjustTeamnames(data.teamnames.ct, data.teamnames.t);
 
     }
 
