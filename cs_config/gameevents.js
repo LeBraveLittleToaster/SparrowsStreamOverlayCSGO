@@ -16,6 +16,41 @@ class EventHandler{
     }
 }
 
+class PlayerComparisonEvent{
+    constructor(name_ct, score_ct, name_t, score_t){
+        this.name_ct = name_ct;
+        this.score_ct = score_ct;
+        this.name_t = name_t;
+        this.score_t = score_t;
+    }
+
+    static checkForEvent(gameConfig, payload){
+        if(payload === undefined){
+            return undefined;
+        }
+     
+        if(payload.type !== "player_comparison"){
+            return undefined;
+        }
+        
+        return new PlayerComparisonEvent(
+            "LeCounterPlayer",
+            24,
+            "LeTerroristPlayer",
+            12
+        );
+    }
+
+    getJsonResponse(){
+        let rsp = {
+            type: "player_comparison",
+            data: this
+        }
+        return JSON.stringify(rsp);
+    }
+}
+
+
 class RoundEndEvent {
     constructor(winning_team, winning_team_name , roundnumber){
         this.winning_team = winning_team
@@ -53,5 +88,6 @@ class RoundEndEvent {
 
 module.exports = {
     RoundEndEvent,
+    PlayerComparisonEvent,
     EventHandler
 }
