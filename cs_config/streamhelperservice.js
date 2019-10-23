@@ -27,9 +27,23 @@ wss.on('connection', function connection(ws) {
             broadcastTeamnnames(data);
         } else if(data.type === "timer_update"){
             broadcastTimerChange(data);
+        } else if(data.type === "maps_setup_update"){
+            gameConfig.setMapsSetup(data);
+            broadcastMapsSetup(data);
         }
     });
 });
+
+function broadcastMapsSetup(mapsSetupJson){
+    console.log("Broadcasting change: " + JSON.stringify(mapsSetupJson));
+    mapsSetupJson.type = "broadcast_" + mapsSetupJson.type;
+    console.log("mapsSetupJson: " + JSON.stringify(mapsSetupJson));
+    wss.clients.forEach(function each(client) {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(mapsSetupJson));
+        }
+    });
+}
 
 function broadcastGameConfigChange(changeJson) {
     console.log("Broadcasting change: " + JSON.stringify(changeJson));

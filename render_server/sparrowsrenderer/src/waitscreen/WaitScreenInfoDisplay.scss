@@ -124,35 +124,12 @@ div.col{
 }
 
 
-#map-one-info{
-    height: 100%;
-}
-
-#map-one-picture {
+#map-picture {
     max-width: 100%;
     max-height: 100%;
     vertical-align: center;
 }
 
-#map-two-info{
-    height: 100%;
-}
-
-#map-two-picture {
-    max-width: 100%;
-    max-height: 100%;
-    
-}
-
-#map-three-info{
-    height: 100%;
-}
-
-#map-three-picture {
-    max-width: 100%;
-    max-height: 100%;
-    
-}
 
 #score-text{
     font-size: 2.2em;
@@ -168,16 +145,36 @@ div.col{
     font-size: 2.2em;
     color: #cfcfcf;
     margin-bottom: 0px;
+    width: 100%;
+    text-align: center;
 }
 
 #map-text-alternative{
     font-size: 1.35em;
     color: #cfcfcf;
     margin-top: 0px;
+    width: 100%;
+    text-align: center;
 }
 
 a {
     font-size: 30px;
     color: white;
     text-align: center;
+}
+
+#one-row {
+    width: 100%;
+    height: 100%;
+}
+
+#two-row {
+
+    width: 50%;
+    height: 100%;
+}
+
+#three-row {
+    width: 33%;
+    height: 100%;
 }

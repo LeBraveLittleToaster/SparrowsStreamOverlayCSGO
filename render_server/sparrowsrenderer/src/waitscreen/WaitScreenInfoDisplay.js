@@ -14,20 +14,20 @@ const WaitScreenInfoDisplay = observer(class WaitScreenInfoDisplay extends Compo
         return (
             <div id="container">
                 <div id="up-left-info">
-                    <img src={this.props.store.retrieveInfoPictures.upLeftUrl} />
+                    <img src={this.props.store.getInfoPictures.upLeftUrl} />
                 </div>
                 <div id="up-middle-info">
                     <CountdownWrapper store={this.props.store} />
                 </div>
                 <div id="up-right-info">
-                    <img src={this.props.store.retrieveInfoPictures.upRightUrl} />
+                    <img src={this.props.store.getInfoPictures.upRightUrl} />
                 </div>
 
                 <div id="mid-left-info">
                     <a>{this.props.store.teamnames.ct}</a>
                 </div>
                 <div id="mid-left-picture">
-                <img src={this.props.store.retrieveTeamPictures.ctUrl} />
+                <img src={this.props.store.getTeamPictures.ctUrl} />
                 </div>
 
 
@@ -36,7 +36,7 @@ const WaitScreenInfoDisplay = observer(class WaitScreenInfoDisplay extends Compo
                 </div>
 
                 <div id="mid-right-picture">
-                    <img src={this.props.store.retrieveTeamPictures.tUrl} />
+                    <img src={this.props.store.getTeamPictures.tUrl} />
                 </div>
 
                 <div id="bottom-bar">

@@ -4,9 +4,10 @@ export const availableMaps = ["tbd" , "Inferno", "Overpass", "Vertigo", "Train",
 export const availableMapsPins = ["unknown.png", "inferno.png", "overpass.png", "vertigo.png", "train.png", "nuke.png", "dust2.png", "mirage.png"]
 
 class WaitStore {
-    firstMap = {map_index: 0, score:{ct:0, t:0}, picked_by:"unknown", isActive: true};
-    secondMap = {map_index: 0, score:{ct:0, t:0}, picked_by:"unknown", isActive: true};
-    thirdMap = {map_index: 0, score:{ct:0, t:0}, picked_by:"unknown", isActive: true};
+    firstMap = {map_index: 0, score:{ct:0, t:0}, picked_by:"unknown"};
+    secondMap = {map_index: 0, score:{ct:0, t:0}, picked_by:"unknown"};
+    thirdMap = {map_index: 0, score:{ct:0, t:0}, picked_by:"unknown"};
+    mapsSetup = {amountOfMaps: 3};
     teamnames = {ct: "Ulmer Spatzierfragger", t: "Opponent"};
     countdown = {initValue: 0};
     teamPictures = {
@@ -22,84 +23,99 @@ class WaitStore {
         console.log("Creating store")
     }
 
-    get retrieveFirstMap(){
+    get getFirstMap(){
         return this.firstMap;
     }
 
-    get retrieveSecondMap(){
+    get getSecondMap(){
         return this.secondMap;
     }
 
-    get retrieveThirdMap(){
+    get getThirdMap(){
         return this.thirdMap;
     }
 
-    get retrieveTeamnames(){
+    get getTeamnames(){
         return this.teamnames;
     }
 
-    get retrieveCountdown(){
+    get getCountdown(){
         return this.countdown;
     }
 
-    get retrieveInfoPictures(){
+    get getInfoPictures(){
         return this.infoPictures;
     }
 
-    get retrieveTeamPictures(){
+    get getTeamPictures(){
         return this.teamPictures;
+    }
+
+    get getMapsSetup(){
+        return this.mapsSetup;
+    }
+
+    setMapsSetup(amountOfMaps){
+        if(amountOfMaps !== undefined) this.mapsSetup.amountOfMaps = amountOfMaps;
     }
 
     injectInitData(data){
         console.log("Injecting server data")
         console.log(JSON.stringify(data))
-        this.adjustFirstMap(data.maps[0].map_index, data.maps[0].score.ct, data.maps[0].score.t, data.maps[0].picked_by, data.maps[0].isActive)
-        this.adjustSecondMap(data.maps[1].map_index, data.maps[1].score.ct, data.maps[1].score.t, data.maps[1].picked_by, data.maps[1].isActive)
-        this.adjustThirdMap(data.maps[2].map_index, data.maps[2].score.ct, data.maps[2].score.t, data.maps[2].picked_by, data.maps[2].isActive)
-
+        if(data.maps !== undefined && data.maps !== null){
+            this.setFirstMap(data.maps[0].map_index, data.maps[0].score.ct, data.maps[0].score.t, data.maps[0].picked_by)
+            this.setSecondMap(data.maps[1].map_index, data.maps[1].score.ct, data.maps[1].score.t, data.maps[1].picked_by)
+            this.setThirdMap(data.maps[2].map_index, data.maps[2].score.ct, data.maps[2].score.t, data.maps[2].picked_by)
+        }
+        if(data.mapsSetup !== undefined && data.mapsSetup !== null && data.mapsSetup.amountOfMaps !== undefined && data.mapsSetup.amountOfMaps !== null){
+            this.setMapsSetup(data.mapsSetup.amountOfMaps);
+        }
+        if(data.teamnames !== undefined && data.teamnames !== null){
+            this.setTeamnames(data.teamnames.ct, data.teamnames.t)
+        }
     }
 
-    adjustTeamnames(ct_name, t_name){
+    setTeamnames(ct_name, t_name){
         if(ct_name !== undefined && ct_name !== this.teamnames.ct) this.teamnames.ct = ct_name;
         if(t_name !== undefined && t_name !== this.teamnames.t) this.teamnames.t = t_name;
     }
 
-    adjustFirstMap(map_index, score_ct, score_t, picked_by, isActive){
+    setFirstMap(map_index, score_ct, score_t, picked_by, isActive){
         console.log("Updating first map")
         if(map_index !== undefined && map_index !== this.firstMap.map_index) this.firstMap.map_index = map_index;
         if(score_ct !== undefined && score_ct !== this.firstMap.score.ct) this.firstMap.score.ct = score_ct;
-        if(score_t !== undefined && score_t !== this.firstMap.score.ct) this.firstMap.score.t = score_t;
+        if(score_t !== undefined && score_t !== this.firstMap.score.t) this.firstMap.score.t = score_t;
         if(picked_by !== undefined && picked_by !== this.firstMap.picked_by) this.firstMap.picked_by = picked_by;
         if(isActive !== undefined && isActive !== this.firstMap.isActive) this.firstMap.isActive = isActive;
     }
 
-    adjustSecondMap(map_index, score_ct, score_t, picked_by, isActive){
+    setSecondMap(map_index, score_ct, score_t, picked_by, isActive){
         console.log("Updating second map")
         if(map_index !== undefined && map_index !== this.secondMap.map_index) this.secondMap.map_index = map_index;
         if(score_ct !== undefined && score_ct !== this.secondMap.score.ct) this.secondMap.score.ct = score_ct;
-        if(score_t !== undefined && score_t !== this.secondMap.score.ct) this.secondMap.score.t = score_t;
+        if(score_t !== undefined && score_t !== this.secondMap.score.t) this.secondMap.score.t = score_t;
         if(picked_by !== undefined && picked_by !== this.secondMap.picked_by) this.secondMap.picked_by = picked_by;
         if(isActive !== undefined && isActive !== this.secondMap.isActive) this.secondMap.isActive = isActive;
     }
 
-    adjustThirdMap(map_index, score_ct, score_t, picked_by, isActive){
+    setThirdMap(map_index, score_ct, score_t, picked_by, isActive){
         console.log("Updating third map")
         if(map_index !== undefined && map_index !== this.thirdMap.map_index) this.thirdMap.map_index = map_index;
         if(score_ct !== undefined && score_ct !== this.thirdMap.score.ct) this.thirdMap.score.ct = score_ct;
-        if(score_t !== undefined && score_t !== this.thirdMap.score.ct) this.thirdMap.score.t = score_t;
+        if(score_t !== undefined && score_t !== this.thirdMap.score.t) this.thirdMap.score.t = score_t;
         if(picked_by !== undefined && picked_by !== this.thirdMap.picked_by) this.thirdMap.picked_by = picked_by;
         if(isActive !== undefined && isActive !== this.thirdMap.isActive) this.thirdMap.isActive = isActive;
     }
 
-    adjustCountdown(initValue){
+    setCountdown(initValue){
         console.log("Updating initValue for countdown")
         if(initValue > 0){
             this.countdown.initValue = initValue;
         }
     }
 
-    adjustInfoPictures(upLeftUrl, upRightUrl){
-        console.log("Adjust info pictures")
+    setInfoPictures(upLeftUrl, upRightUrl){
+        console.log("set info pictures")
         if(upLeftUrl !== undefined){
             this.infoPictures.upLeftUrl = upLeftUrl;
         }
@@ -108,7 +124,7 @@ class WaitStore {
         }
     }
 
-    adjustTeamPictures(ctUrl, tUrl){
+    setTeamPictures(ctUrl, tUrl){
         console.log("Updating team pictures")
         if(this.teamPictures.ctUrl !== undefined){
             this.teamPictures.ctUrl = ctUrl;
@@ -129,20 +145,23 @@ decorate(WaitStore,{
     countdown: observable,
     infoPictures: observable,
     teamPictures: observable,
-    retrieveFirstMap: computed,
-    retrieveSecondMap: computed,
-    retrieveThirdMap: computed,
-    retrieveTeamnames: computed,
-    retrieveCountdown: computed,
-    retrieveTeamPictures: computed,
-    retrieveInfoPictures: computed,
-    adjustCountdown: action,
-    adjustTeamnames: action,
-    adjustFirstMap: action,
-    adjustSecondMap: action,
-    adjustThirdMap: action,
-    adjustInfoPictures: action,
-    adjustTeamPictures: action,
+    mapsSetup: observable,
+    getFirstMap: computed,
+    getSecondMap: computed,
+    getThirdMap: computed,
+    getTeamnames: computed,
+    getCountdown: computed,
+    getTeamPictures: computed,
+    getInfoPictures: computed,
+    getMapsSetup: computed,
+    setCountdown: action,
+    setTeamnames: action,
+    setFirstMap: action,
+    setSecondMap: action,
+    setThirdMap: action,
+    setInfoPictures: action,
+    setTeamPictures: action,
+    setMapsSetup: action,
     injectInitData: action
 });
 export default WaitStore
