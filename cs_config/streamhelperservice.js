@@ -2,13 +2,14 @@ const http = require('http');
 const WebSocket = require('ws');
 const EventHandler = require('./gameevents.js').EventHandler
 const RoundEndEvent = require('./gameevents.js').RoundEndEvent
+const PlayerComparisonEvent = require('./gameevents.js').PlayerComparisonEvent
 const CsgoGameConfig = require('./gameconfig.js').CsgoGameConfig
 
 const port = 4000;
 const host = '127.0.0.1';
 
 let gameConfig = new CsgoGameConfig({});
-let eventHandler = new EventHandler(gameConfig, [RoundEndEvent]);
+let eventHandler = new EventHandler(gameConfig, [RoundEndEvent, PlayerComparisonEvent]);
 
 const wss = new WebSocket.Server({ port: 8080 });
 
@@ -97,8 +98,10 @@ app.use(express.static('public'));
 app.post("/", (req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/html' });
     console.log("Handling payload")
-    let rsps = eventHandler.checkAndHandleEvents(JSON.parse(req.body.toString()))
+    console.log(JSON.stringify(req.body))
+    let rsps = eventHandler.checkAndHandleEvents(JSON.parse(JSON.stringify(req.body)))
     broadcastGameEvents(rsps)
+    res.end();
 });
 
 app.listen(port, () => {
