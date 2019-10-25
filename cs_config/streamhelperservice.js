@@ -1,15 +1,22 @@
 const http = require('http');
 const WebSocket = require('ws');
+const SteamAPI = require('steamapi');
 const EventHandler = require('./gameevents.js').EventHandler
 const RoundEndEvent = require('./gameevents.js').RoundEndEvent
 const PlayerComparisonEvent = require('./gameevents.js').PlayerComparisonEvent
 const CsgoGameConfig = require('./gameconfig.js').CsgoGameConfig
+const GameStateCSGO = require('./gamestate').GameStateCSGO;
 
 const port = 4000;
 const host = '127.0.0.1';
 
-let gameConfig = new CsgoGameConfig({});
-let eventHandler = new EventHandler(gameConfig, [RoundEndEvent, PlayerComparisonEvent]);
+const steam = new SteamAPI("place steam web api key here");
+const gamestate = new GameStateCSGO(steam);
+
+let gameConfig = new CsgoGameConfig(gamestate);
+let eventHandler = new EventHandler(gameConfig, gamestate, [RoundEndEvent, PlayerComparisonEvent]);
+
+
 
 const wss = new WebSocket.Server({ port: 8080 });
 

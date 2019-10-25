@@ -1,6 +1,7 @@
 class EventHandler{
-    constructor(gameConfig , events) {
+    constructor(gameConfig, gamestate , events) {
         this.gameConfig = gameConfig
+        this.gamestate = gamestate
         this.events = events
     }
 
