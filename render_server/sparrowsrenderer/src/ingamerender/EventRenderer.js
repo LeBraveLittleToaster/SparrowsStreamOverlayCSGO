@@ -3,6 +3,8 @@ import EventEndRound from './events/EventEndRound';
 import WebSocket from 'react-websocket';
 import EventPlayerComparison from './events/EventPlayerComparison';
 
+const fade_timeout_millis = 10000;
+
 class EventRenderer extends Component {
 
     constructor(props) {
@@ -21,7 +23,7 @@ class EventRenderer extends Component {
                     this.setState({
                         end_event: undefined
                     })
-                }, 10000);
+                }, fade_timeout_millis);
             }
             if(result.type === "player_comparison"){
                 console.log("Triggering player_comparison event")
@@ -30,7 +32,7 @@ class EventRenderer extends Component {
                     this.setState({
                         player_comparison_event: undefined
                     })
-                }, 10000);
+                }, fade_timeout_millis);
             }
         }
     }
@@ -44,7 +46,7 @@ class EventRenderer extends Component {
                     (<div></div>)
                 }
                 {this.state.player_comparison_event !== undefined ? (
-                    <EventPlayerComparison store={this.props.store} event_data={this.state.player_comparison_event}/>) 
+                    <EventPlayerComparison fade_timeout_millis={fade_timeout_millis} store={this.props.store} event_data={this.state.player_comparison_event}/>) 
                 : 
                     (<div></div>) 
                 }
