@@ -1,3 +1,92 @@
-#test{
-    max-width: 75px;
+#popup-main-text{
+    color: aliceblue;
+    width: 100%;
+    
+}
+
+#playername_ct{
+    width: 100%;
+    font-size: 2em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: aliceblue;
+    text-align: left;
+}
+
+
+#teamname_ct{
+    width: 100%;
+    font-size: .7em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #327DC4;
+    text-align: left;
+}
+
+
+#vertical-line{
+    background-color: aqua;
+    width: 2px;
+    height: 100%;
+    size: 500px;
+}
+
+#full-extend{
+    height: 100%;
+    width: 100%;
+}
+
+#bg_pic_ct{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+    display: block;
+    width: 200px;
+    height: 200px;
+    filter: opacity(70%);
+}
+
+#bg_pic_t{
+    position: absolute;
+    right: 0;
+    left:0;
+    bottom: 0;
+    z-index: 1;
+    display: block;
+    width: 200px;
+    height: 200px;
+    filter: opacity(70%);
+}
+
+#stat-header{
+    color: #327DC4;
+    width: 100%;
+    text-align: left;
+    font-size: 1.25em;
+    margin-top: 3px;
+    margin-bottom: 0;
+    margin-left: 5px;
+    z-index: 2;
+}
+
+#stat-value{
+    color: aliceblue;
+    font-size: 3em;
+    width: 100%;
+    text-align: right;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    margin-right: 5px;
+    z-index: 2;
+}
+
+#popup-main{
+    background-color: #333333;
+    position: absolute;
+    left: 460px;
+    top: 200px;
+    width: 1000px;
+    height: 600px;
+    opacity: 70%;
+    border-radius: 20px;
+    padding: 20px;
 }

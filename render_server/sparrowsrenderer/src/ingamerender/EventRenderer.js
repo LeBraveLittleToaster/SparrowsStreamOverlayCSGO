@@ -21,7 +21,7 @@ class EventRenderer extends Component {
                     this.setState({
                         end_event: undefined
                     })
-                }, 6000);
+                }, 10000);
             }
             if(result.type === "player_comparison"){
                 console.log("Triggering player_comparison event")
@@ -30,7 +30,7 @@ class EventRenderer extends Component {
                     this.setState({
                         player_comparison_event: undefined
                     })
-                }, 6000);
+                }, 10000);
             }
         }
     }
@@ -44,7 +44,7 @@ class EventRenderer extends Component {
                     (<div></div>)
                 }
                 {this.state.player_comparison_event !== undefined ? (
-                    <EventPlayerComparison event_data={this.state.player_comparison_event}/>) 
+                    <EventPlayerComparison store={this.props.store} event_data={this.state.player_comparison_event}/>) 
                 : 
                     (<div></div>) 
                 }

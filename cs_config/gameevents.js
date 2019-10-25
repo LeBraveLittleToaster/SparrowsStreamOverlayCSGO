@@ -17,10 +17,12 @@ class EventHandler{
 }
 
 class PlayerComparisonEvent{
-    constructor(name_ct, score_ct, name_t, score_t){
+    constructor(name_ct, team_ct, score_ct, name_t, team_t, score_t){
         this.name_ct = name_ct;
+        this.team_ct = team_ct;
         this.score_ct = score_ct;
         this.name_t = name_t;
+        this.team_t = team_t;
         this.score_t = score_t;
     }
 
@@ -35,9 +37,21 @@ class PlayerComparisonEvent{
         
         return new PlayerComparisonEvent(
             "LeCounterPlayer",
-            24,
+            gameConfig.ct_name,
+            {
+                kills: 12,
+                assists: 34,
+                deaths: 56,
+                adr: 789
+            },
             "LeTerroristPlayer",
-            12
+            gameConfig.t_name,
+            {
+                kills: 21,
+                assists: 43,
+                deaths: 65,
+                adr: 987
+            }
         );
     }
 
