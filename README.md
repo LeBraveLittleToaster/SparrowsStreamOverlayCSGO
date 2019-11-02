@@ -10,6 +10,7 @@ If you want to try out the current build then follow these steps and hope that t
 ## What you need
 
 - Current Nodejs installed (tested with v8.9.1)
+- Windows environment variable called "STEAM_API_KEY" with your generated steam api key for your observer account (created here: https://steamcommunity.com/login/home/?goto=%2Fdev%2Fapikey) use a domain name of your choice
 
 ### Open two consoles
 
@@ -32,5 +33,5 @@ If you want to try out the current build then follow these steps and hope that t
 The project is intented to be used together with Streamlabs OBS. Here a small example how to set it up:
 
 - Install Streamlabs OBS and create two scenes: Waiting and Ingame
-- Waiting: "+" -> "Browser Source" -> "create a new slider" -> Double click the layer -> Height "1080 -> Width "1920" -> Clear the whole css -> check "refresh when active"  -> uncheck "deactivate if not visible" -> Click the cache Button and close the window
+- Waiting: "+" -> "Browser Source" -> "create a new slider" -> Double click the layer -> "URL" for waiting screen "http://localhost:3000/wait" and for ingame "http://localhost:3000/ingame" -> Height "1080 -> Width "1920" -> Clear the whole css -> check "refresh when active"  -> uncheck "deactivate if not visible" -> Click the cache Button and close the window
 

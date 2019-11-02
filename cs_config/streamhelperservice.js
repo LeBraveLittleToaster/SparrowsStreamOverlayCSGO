@@ -10,13 +10,13 @@ const GameStateCSGO = require('./gamestate').GameStateCSGO;
 const port = 4000;
 const host = '127.0.0.1';
 
-//const steam = new SteamAPI("place steam web api key here");
+const steam = new SteamAPI("place steam web api key here");
 const gamestate = undefined;// new GameStateCSGO(steam);
 
 let gameConfig = new CsgoGameConfig(gamestate);
 let eventHandler = new EventHandler(gameConfig, gamestate, [RoundEndEvent, PlayerComparisonEvent]);
 
-
+console.log("STEAM_API_KEY: " + process.env.STEAM_API_KEY)
 
 const wss = new WebSocket.Server({ port: 8080 });
 
