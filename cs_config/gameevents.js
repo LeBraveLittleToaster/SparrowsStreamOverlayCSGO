@@ -21,7 +21,7 @@ class EventHandler{
 
 class PlayerComparisonEvent{
     constructor(name_ct, team_ct, score_ct, name_t, team_t, score_t){
-        this.type = "player_comparison_event"
+        this.priority = 1;
         this.name_ct = name_ct;
         this.team_ct = team_ct;
         this.score_ct = score_ct;
@@ -35,6 +35,7 @@ class PlayerComparisonEvent{
             return undefined;
         }
      
+        //only for testing!
         if(payload.type !== "player_comparison"){
             return undefined;
         }
@@ -71,7 +72,7 @@ class PlayerComparisonEvent{
 
 class RoundEndEvent {
     constructor(winning_team, winning_team_name , roundnumber){
-        this.type = "round_end_event"
+        this.priority = 0;
         this.winning_team = winning_team
         this.winning_team_name = winning_team_name
         this.roundnumber = roundnumber
@@ -105,7 +106,30 @@ class RoundEndEvent {
     }
 }
 
+class MultikillEvent {
+    constructor(){
+        this.priority = 5;
+    }
+
+    static checkForEvent(gameConfig, payload){
+        if(payload === undefined || typeof payload.added === 'undefined'){
+            return undefined;
+        }
+
+        return new MultikillEvent();
+    }
+
+    getJsonResponse(){
+        let rsp = {
+            type: "multikill_event",
+            data: this
+        }
+        return JSON.stringify(rsp);
+    }
+}
+
 module.exports = {
+    MultikillEvent,
     RoundEndEvent,
     PlayerComparisonEvent,
     EventHandler

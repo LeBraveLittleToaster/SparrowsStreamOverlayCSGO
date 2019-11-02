@@ -14,6 +14,14 @@ class GameStateCSGO{
         this.loadSteamUserSummary(steam_url, userobj);
     }
     
+    updatePlayerScore(score){
+
+    }
+
+    getBestPlayer(isCt){
+        
+    }
+
     getPlayer(steam_id64){
         for(let item of this.players){
             if(item.steam_id64 === steam_id64){
