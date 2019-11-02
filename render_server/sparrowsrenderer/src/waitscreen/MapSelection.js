@@ -17,7 +17,7 @@ const MapSelection = observer(class MapSelection extends Component {
             {this.props.store.getMapsSetup.amountOfMaps === 1 ?
                 (<Row>
                     <Col id="two-row">
-                        <MapInfo map={this.props.store.getFirstMap} />
+                        <MapInfo map={this.props.store.getFirstMap} map_number={1}/>
                     </Col>
                     <Col>
                         <BestOf count={1} maps={[this.props.store.getFirstMap]}/>
@@ -29,10 +29,10 @@ const MapSelection = observer(class MapSelection extends Component {
             {this.props.store.getMapsSetup.amountOfMaps === 2 ?
                 (<Row>
                     <Col id="three-row">
-                        <MapInfo map={this.props.store.getFirstMap} />
+                        <MapInfo map={this.props.store.getFirstMap} map_number={1}/>
                     </Col>
                     <Col id="three-row">
-                        <MapInfo map={this.props.store.getSecondMap} />
+                        <MapInfo map={this.props.store.getSecondMap} map_number={2} />
                     </Col>
                     <Col id="three-row">
                         <BestOf count={2} maps={[this.props.store.getFirstMap, this.props.store.getSecondMap]}/>
@@ -44,13 +44,13 @@ const MapSelection = observer(class MapSelection extends Component {
             {this.props.store.getMapsSetup.amountOfMaps === 3 ?
                 (<Row>
                     <Col id="three-row">
-                        <MapInfo map={this.props.store.getFirstMap} />
+                        <MapInfo map={this.props.store.getFirstMap} map_number={1} />
                     </Col>
                     <Col id="three-row">
-                        <MapInfo map={this.props.store.getSecondMap} />
+                        <MapInfo map={this.props.store.getSecondMap} map_number={2} />
                     </Col>
                     <Col id="three-row">
-                        <MapInfo map={this.props.store.getThirdMap} />
+                        <MapInfo map={this.props.store.getThirdMap} map_number={3}/>
                     </Col>
                 </Row>)
                 :

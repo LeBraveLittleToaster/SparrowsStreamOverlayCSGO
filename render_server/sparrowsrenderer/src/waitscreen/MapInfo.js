@@ -22,7 +22,7 @@ const MapInfo = observer(class MapInfo extends Component {
                                 <a id="score-text">{this.props.map.score.ct} : {this.props.map.score.t}</a>
                             </Row>
                             <Row>
-                                <a id="map-text">Map 1</a>
+                                <a id="map-text">Map {this.props.map_number}</a>
                             </Row>
                         </Col>
                     </Container>

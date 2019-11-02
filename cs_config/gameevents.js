@@ -3,6 +3,7 @@ class EventHandler{
         this.gameConfig = gameConfig
         this.gamestate = gamestate
         this.events = events
+        this.next_event_to_render = undefined
     }
 
     checkAndHandleEvents(payload){
@@ -19,6 +20,7 @@ class EventHandler{
 
 class PlayerComparisonEvent{
     constructor(name_ct, team_ct, score_ct, name_t, team_t, score_t){
+        this.type = "player_comparison_event"
         this.name_ct = name_ct;
         this.team_ct = team_ct;
         this.score_ct = score_ct;
@@ -68,6 +70,7 @@ class PlayerComparisonEvent{
 
 class RoundEndEvent {
     constructor(winning_team, winning_team_name , roundnumber){
+        this.type = "round_end_event"
         this.winning_team = winning_team
         this.winning_team_name = winning_team_name
         this.roundnumber = roundnumber

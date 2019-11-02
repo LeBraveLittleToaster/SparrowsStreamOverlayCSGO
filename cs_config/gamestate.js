@@ -5,7 +5,7 @@ class GameStateCSGO{
     }
 
     addPlayer(isCt, steam_url){
-        let userobj = {url: steam_url, steam_id64:undefined, isCt: isCt, summary: undefined}
+        let userobj = {url: steam_url, steam_id64: undefined, isCt: isCt, summary: undefined}
         if(isCt){
             this.players.add(userobj);
         }else{

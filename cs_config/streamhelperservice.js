@@ -10,8 +10,8 @@ const GameStateCSGO = require('./gamestate').GameStateCSGO;
 const port = 4000;
 const host = '127.0.0.1';
 
-const steam = new SteamAPI("place steam web api key here");
-const gamestate = new GameStateCSGO(steam);
+//const steam = new SteamAPI("place steam web api key here");
+const gamestate = undefined;// new GameStateCSGO(steam);
 
 let gameConfig = new CsgoGameConfig(gamestate);
 let eventHandler = new EventHandler(gameConfig, gamestate, [RoundEndEvent, PlayerComparisonEvent]);
@@ -106,8 +106,16 @@ app.post("/", (req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/html' });
     console.log("Handling payload")
     console.log(JSON.stringify(req.body))
-    let rsps = eventHandler.checkAndHandleEvents(JSON.parse(JSON.stringify(req.body)))
-    broadcastGameEvents(rsps)
+    let eventset = eventHandler.checkAndHandleEvents(JSON.parse(JSON.stringify(req.body)))
+    let shouldUpdate = false;
+    for(event in eventset){
+        if(event.type = "round_end_event"){
+            shouldUpdate = true;
+        }
+    }
+    if(shouldUpdate){
+        broadcastGameEvents(data)
+    }
     res.end();
 });
 
