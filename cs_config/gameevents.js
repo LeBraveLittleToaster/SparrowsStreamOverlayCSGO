@@ -11,6 +11,7 @@ class EventHandler{
         this.events.forEach((event) => {
             let rsp = event.checkForEvent(this.gameConfig, payload);
             if(rsp !== undefined){
+                console.log(rsp)
                 responses.push(rsp)
             }
         })

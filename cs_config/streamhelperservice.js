@@ -105,7 +105,9 @@ app.use(express.static('public'));
 app.post("/", (req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/html' });
     console.log("Handling payload")
-    console.log(JSON.stringify(req.body))
+    //console.log(JSON.stringify(req.body))
+    let data = JSON.parse(JSON.stringify(req.body));
+    console.log(data.added)
     let eventset = eventHandler.checkAndHandleEvents(JSON.parse(JSON.stringify(req.body)))
     let shouldUpdate = false;
     for(event in eventset){
@@ -114,7 +116,7 @@ app.post("/", (req, res) => {
         }
     }
     if(shouldUpdate){
-        broadcastGameEvents(data)
+        broadcastGameEvents(eventset)
     }
     res.end();
 });
