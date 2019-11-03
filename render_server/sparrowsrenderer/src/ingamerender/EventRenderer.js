@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import EventEndRound from './events/EventEndRound';
 import WebSocket from 'react-websocket';
 import EventPlayerComparison from './events/EventPlayerComparison';
+import './EventRenderer.scss';
+import { stat } from 'fs';
 
-const fade_timeout_millis = 10000;
+const fade_timeout_millis_player_comparison = 10000;
+const fade_timeout_millis_player_end_round = 4000;
 
 class EventRenderer extends Component {
 
@@ -23,7 +26,7 @@ class EventRenderer extends Component {
                     this.setState({
                         end_event: undefined
                     })
-                }, fade_timeout_millis);
+                }, fade_timeout_millis_player_end_round);
             }
             if(result.type === "player_comparison"){
                 console.log("Triggering player_comparison event")
@@ -32,21 +35,21 @@ class EventRenderer extends Component {
                     this.setState({
                         player_comparison_event: undefined
                     })
-                }, fade_timeout_millis);
+                }, fade_timeout_millis_player_comparison);
             }
         }
     }
 
     render() {
         return (
-            <div>
+            <div id="max-container">
                 {this.state.end_event !== undefined ? (
-                    <EventEndRound winning_team_name={this.state.end_event.winning_team_name}/>)
+                    <EventEndRound store={this.props.store} fade_timeout_millis={fade_timeout_millis_player_end_round} hasCtWon={this.state.end_event.hasCtWon} winning_team_name={this.state.end_event.winning_team_name}/>)
                 :
                     (<div></div>)
                 }
                 {this.state.player_comparison_event !== undefined ? (
-                    <EventPlayerComparison fade_timeout_millis={fade_timeout_millis} store={this.props.store} event_data={this.state.player_comparison_event}/>) 
+                    <EventPlayerComparison fade_timeout_millis={fade_timeout_millis_player_comparison} store={this.props.store} event_data={this.state.player_comparison_event}/>) 
                 : 
                     (<div></div>) 
                 }

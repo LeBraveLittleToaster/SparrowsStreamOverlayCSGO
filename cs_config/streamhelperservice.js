@@ -15,7 +15,11 @@ const steam = new SteamAPI("place steam web api key here");
 const gamestate = undefined;// new GameStateCSGO(steam);
 
 let gameConfig = new CsgoGameConfig(gamestate);
-let eventHandler = new EventHandler(gameConfig, gamestate, [RoundEndEvent, PlayerComparisonEvent, MultikillEvent]);
+let eventHandler = new EventHandler(gameConfig, gamestate, [
+    (config, payload) => RoundEndEvent.checkForEvent(config, payload), 
+    (config,payload) => PlayerComparisonEvent.checkForEvent(config, payload)
+    /*, MultikillEvent*/
+]);
 
 console.log("STEAM_API_KEY: " + process.env.STEAM_API_KEY)
 
@@ -110,10 +114,9 @@ function filterEventWithPriority(eventset){
                 startV = event;
             }
         }
-        return startV;
+        event.push(startV);
+        return event;
     }
-
-    //take the event that should be fired
     return event;
 }
 
@@ -124,17 +127,19 @@ app.use(express.static('public'));
 
 app.post("/", (req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/html' });
-    console.log("Handling payload")
-    console.log(JSON.stringify(req.body))
+    //console.log("Handling payload")
+    //console.log(JSON.stringify(req.body))
     let data = JSON.parse(JSON.stringify(req.body));
     let eventset = eventHandler.checkAndHandleEvents(data);
 
     let needUpdate = false;
-    for (event in eventset) {
+    eventset.forEach(event => {
+        console.log(typeof event)
         if (event instanceof RoundEndEvent) {
+            console.log("Update send")
             needUpdate = true;
         }
-    }
+    });
     if (needUpdate) {
         broadcastGameEvents(filterEventWithPriority(eventset))
     }

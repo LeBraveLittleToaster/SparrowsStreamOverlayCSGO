@@ -8,10 +8,9 @@ class EventHandler{
 
     checkAndHandleEvents(payload){
         let responses = []
-        this.events.forEach((event) => {
-            let rsp = event.checkForEvent(this.gameConfig, payload);
+        this.events.forEach((checkForEvent) => {
+            let rsp = checkForEvent(this.gameConfig, payload);
             if(rsp !== undefined){
-                console.log(rsp)
                 responses.push(rsp)
             }
         })
@@ -40,6 +39,8 @@ class PlayerComparisonEvent{
             return undefined;
         }
         
+        
+
         return new PlayerComparisonEvent(
             "LeCounterPlayer",
             gameConfig.ct_name,
@@ -71,30 +72,41 @@ class PlayerComparisonEvent{
 
 
 class RoundEndEvent {
-    constructor(winning_team, winning_team_name , roundnumber){
+    constructor(hasCtWon, winning_team_name , round){
         this.priority = 0;
-        this.winning_team = winning_team
+        this.hasCtWon = hasCtWon
         this.winning_team_name = winning_team_name
-        this.roundnumber = roundnumber
+        this.round = round
     }
 
     static checkForEvent(gameConfig, payload){
+        console.log("Checking for event...")
         if(payload === undefined || typeof payload.added === 'undefined'){
             return undefined;
         }
      
+        console.log("Event not empty...")
         let winning_team_name = ""
+        let hasCtWon = false;
         if(payload.round.win_team === 'T'){
             winning_team_name = gameConfig.t_name;
+            hasCtWon = false;
         }else{
             winning_team_name = gameConfig.ct_name;
+            hasCtWon = true;
         }
 
-        return new RoundEndEvent(
-            payload.round.win_team,
+        console.log("Creating event...")
+        let event = new RoundEndEvent(
+            hasCtWon,
             winning_team_name,
             payload.map.round
         );
+        console.log("Created event...")
+        console.log(typeof event)
+        console.log(event instanceof RoundEndEvent)
+        console.log("Finished event check...")
+        return event;
     }
 
     getJsonResponse(){
