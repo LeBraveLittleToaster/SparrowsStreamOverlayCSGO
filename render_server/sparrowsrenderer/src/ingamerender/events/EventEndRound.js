@@ -3,10 +3,7 @@ import { merge, fadeIn, slideInRight,fadeOutLeft ,slideOutLeft, bounceInDown, bo
 import Radium, { StyleRoot } from 'radium';
 import { Container } from 'reactstrap';
 import './EventEndRound.scss'
-import bounceOutUp from 'react-animations/lib/bounce-out-up';
 import fadeOut from 'react-animations/lib/fade-out';
-import zoomInLeft from 'react-animations/lib/zoom-in-left';
-
 const mergeStyles = {
     faderino: {
         animation: 'x 4s',
@@ -53,7 +50,7 @@ class EventEndRound extends Component {
                     <div id="text-bottom">
                         <h2 className="glitch" data-text="WON">WON</h2>
                     </div>
-                    
+
                     <div id="teamlogo">
                         {this.state.hasCtWon ? (
                             <img alt="Could not load pic" id="pic" src={this.props.store.getTeamPictures.ctUrl} />

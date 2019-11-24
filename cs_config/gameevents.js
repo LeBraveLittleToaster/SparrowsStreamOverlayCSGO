@@ -34,6 +34,8 @@ class PlayerComparisonEvent{
             return undefined;
         }
      
+        console.log("Payload: " + JSON.stringify(payload))
+
         //only for testing!
         if(payload.type !== "player_comparison"){
             return undefined;
