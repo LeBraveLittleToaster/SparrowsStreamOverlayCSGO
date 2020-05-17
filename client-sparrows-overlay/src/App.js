@@ -1,4 +1,5 @@
 import React from 'react';
+import Waiting from './components/waitscreen';
 
 import {
   BrowserRouter as Router,
@@ -10,25 +11,29 @@ import {
 function App() {
   return (
     <div>
-      <h1> Sparrows Overlay </h1>
+
       <Router>
         <div>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/wait">Waiting</Link>
-              </li>
-              <li>
-                <Link to="/console"> Console </Link>
-              </li>
-            </ul>
-          </nav>
+          <div id="navbar">
+            <h1> Sparrows Overlay </h1>
+            <nav>
+              <ul>
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+                <li>
+                  <Link to="/wait">wait</Link>
+                </li>
+                <li>
+                  <Link to="/console"> console </Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+
           <Switch>
             <Route path="/wait">
-              <p> wait </p>
+              <Waiting />
             </Route>
             <Route path="/console">
               <p> console </p>

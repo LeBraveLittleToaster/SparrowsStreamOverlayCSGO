@@ -1,0 +1,221 @@
+/**
+#navbar{
+  display: none;
+}
+**/
+
+#container{
+  text-align: center;
+  width: 1920px;
+  height: 1080px;
+  background-color: red;
+  position: relative;
+}
+
+#countdown-font{
+  color: #cfcfcf;
+}
+
+#up-right-info img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#up-left-info img {
+  max-width: 100%;
+  max-height: 100%;
+  
+}
+
+#mid-left-picture img {
+  max-width: 80%;
+  max-height: 80%;
+}
+/*
+#up-middle-info{
+  width: 400px;
+  height: 55px;
+  margin-top: 10px;
+  position: absolute;
+}
+*/
+
+#up-middle-info {
+  position: absolute;
+  top: 20px;
+  height: 55px;
+  width: 400px;
+  margin-left:auto;
+  margin-right:auto;
+  left: 0;
+  right: 0;
+  color: #cfcfcf;
+}
+
+#mid-right-picture img {
+  max-width: 80%;
+  max-height: 80%;
+}
+
+#mid-left-picture{
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  left: 20px;
+  top: 425px;
+}
+
+#mid-left-info{
+  width: 300px;
+  height: 50px;
+  position: absolute;
+  left: 20px;
+  top: 610px;
+  text-align: start;
+  color: #cfcfcf;
+}
+
+#mid-right-picture{
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  right: 20px;
+  top: 425px;
+}
+
+#mid-right-info{
+  width: 300px;
+  height: 50px;
+  position: absolute;
+  right: 20px;
+  top: 610px;
+  text-align: end;
+  color: #cfcfcf;
+}
+
+#up-left-info {
+  width: 250px;
+  height: 65px;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+
+#up-right-info {
+  width: 250px;
+  height: 65px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+
+#bottom-bar {
+  position: absolute;
+  bottom: 20px;
+  height: 115px;
+  width: 1130px;
+  margin-left:auto;
+  margin-right:auto;
+  left: 0;
+  right: 0;
+}
+
+div.row{
+  height: 100%;
+}
+
+div.col{
+  height: 100%;
+}
+
+#col-spacer{
+  margin-left: 20px;
+  margin-right: 20px;
+  height: 100%;
+  max-width: 33%;
+}
+
+#maps_container{
+  height: 100%;
+  display: flex;
+}
+
+.map-info {
+  height: 100%;
+  width: 220px;
+
+  position: relative;
+}
+
+#map-picture {
+  position: absolute; /* Take your picture out of the flow */
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; /* Make the picture taking the size of it's parent */
+  height: 115px; /* This if for the object-fit */
+  width: 115px;
+}
+
+#score-text{
+  position: absolute; /* Take your picture out of the flow */
+  top: 10px;
+  bottom: 0;
+  left: 120px;
+  right: 0; /* Make the picture taking the size of it's parent */
+  font-size: 2.2em;
+  color: #cfcfcf;
+}
+
+#map-text{
+  position: absolute; /* Take your picture out of the flow */
+  top: 60px;
+  bottom: 0;
+  left: 120px;
+  right: 0; /* Make the picture taking the size of it's parent */
+  font-size: 2.25em;
+  color: #cfcfcf;
+}
+
+
+
+
+#map-text-mode{
+  font-size: 2.2em;
+  color: #cfcfcf;
+  margin-bottom: 0px;
+  width: 100%;
+  text-align: center;
+}
+
+#map-text-alternative{
+  font-size: 1.35em;
+  color: #cfcfcf;
+  margin-top: 0px;
+  width: 100%;
+  text-align: center;
+}
+/**
+a {
+  font-size: 30px;
+  color: white;
+  text-align: center;
+}
+**/
+
+#one-row {
+  width: 100%;
+  height: 100%;
+}
+
+#two-row {
+
+  width: 50%;
+  height: 100%;
+}
+
+#three-row {
+  width: 33%;
+  height: 100%;
+}
