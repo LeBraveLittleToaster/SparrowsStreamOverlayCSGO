@@ -1,5 +1,6 @@
 import React from 'react';
 import Waiting from './components/waitscreen';
+import Console from './components/console';
 
 import {
   BrowserRouter as Router,
@@ -11,41 +12,48 @@ import {
 function App() {
   return (
     <div>
-
       <Router>
-        <div>
-          <div id="navbar">
-            <h1> Sparrows Overlay </h1>
-            <nav>
-              <ul>
-                <li>
-                  <Link to="/">Home</Link>
-                </li>
-                <li>
-                  <Link to="/wait">wait</Link>
-                </li>
-                <li>
-                  <Link to="/console"> console </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-
-          <Switch>
-            <Route path="/wait">
-              <Waiting />
-            </Route>
-            <Route path="/console">
-              <p> console </p>
-            </Route>
-            <Route path="/">
-              <p> Home </p>
-            </Route>
-          </Switch>
-        </div>
+        <Switch>
+          <Route path="/wait-preview">
+            <Navbar/>
+            <Waiting />
+          </Route>
+          <Route path="/wait">
+            <Waiting />
+          </Route>
+          <Route path="/console">
+            <Navbar/>
+            <Console />
+          </Route>
+          <Route path="/">
+            <Navbar/>
+            <p> Home </p>
+          </Route>
+        </Switch>
       </Router>
     </div>
   );
 }
+
+function Navbar() {
+  return (
+    <div id="navbar">
+      <h1> Sparrows Overlay </h1>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/wait-preview">wait Preview</Link>
+          </li>
+          <li>
+            <Link to="/console"> console </Link>
+          </li>
+        </ul>
+      </nav>
+    </div>)
+}
+
 
 export default App;

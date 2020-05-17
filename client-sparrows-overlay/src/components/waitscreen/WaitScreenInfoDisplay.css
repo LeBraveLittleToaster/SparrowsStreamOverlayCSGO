@@ -11,6 +11,10 @@
   background-color: red;
   position: relative;
 }
+body {
+  margin: 0;
+  padding: 0;
+}
 
 #countdown-font{
   color: #cfcfcf;
@@ -53,6 +57,7 @@
 }
 
 #mid-right-picture img {
+  
   max-width: 80%;
   max-height: 80%;
 }
