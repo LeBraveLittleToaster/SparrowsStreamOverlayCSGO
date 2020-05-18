@@ -82,26 +82,25 @@ app.post('/api/simple_data_base', function (req, res) {
 
 
 // Websocket 
-app.ws('/api/subscription_simple_data_base', function (ws, req) {
+app.ws('/api/simple_data_base/subscription', function (ws, req) {
     ws.on('message', function (msg) {
         var d = new Date();
         var n = d.toISOString();
         console.log(`Time ${n}, message: ${req.url}`);
         try {
-            parsed =JSON.parse(msg);
+            parsed = JSON.parse(msg);
             simple_data_base = parsed;
-          } catch (e) {
+            save_simple_data_base();
+        } catch (e) {
             console.log("message could not be parsed");
-          }
-        
-        save_simple_data_base();
+        }
     });
     console.log('socket', req.testing);
 });
 
 
-function send_to_subscription(msg){
-    var aWss = expressWs.getWss('/api/subscription_simple_data_base');
+function send_to_subscription(msg) {
+    var aWss = expressWs.getWss('/api/simple_data_base/subscription');
     aWss.clients.forEach(function (client) {
         client.send(msg);
     });
