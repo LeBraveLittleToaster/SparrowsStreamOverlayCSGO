@@ -47,6 +47,7 @@ try {
 function save_simple_data_base() {
     console.log("simple_data_base save");
     fs.writeFileSync(path, JSON.stringify(simple_data_base, null, 4));
+    send_to_subscription(JSON.stringify(simple_data_base));
 }
 save_simple_data_base()
 
@@ -83,10 +84,28 @@ app.post('/api/simple_data_base', function (req, res) {
 // Websocket 
 app.ws('/api/subscription_simple_data_base', function (ws, req) {
     ws.on('message', function (msg) {
-        console.log(msg);
+        var d = new Date();
+        var n = d.toISOString();
+        console.log(`Time ${n}, message: ${req.url}`);
+        try {
+            parsed =JSON.parse(msg);
+            simple_data_base = parsed;
+          } catch (e) {
+            console.log("message could not be parsed");
+          }
+        
+        save_simple_data_base();
     });
     console.log('socket', req.testing);
 });
+
+
+function send_to_subscription(msg){
+    var aWss = expressWs.getWss('/api/subscription_simple_data_base');
+    aWss.clients.forEach(function (client) {
+        client.send(msg);
+    });
+}
 
 
 app.listen(port, function () {
