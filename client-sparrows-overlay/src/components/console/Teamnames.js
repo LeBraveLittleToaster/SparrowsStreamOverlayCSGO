@@ -20,14 +20,14 @@ class Teamnames extends Component {
     render() {
         return (<div>
             <div>
-                <label for="name_left">left Name: </label>
+                <label htmlFor="name_left">left Name: </label>
                 <input type="text" name="name_left"
                     value={this.state.name_left}
                     onChange={(e) => this.name_left_change(e.target.value)}
                 />
             </div>
             <div>
-                <label for="name_right">right Name: </label>
+                <label htmlFor="name_right">right Name: </label>
                 <input type="text" name="name_right"
                     value={this.state.name_right}
                     onChange={(e) => this.name_right_change(e.target.value)}

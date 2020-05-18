@@ -83,6 +83,8 @@ app.post('/api/simple_data_base', function (req, res) {
 
 // Websocket 
 app.ws('/api/simple_data_base/subscription', function (ws, req) {
+    
+    ws.send(JSON.stringify(simple_data_base))
     ws.on('message', function (msg) {
         var d = new Date();
         var n = d.toISOString();
