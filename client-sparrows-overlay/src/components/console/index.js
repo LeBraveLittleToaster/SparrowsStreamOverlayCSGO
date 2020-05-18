@@ -16,17 +16,30 @@ class Console extends Component {
     }
 
     render() {
+        let data = this.props.data;
+        let config = null;
+        let number = 0;
+        if(data !== null){
+            let uuid = this.props.data.selected_config_uuid;
+            config = data.data.find(foo => foo.uuid == uuid);   
+        }
+
+        
 
         return (
             <div>
+                <p> {JSON.stringify(data)}</p>
+                <p> {JSON.stringify(config)}</p>
                 <h1> Mapselection </h1>
-                <MapSetupView />
-                <h2>Map 1</h2>
-                <MapChangerView />
-                <h2>Map 2</h2>
-                <MapChangerView />
-                <h2>Map 3</h2>
-                <MapChangerView />
+                {config !== null && <MapSetupView amount_of_maps={config.mapselection.amount_of_maps-1}/>}
+               
+
+                {config !== null && config.mapselection.maps.map((value, index) => {
+                    return (<div>
+                        <h2> Map {index+1} </h2>
+                        <MapChangerView />
+                    </div>)
+                })}
 
                 <h1> Timer </h1>
                 <TimerView />

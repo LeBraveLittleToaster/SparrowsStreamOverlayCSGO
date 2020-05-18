@@ -6,7 +6,7 @@
             "uuid": "495762cd-c230-4260-801b-440367866220",
             "schema": "csgo",
             "mapselection": {
-                "amount of maps": 2,
+                "amount_of_maps": 2,
                 "maps": [
                     {
                         "map_name": "cache",

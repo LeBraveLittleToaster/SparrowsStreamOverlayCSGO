@@ -12,11 +12,12 @@ import {
 const URL = "ws://" + window.location.host + '/api/simple_data_base/subscription';
 
 class App extends Component {
-    
+
   constructor(props){
     super(props);
     this.state = {
-      ws: null
+      ws: null,
+      data: null,
     }
     console.log( window.location.host)
   }
@@ -32,8 +33,11 @@ class App extends Component {
     }
 
     ws.onmessage = evt => {
-      const message = JSON.parse(evt.data)
+      const data = JSON.parse(evt.data)
       //this.addMessage(message)
+      this.setState({
+        data
+      })
     }
 
     ws.onclose = () => {
@@ -60,7 +64,7 @@ class App extends Component {
             </Route>
             <Route path="/console">
               <Navbar />
-              <Console />
+              <Console data={this.state.data}/>
             </Route>
             <Route path="/">
               <Navbar />

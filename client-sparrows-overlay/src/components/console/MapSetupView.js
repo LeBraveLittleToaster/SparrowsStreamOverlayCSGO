@@ -7,13 +7,19 @@ class MapSetupView extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            id: 0
+            id: props.amount_of_maps
         }
         this.store = props.store;
     }
 
     bestOfSelect(value) {
         this.setState({ id: value });
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.state = {
+            id: newProps.amount_of_maps
+        }
     }
 
     render() {
