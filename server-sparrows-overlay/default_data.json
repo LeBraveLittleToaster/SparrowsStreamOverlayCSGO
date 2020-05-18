@@ -1,0 +1,28 @@
+{
+    "selected_config_uuid":"495762cd-c230-4260-801b-440367866220",
+    "steam_api_key": null,
+    "data": [
+        {
+            "uuid": "495762cd-c230-4260-801b-440367866220",
+            "schema": "csgo",
+            "mapselection": {
+                "amount of maps": 2,
+                "maps": [
+                    {
+                        "map_name": "cache",
+                        "score_left": 3,
+                        "score_right": 1
+                    },
+                    {
+                        "map_name": "nuke",
+                        "score_left": 3,
+                        "score_right": 1
+                    }
+                ],
+                "begin": "2020-05-18 11:21",
+                "team_name_left": "Sparrows",
+                "team_name_right": "Opponent"
+            }
+        }
+    ]
+}

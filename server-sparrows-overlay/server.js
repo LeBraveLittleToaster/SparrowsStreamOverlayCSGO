@@ -2,8 +2,54 @@
 var express = require('express');
 var app = express();
 var expressWs = require('express-ws')(app);
-
+const fs = require('fs');
 const port = 4040;
+
+
+/**
+ * Server setup start
+ *  - creates data folder (if not exists)
+ *  - copys default_data.json
+ *  - ask for steam_api_key
+ */
+var default_data = require('./default_data.json');
+var simple_data_base = default_data;
+var dir = './data';
+const path = './data/simple_data_base.json';
+// - creates data folder (if not exists)
+
+if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+    console.log("data folder mkdir");
+} else {
+    console.log("data folder already exists");
+}
+
+// - copys default_data.json
+try {
+    if (fs.existsSync(path)) {
+        try {
+            console.log("simple_data_base already exists");
+            simple_data_base = JSON.parse(fs.readFileSync(path, 'utf8'))
+        } catch (err) {
+            console.error(err)
+            process.exit(1)
+        }
+    } else {
+        console.log("create simple_data_base with default_data.json ");
+    }
+} catch (err) {
+    console.error(err)
+    process.exit(1)
+}
+
+// TODO check if simple_data_base is valid
+function save_simple_data_base() {
+    console.log("simple_data_base save");
+    fs.writeFileSync(path, JSON.stringify(simple_data_base, null, 4));
+}
+save_simple_data_base()
+
 
 
 // Middleware
@@ -16,13 +62,26 @@ app.use(function (req, res, next) {
 
 
 // REST API
-app.get('/api/hello', function (req, res) {
-    res.send('Hello World!\n');
+app.get('/api/simple_data_base', function (req, res) {
+    res.json(simple_data_base)
+});
+
+app.use(express.json());
+app.post('/api/simple_data_base', function (req, res) {
+    if (!req.is('application/json')) {
+        console.log("no application/json")
+        res.status(415)
+        res.send("json only please")
+    } else {
+        simple_data_base = req.body;
+        save_simple_data_base()
+        res.end("yes");
+    }
 });
 
 
 // Websocket 
-app.ws('/api/syncservice', function (ws, req) {
+app.ws('/api/subscription_simple_data_base', function (ws, req) {
     ws.on('message', function (msg) {
         console.log(msg);
     });
