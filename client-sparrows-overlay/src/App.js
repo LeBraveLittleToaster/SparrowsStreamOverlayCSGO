@@ -9,31 +9,40 @@ import {
   Link
 } from "react-router-dom";
 
+const URL = "ws://" + window.location.host + '/api/simple_data_base/subscription';
+
 class App extends Component {
-  
-  ws = new WebSocket("ws://" + window.location.host + '/api/simple_data_base/subscription');
-  //ws = new WebSocket('ws://localhost:3000/api/simple_data_base/subscription');
-  
+    
   constructor(props){
     super(props);
+    this.state = {
+      ws: null
+    }
     console.log( window.location.host)
   }
 
   componentDidMount() {
-    this.ws.onopen = () => {
+    let ws = new WebSocket(URL);
+    this.setState({
+      ws
+    })
+
+    ws.onopen = () => {
       console.log('connected')
     }
 
-    this.ws.onmessage = evt => {
+    ws.onmessage = evt => {
       const message = JSON.parse(evt.data)
       //this.addMessage(message)
     }
 
-    this.ws.onclose = () => {
+    ws.onclose = () => {
       console.log('disconnected')
+      
       this.setState({
         ws: new WebSocket(URL),
       })
+      
     }
   }
 
