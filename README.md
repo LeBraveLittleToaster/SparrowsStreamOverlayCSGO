@@ -9,7 +9,7 @@ If you want to try out the current build then follow these steps and hope that t
 
 ## What you need
 
-- Current Nodejs installed (tested with v8.9.1)
+- Nodejs version 12.x.x
 - Windows environment variable called "STEAM_API_KEY" with your generated steam api key for your observer account (created here: https://steamcommunity.com/login/home/?goto=%2Fdev%2Fapikey) use a domain name of your choice
 
 ### Open two consoles
