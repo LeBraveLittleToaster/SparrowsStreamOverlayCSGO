@@ -56,8 +56,9 @@ function Console(props) {
                     let objIndex = mapselection.data.findIndex((obj => obj.uuid === mapselection.selected_config_uuid));
                     let newdata = mapselection.data;
                     newdata[objIndex].mapselection.amount_of_maps = e;
-                    newdata[objIndex].mapselection.maps = [];
-                    for (var i = 0; i < e; i++) {
+                    newdata[objIndex].mapselection.maps =  newdata[objIndex].mapselection.maps.slice(0, e);
+                    for (var i = newdata[objIndex].mapselection.maps.length; i < e; i++) {
+                        //let new_item = 
                         newdata[objIndex].mapselection.maps.push({
                             "map_name": "cache",
                             "score_left": 0,

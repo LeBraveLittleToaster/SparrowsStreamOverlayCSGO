@@ -4,7 +4,7 @@ var app = express();
 var expressWs = require('express-ws')(app);
 const fs = require('fs');
 const port = 4040;
-
+const WebSocket = require('ws');
 
 /**
  * Server setup start
@@ -83,7 +83,11 @@ app.post('/api/simple_data_base', function (req, res) {
 
 // Websocket 
 app.ws('/api/simple_data_base/subscription', function (ws, req) {
-    
+    setInterval(function timeout() {
+        if(ws.readyState === WebSocket.OPEN){
+            ws.ping("heartbeat");
+        }
+    }, 20000);
     ws.send(JSON.stringify(simple_data_base))
     ws.on('message', function (msg) {
         var d = new Date();
