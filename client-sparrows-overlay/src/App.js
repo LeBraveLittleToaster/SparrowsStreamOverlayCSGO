@@ -64,7 +64,13 @@ class App extends Component {
             </Route>
             <Route path="/console">
               <Navbar />
-              <Console data={this.state.data}/>
+              <Console 
+                  value={this.state.data}
+                  onChange={(e) => {
+                    this.setState({data:e});
+                    console.log("now send something"+JSON.stringify(e));
+                  }}
+              />
             </Route>
             <Route path="/">
               <Navbar />

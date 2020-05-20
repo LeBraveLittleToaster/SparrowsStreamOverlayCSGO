@@ -1,56 +1,98 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import MapSetupView from './MapSetupView';
 import MapChangerView from './MapChangerView';
 import TimerView from './TimerView';
 import Teamnames from './Teamnames';
 
-
-class Console extends Component {
-
-    constructor(props) {
-        super(props)
+function get_config(value) {
+    let config = null;
+    let number = 0;
+    if (value !== null) {
+        let uuid = value.selected_config_uuid;
+        config = value.data.find(foo => foo.uuid == uuid);
     }
+    return config;
+}
 
-    save() {
-        console.log("TODO save status");
-    }
 
-    render() {
-        let data = this.props.data;
-        let config = null;
-        let number = 0;
-        if(data !== null){
-            let uuid = this.props.data.selected_config_uuid;
-            config = data.data.find(foo => foo.uuid == uuid);   
+var default_value = {
+    "selected_config_uuid":"495762cd-c230-4260-801b-440367866220",
+    "steam_api_key": null,
+    "data": [
+        {
+            "uuid": "495762cd-c230-4260-801b-440367866220",
+            "schema": "csgo",
+            "mapselection": {
+                "amount_of_maps": 0,
+                "maps": [],
+                "begin": "2020-05-18 11:21",
+                "team_name_left": "left",
+                "team_name_right": "right"
+            }
         }
+    ]
+};
 
-        
 
-        return (
-            <div>
-                <p> {JSON.stringify(data)}</p>
-                <p> {JSON.stringify(config)}</p>
-                <h1> Mapselection </h1>
-                {config !== null && <MapSetupView amount_of_maps={config.mapselection.amount_of_maps-1}/>}
-               
+function Console(props) {
 
-                {config !== null && config.mapselection.maps.map((value, index) => {
-                    return (<div>
-                        <h2> Map {index+1} </h2>
-                        <MapChangerView />
-                    </div>)
-                })}
 
-                <h1> Timer </h1>
-                <TimerView />
+    const [mapselection, set_mapselection] = useState(props.value || default_value);
 
-                <h1>Teamnnames</h1>
-                <Teamnames />
 
-                <button onClick={this.save()}>Save</button>
-            </div>
-        );
-    }
+    let data = props.value;
+    let config = get_config(data);
+
+
+
+    return (
+        <div>
+            <p> {JSON.stringify(data)}</p>
+            <p> {JSON.stringify(config)}</p>
+            <h1> Mapselection </h1>
+            {config !== null && <MapSetupView
+                value={mapselection.amount_of_maps}
+                onChange={(e) => {
+                    let objIndex = mapselection.data.findIndex((obj => obj.uuid === mapselection.selected_config_uuid));
+                    let newdata = mapselection.data;
+                    newdata[objIndex].mapselection.amount_of_maps = e;
+                    newdata[objIndex].mapselection.maps = [];
+                    for (var i = 0; i < e; i++) {
+                        newdata[objIndex].mapselection.maps.push({
+                            "map_name": "cache",
+                            "score_left": 0,
+                            "score_right": 0
+                        })
+                    }
+                    let newmapselection = { ...mapselection, data: newdata };
+                    set_mapselection(newmapselection);
+                    if (props.onChange !== null) {
+                        props.onChange(newmapselection);
+                    }
+                }
+                }
+            />
+            }
+
+
+            {config !== null && config.mapselection.maps.map((value, index) => {
+                return (<div>
+                    <h2> Map {index + 1} </h2>
+                    <MapChangerView />
+                </div>)
+            })}
+
+            <h1> Timer </h1>
+            <TimerView />
+
+            <h1>Teamnnames</h1>
+            <Teamnames />
+
+
+        </div>
+    );
 };
 
 export default Console;
+
+//<button onClick={}>Save</button>
