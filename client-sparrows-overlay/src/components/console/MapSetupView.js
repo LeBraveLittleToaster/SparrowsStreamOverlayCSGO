@@ -7,10 +7,13 @@ function MapSetupView(props) {
 
     const [amount_of_maps, set_amount_of_maps] = useState(props.value || 0);
 
+    let local_amount_of_maps = props.value || amount_of_maps;
+
+
     return (<div id="select_container">
         <label htmlFor="cars">Select amount of maps:</label>
         <select id="cars"
-            value={optionsBestOf[amount_of_maps]}
+            value={optionsBestOf[local_amount_of_maps]}
             onChange={(e) => {
                 set_amount_of_maps(e.target.selectedIndex)
                 if (props.onChange !== null) {

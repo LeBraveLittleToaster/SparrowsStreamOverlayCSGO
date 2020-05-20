@@ -40,18 +40,18 @@ function Console(props) {
     const [mapselection, set_mapselection] = useState(props.value || default_value);
 
 
-    let data = props.value;
-    let config = get_config(data);
+    let local_mapselection = props.value || mapselection;
+    let config = get_config(local_mapselection);
 
 
 
     return (
         <div>
-            <p> {JSON.stringify(data)}</p>
+            <p> {JSON.stringify(local_mapselection)}</p>
             <p> {JSON.stringify(config)}</p>
             <h1> Mapselection </h1>
             {config !== null && <MapSetupView
-                value={mapselection.amount_of_maps}
+                value={config.mapselection.amount_of_maps}
                 onChange={(e) => {
                     let objIndex = mapselection.data.findIndex((obj => obj.uuid === mapselection.selected_config_uuid));
                     let newdata = mapselection.data;

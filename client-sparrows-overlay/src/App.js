@@ -68,7 +68,9 @@ class App extends Component {
                   value={this.state.data}
                   onChange={(e) => {
                     this.setState({data:e});
-                    console.log("now send something"+JSON.stringify(e));
+                    if(this.state.ws !==null){
+                      this.state.ws.send(JSON.stringify(e))
+                    }
                   }}
               />
             </Route>
