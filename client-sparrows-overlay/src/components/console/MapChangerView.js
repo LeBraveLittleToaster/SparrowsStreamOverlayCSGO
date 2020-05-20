@@ -14,7 +14,7 @@ function MapChangerView(props) {
 
     const [value, set_value] = useState(props.value || default_value);
 
-    let local_value = props.value || default_value;
+    let local_value = props.value || value;
 
     return (<div>
 
@@ -44,7 +44,11 @@ function MapChangerView(props) {
             <input type="number" id="quantity" name="quantity" min="0" max="100"
                 value={local_value.score_left}
                 onChange={(e) =>{
-
+                    let newvalue = { ...value, score_left: e.target.value };
+                    set_value(newvalue)
+                    if (props.onChange !== null) {
+                        props.onChange(newvalue)
+                    }
                 }} />
         </div>
 
@@ -53,7 +57,11 @@ function MapChangerView(props) {
             <input type="number" id="quantity" name="quantity" min="0" max="100"
                 value={local_value.score_right}
                 onChange={(e) => {
-
+                    let newvalue = { ...value, score_right: e.target.value };
+                    set_value(newvalue)
+                    if (props.onChange !== null) {
+                        props.onChange(newvalue)
+                    }
                 }} />
         </div>
         <div>

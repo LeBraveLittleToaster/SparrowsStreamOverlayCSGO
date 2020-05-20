@@ -1,41 +1,46 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
-class Teamnames extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            name_left: "Sparrows",
-            name_right: "Opponent"
-        }
-    }
+var default_value = {
+    team_name_left: "Sparrows",
+    team_name_right: "Opponent"
+}
 
-    name_left_change(value) {
-        this.setState({ name_left: value })
-    }
+function Teamnames(props) {
 
-    name_right_change(value) {
-        this.setState({ name_right: value })
-    }
+    const[value, set_value] = useState(props.value || default_value);
 
-    render() {
-        return (<div>
-            <div>
-                <label htmlFor="name_left">left Name: </label>
-                <input type="text" name="name_left"
-                    value={this.state.name_left}
-                    onChange={(e) => this.name_left_change(e.target.value)}
-                />
-            </div>
-            <div>
-                <label htmlFor="name_right">right Name: </label>
-                <input type="text" name="name_right"
-                    value={this.state.name_right}
-                    onChange={(e) => this.name_right_change(e.target.value)}
-                />
-            </div>
+    let local_value = props.value || value;
+    
+    return (<div>
+        <div>
+            <label htmlFor="name_left">left Name: </label>
+            <input type="text" name="name_left"
+                value={local_value.team_name_left}
+                onChange={(e) => {
+                    let newvalue = { ...value, team_name_left: e.target.value };
+                    set_value(newvalue)
+                    if(typeof props.onChange !== "undefined"){
+                        props.onChange(newvalue)
+                    }
+                }}
+            />
         </div>
-        );
-    }
+        <div>
+            <label htmlFor="name_right">right Name: </label>
+            <input type="text" name="name_right"
+                value={local_value.team_name_right}
+                onChange={(e) => {
+                    let newvalue = { ...value, team_name_right: e.target.value };
+                    set_value(newvalue)
+                    if(typeof props.onChange !== "undefined"){
+                        props.onChange(newvalue)
+                    }
+                }}
+            />
+        </div>
+    </div>
+    );
+
 };
 
 export default Teamnames;

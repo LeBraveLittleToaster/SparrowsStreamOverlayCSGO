@@ -16,7 +16,7 @@ function get_config(value) {
 
 
 var default_value = {
-    "selected_config_uuid":"495762cd-c230-4260-801b-440367866220",
+    "selected_config_uuid": "495762cd-c230-4260-801b-440367866220",
     "steam_api_key": null,
     "data": [
         {
@@ -79,7 +79,7 @@ function Console(props) {
             {config !== null && config.mapselection.maps.map((value, index) => {
                 return (<div>
                     <h2> Map {index + 1} </h2>
-                    <MapChangerView 
+                    <MapChangerView
                         value={config.mapselection.maps[index]}
                         onChange={(e) => {
                             let objIndex = mapselection.data.findIndex((obj => obj.uuid === mapselection.selected_config_uuid));
@@ -99,7 +99,25 @@ function Console(props) {
             <TimerView />
 
             <h1>Teamnnames</h1>
-            <Teamnames />
+            <Teamnames
+                value={{
+                    team_name_left: config.mapselection.team_name_left,
+                    team_name_right: config.mapselection.team_name_right,
+                }
+                }
+                onChange={(e) => {
+                    let objIndex = mapselection.data.findIndex((obj => obj.uuid === mapselection.selected_config_uuid));
+                    let newdata = mapselection.data;
+                    newdata[objIndex].mapselection.team_name_left= e.team_name_left;
+                    newdata[objIndex].mapselection.team_name_right= e.team_name_right;
+                    let newmapselection = { ...mapselection, data: newdata };
+                    set_mapselection(newmapselection);
+                    if (props.onChange !== null) {
+                        props.onChange(newmapselection);
+                    }  
+                }
+                }
+            />
 
 
         </div>
