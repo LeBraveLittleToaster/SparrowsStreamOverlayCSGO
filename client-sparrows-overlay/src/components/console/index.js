@@ -9,7 +9,7 @@ function get_config(value) {
     let number = 0;
     if (value !== null) {
         let uuid = value.selected_config_uuid;
-        config = value.data.find(foo => foo.uuid == uuid);
+        config = value.data.find(foo => foo.uuid === uuid);
     }
     return config;
 }

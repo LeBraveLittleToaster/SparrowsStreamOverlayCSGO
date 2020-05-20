@@ -13,13 +13,13 @@ const URL = "ws://" + window.location.host + '/api/simple_data_base/subscription
 
 class App extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       ws: null,
       data: null,
     }
-    console.log( window.location.host)
+    console.log(window.location.host)
   }
 
   componentDidMount() {
@@ -34,7 +34,6 @@ class App extends Component {
 
     ws.onmessage = evt => {
       const data = JSON.parse(evt.data)
-      //this.addMessage(message)
       this.setState({
         data
       })
@@ -42,11 +41,11 @@ class App extends Component {
 
     ws.onclose = () => {
       console.log('disconnected')
-      
+
       this.setState({
         ws: new WebSocket(URL),
       })
-      
+
     }
   }
 
@@ -57,21 +56,35 @@ class App extends Component {
           <Switch>
             <Route path="/wait-preview">
               <Navbar />
-              <Waiting />
+              <Waiting value={this.state.data}
+                onChange={(e) => {
+                  this.setState({ data: e });
+                  if (this.state.ws !== null) {
+                    this.state.ws.send(JSON.stringify(e))
+                  }
+                }}
+              />
             </Route>
             <Route path="/wait">
-              <Waiting />
+              <Waiting value={this.state.data}
+                onChange={(e) => {
+                  this.setState({ data: e });
+                  if (this.state.ws !== null) {
+                    this.state.ws.send(JSON.stringify(e))
+                  }
+                }}
+              />
             </Route>
             <Route path="/console">
               <Navbar />
-              <Console 
-                  value={this.state.data}
-                  onChange={(e) => {
-                    this.setState({data:e});
-                    if(this.state.ws !==null){
-                      this.state.ws.send(JSON.stringify(e))
-                    }
-                  }}
+              <Console
+                value={this.state.data}
+                onChange={(e) => {
+                  this.setState({ data: e });
+                  if (this.state.ws !== null) {
+                    this.state.ws.send(JSON.stringify(e))
+                  }
+                }}
               />
             </Route>
             <Route path="/">
