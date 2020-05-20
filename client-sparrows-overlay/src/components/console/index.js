@@ -61,7 +61,8 @@ function Console(props) {
                         newdata[objIndex].mapselection.maps.push({
                             "map_name": "cache",
                             "score_left": 0,
-                            "score_right": 0
+                            "score_right": 0,
+                            "pick_by": "left"
                         })
                     }
                     let newmapselection = { ...mapselection, data: newdata };
@@ -78,7 +79,19 @@ function Console(props) {
             {config !== null && config.mapselection.maps.map((value, index) => {
                 return (<div>
                     <h2> Map {index + 1} </h2>
-                    <MapChangerView />
+                    <MapChangerView 
+                        value={config.mapselection.maps[index]}
+                        onChange={(e) => {
+                            let objIndex = mapselection.data.findIndex((obj => obj.uuid === mapselection.selected_config_uuid));
+                            let newdata = mapselection.data;
+                            newdata[objIndex].mapselection.maps[index] = e;
+                            let newmapselection = { ...mapselection, data: newdata };
+                            set_mapselection(newmapselection);
+                            if (props.onChange !== null) {
+                                props.onChange(newmapselection);
+                            }
+                        }}
+                    />
                 </div>)
             })}
 
