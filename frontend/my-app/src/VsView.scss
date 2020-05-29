@@ -1,0 +1,73 @@
+.container {
+    margin-left: 250px;
+    margin-right: 250px;
+    margin-top: 190px;
+    margin-bottom: 190px;
+    width: 1420px;
+    height: 700px;;
+}
+
+a {
+    padding: 10px;
+    font-size: 40px;
+    color: white;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    vertical-align: middle;
+}
+
+.score {
+    height: 100%;
+    vertical-align: middle;
+    font-size: 250px;
+    font-weight: bold;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-left: 50px;
+    display: inline-block;;
+}
+
+.orga-picture {
+    height: 100%;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.team-picture {
+
+}
+
+.toptext {
+    display: inline-block;
+    width: 420px;
+    height: 50px;
+    background-color: blue;
+}
+
+.team-top {
+    display: inline-block;
+    height: 300px;
+    width: 100%;
+    background-color: green;
+}
+
+.team-bottom {
+    display: inline-block;
+    height: 300px;
+    width: 100%;
+    background-color: yellow;
+}
+
+.announce-text {
+    display: inline-block;
+    margin-bottom: 3px;
+    height: 50px;
+    background-color: red;
+}
+
+.caster-text{
+    margin-top: 3px;;
+    background-color: black;
+    display: inline-block;
+}
