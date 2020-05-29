@@ -24,18 +24,69 @@ a {
     color: white;
     font-family: Arial, Helvetica, sans-serif;
     padding-left: 50px;
-    display: inline-block;;
+    
+    grid-column-start:1; 
+    grid-column-end:1; 
+    grid-row-start:1; 
+    grid-row-end:2;    
 }
 
-.orga-picture {
+.team-name {
     height: 100%;
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: end;
+
+    grid-column-start:4; 
+    grid-column-end:4; 
+    grid-row-start:1; 
+    grid-row-end:2; 
 }
 
-.team-picture {
+.team-name-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
 
+.team-name-text {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+
+.vs-text {
+    font-size: 80px;
+    font-weight: bold;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: end;
+
+    position: absolute;
+    left: 850px;
+    top: 490px;
+}
+
+.picture-orga {
+    width: 100%;
+    height: 100%;
+    grid-column-start:2; 
+    grid-column-end:2; 
+    grid-row-start:1; 
+    grid-row-end:1; 
+    object-fit: contain;
+}
+
+.picture-team {
+    width: 100%;
+    height: 100%;
+    grid-column-start:3; 
+    grid-column-end:3; 
+    grid-row-start:1; 
+    grid-row-end:1; 
+    object-fit: contain;
 }
 
 .toptext {
@@ -46,28 +97,35 @@ a {
 }
 
 .team-top {
-    display: inline-block;
+    display: grid;
     height: 300px;
     width: 100%;
-    background-color: green;
+    grid-template-rows: 100fr; 
+    grid-template-columns: 15% 30% 30% 25%; 
+    background: radial-gradient(circle, #173F7A 0%, #122543 100%);
+    grid-auto-flow: column; 
 }
 
 .team-bottom {
-    display: inline-block;
+    display: grid;
     height: 300px;
     width: 100%;
-    background-color: yellow;
+    background: radial-gradient(circle, #6C8DBA 0%, #5A6F8C 100%);
+    
+    grid-template-rows: 100fr; 
+    grid-template-columns: 15% 30% 30% 25%; 
+    grid-auto-flow: column;
 }
 
 .announce-text {
     display: inline-block;
     margin-bottom: 3px;
     height: 50px;
-    background-color: red;
+    background: radial-gradient(circle, #173F7A 0%, #122543 100%);
 }
 
 .caster-text{
     margin-top: 3px;;
-    background-color: black;
+    background: radial-gradient(circle, #6C8DBA 0%, #5A6F8C 100%);
     display: inline-block;
 }
