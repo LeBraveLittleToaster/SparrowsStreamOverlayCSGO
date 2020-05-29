@@ -22,7 +22,7 @@ const TimerView = observer(class TimerView extends Component {
         let totalMillis = this.state.seconds * 1000;
         totalMillis += this.state.minutes * 60 * 1000;
         totalMillis += this.state.hours * 3600 * 1000;
-        this.props.store.adjustCountdown(totalMillis);
+        this.props.store.setCountdown(totalMillis);
         this.props.callback()
     }
 

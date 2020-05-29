@@ -1,15 +1,27 @@
 const http = require('http');
 const WebSocket = require('ws');
+const SteamAPI = require('steamapi');
 const EventHandler = require('./gameevents.js').EventHandler
 const RoundEndEvent = require('./gameevents.js').RoundEndEvent
+const MultikillEvent = require('./gameevents.js').MultikillEvent
 const PlayerComparisonEvent = require('./gameevents.js').PlayerComparisonEvent
 const CsgoGameConfig = require('./gameconfig.js').CsgoGameConfig
+const GameStateCSGO = require('./gamestate').GameStateCSGO;
 
 const port = 4000;
 const host = '127.0.0.1';
 
-let gameConfig = new CsgoGameConfig({});
-let eventHandler = new EventHandler(gameConfig, [RoundEndEvent, PlayerComparisonEvent]);
+const steam = new SteamAPI("place steam web api key here");
+const gamestate = undefined;// new GameStateCSGO(steam);
+
+let gameConfig = new CsgoGameConfig(gamestate);
+let eventHandler = new EventHandler(gameConfig, gamestate, [
+    (config, payload) => RoundEndEvent.checkForEvent(config, payload), 
+    (config,payload) => PlayerComparisonEvent.checkForEvent(config, payload)
+    /*, MultikillEvent*/
+]);
+
+console.log("STEAM_API_KEY: " + process.env.STEAM_API_KEY)
 
 const wss = new WebSocket.Server({ port: 8080 });
 
@@ -26,11 +38,25 @@ wss.on('connection', function connection(ws) {
         } else if (data.type === "teamnames_update") {
             gameConfig.setTeamNames(data);
             broadcastTeamnnames(data);
-        } else if(data.type === "timer_update"){
+        } else if (data.type === "timer_update") {
             broadcastTimerChange(data);
+        } else if (data.type === "maps_setup_update") {
+            gameConfig.setMapsSetup(data);
+            broadcastMapsSetup(data);
         }
     });
 });
+
+function broadcastMapsSetup(mapsSetupJson) {
+    console.log("Broadcasting change: " + JSON.stringify(mapsSetupJson));
+    mapsSetupJson.type = "broadcast_" + mapsSetupJson.type;
+    console.log("mapsSetupJson: " + JSON.stringify(mapsSetupJson));
+    wss.clients.forEach(function each(client) {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(mapsSetupJson));
+        }
+    });
+}
 
 function broadcastGameConfigChange(changeJson) {
     console.log("Broadcasting change: " + JSON.stringify(changeJson));
@@ -43,7 +69,7 @@ function broadcastGameConfigChange(changeJson) {
     });
 }
 
-function broadcastTimerChange(timerJson){
+function broadcastTimerChange(timerJson) {
     console.log("Broadcasting change: " + JSON.stringify(timerJson));
     timerJson.type = "broadcast_" + timerJson.type;
     console.log("TimerJSON: " + JSON.stringify(timerJson));
@@ -54,7 +80,7 @@ function broadcastTimerChange(timerJson){
     });
 }
 
-function broadcastTeamnnames(teamnamesJson){
+function broadcastTeamnnames(teamnamesJson) {
     console.log("Broadcasting change: " + JSON.stringify(teamnamesJson));
     teamnamesJson.type = "broadcast_" + teamnamesJson.type;
     console.log("teamnamesJson: " + JSON.stringify(teamnamesJson));
@@ -76,6 +102,24 @@ function broadcastGameEvents(rsps) {
     });
 }
 
+function filterEventWithPriority(eventset){
+    let event = []
+    if(eventset.length === 1){
+        event.push(eventset[0])
+        return event;
+    }else if(eventset.length > 1){
+        let startV = eventset[0];
+        for(event in eventset){
+            if(event.priority > startV.priority){
+                startV = event;
+            }
+        }
+        event.push(startV);
+        return event;
+    }
+    return event;
+}
+
 const express = require('express');
 const app = express();
 app.use(express.json());
@@ -83,10 +127,23 @@ app.use(express.static('public'));
 
 app.post("/", (req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/html' });
-    console.log("Handling payload")
-    console.log(JSON.stringify(req.body))
-    let rsps = eventHandler.checkAndHandleEvents(JSON.parse(JSON.stringify(req.body)))
-    broadcastGameEvents(rsps)
+    //console.log("Handling payload")
+    //console.log(JSON.stringify(req.body))
+    let data = JSON.parse(JSON.stringify(req.body));
+    let eventset = eventHandler.checkAndHandleEvents(data);
+
+    let needUpdate = false;
+    eventset.forEach(event => {
+        console.log(typeof event)
+        if (event instanceof RoundEndEvent) {
+            console.log("Update send")
+            needUpdate = true;
+        }
+    });
+    if (needUpdate) {
+        broadcastGameEvents(filterEventWithPriority(eventset))
+    }
+
     res.end();
 });
 

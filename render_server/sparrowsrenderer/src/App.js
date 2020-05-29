@@ -29,10 +29,13 @@ const App = observer(class App extends Component {
         this.props.store.injectInitData(msg);
       } else if(msg.type === "broadcast_timer_update"){
         console.log("TIMER_UPDATE: " + JSON.stringify(msg));
-        this.props.store.adjustCountdown(msg.timer_millis);
+        this.props.store.setCountdown(msg.timer_millis);
       } else if(msg.type === "broadcast_teamnames_update"){
         console.log("Teamnames_update: " + msg.teamnames);
-        this.props.store.adjustTeamnames(msg.teamnames.ct, msg.teamnames.t);
+        this.props.store.setTeamnames(msg.teamnames.ct, msg.teamnames.t);
+      } else if(msg.type === "broadcast_maps_setup_update"){
+        console.log("Maps_Setup_update: " + msg.maps_setup);
+        this.props.store.setMapsSetup(msg.maps_setup.amountOfMaps);
       }
 
       this.setState({

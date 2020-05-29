@@ -1,13 +1,15 @@
 class EventHandler{
-    constructor(gameConfig , events) {
+    constructor(gameConfig, gamestate , events) {
         this.gameConfig = gameConfig
+        this.gamestate = gamestate
         this.events = events
+        this.next_event_to_render = undefined
     }
 
     checkAndHandleEvents(payload){
         let responses = []
-        this.events.forEach((event) => {
-            let rsp = event.checkForEvent(this.gameConfig, payload);
+        this.events.forEach((checkForEvent) => {
+            let rsp = checkForEvent(this.gameConfig, payload);
             if(rsp !== undefined){
                 responses.push(rsp)
             }
@@ -17,10 +19,13 @@ class EventHandler{
 }
 
 class PlayerComparisonEvent{
-    constructor(name_ct, score_ct, name_t, score_t){
+    constructor(name_ct, team_ct, score_ct, name_t, team_t, score_t){
+        this.priority = 1;
         this.name_ct = name_ct;
+        this.team_ct = team_ct;
         this.score_ct = score_ct;
         this.name_t = name_t;
+        this.team_t = team_t;
         this.score_t = score_t;
     }
 
@@ -29,15 +34,32 @@ class PlayerComparisonEvent{
             return undefined;
         }
      
+        console.log("Payload: " + JSON.stringify(payload))
+
+        //only for testing!
         if(payload.type !== "player_comparison"){
             return undefined;
         }
         
+        
+
         return new PlayerComparisonEvent(
             "LeCounterPlayer",
-            24,
+            gameConfig.ct_name,
+            {
+                kills: 12,
+                assists: 34,
+                deaths: 56,
+                adr: 789
+            },
             "LeTerroristPlayer",
-            12
+            gameConfig.t_name,
+            {
+                kills: 21,
+                assists: 43,
+                deaths: 65,
+                adr: 987
+            }
         );
     }
 
@@ -52,29 +74,41 @@ class PlayerComparisonEvent{
 
 
 class RoundEndEvent {
-    constructor(winning_team, winning_team_name , roundnumber){
-        this.winning_team = winning_team
+    constructor(hasCtWon, winning_team_name , round){
+        this.priority = 0;
+        this.hasCtWon = hasCtWon
         this.winning_team_name = winning_team_name
-        this.roundnumber = roundnumber
+        this.round = round
     }
 
     static checkForEvent(gameConfig, payload){
+        console.log("Checking for event...")
         if(payload === undefined || typeof payload.added === 'undefined'){
             return undefined;
         }
      
+        console.log("Event not empty...")
         let winning_team_name = ""
+        let hasCtWon = false;
         if(payload.round.win_team === 'T'){
             winning_team_name = gameConfig.t_name;
+            hasCtWon = false;
         }else{
             winning_team_name = gameConfig.ct_name;
+            hasCtWon = true;
         }
 
-        return new RoundEndEvent(
-            payload.round.win_team,
+        console.log("Creating event...")
+        let event = new RoundEndEvent(
+            hasCtWon,
             winning_team_name,
             payload.map.round
         );
+        console.log("Created event...")
+        console.log(typeof event)
+        console.log(event instanceof RoundEndEvent)
+        console.log("Finished event check...")
+        return event;
     }
 
     getJsonResponse(){
@@ -86,7 +120,30 @@ class RoundEndEvent {
     }
 }
 
+class MultikillEvent {
+    constructor(){
+        this.priority = 5;
+    }
+
+    static checkForEvent(gameConfig, payload){
+        if(payload === undefined || typeof payload.added === 'undefined'){
+            return undefined;
+        }
+
+        return new MultikillEvent();
+    }
+
+    getJsonResponse(){
+        let rsp = {
+            type: "multikill_event",
+            data: this
+        }
+        return JSON.stringify(rsp);
+    }
+}
+
 module.exports = {
+    MultikillEvent,
     RoundEndEvent,
     PlayerComparisonEvent,
     EventHandler

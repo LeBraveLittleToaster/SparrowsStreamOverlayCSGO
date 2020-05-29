@@ -13,7 +13,7 @@ const Teamnames = observer(class Teamnames extends Component {
     }
 
     onNameChange(){
-        this.props.store.adjustTeamnames(this.state.name_ct, this.state.name_t)
+        this.props.store.setTeamnames(this.state.name_ct, this.state.name_t)
         this.props.callback();
     }
 
