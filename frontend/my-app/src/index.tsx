@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import './index.css';
 import VsView from './VsView';
+import Console from './Console';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,11 +17,10 @@ ReactDOM.render(
             <VsView/>
           </Route>
           <Route path="/console">
-            <a>Not yet implemented</a>
+            <Console/>
           </Route>
         </Switch>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
-
