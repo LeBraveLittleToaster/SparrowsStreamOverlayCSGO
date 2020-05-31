@@ -1,13 +1,30 @@
 import {observable} from 'mobx';
-import Player from "./Player";
+import Team from "./data/Team";
 
 class TeamStore {
-    @observable team_name_a: string = "Team Name A";
-    @observable players_a: Player[] = [];
+    @observable teams:Team[] = [];
+    @observable team_a_id:string = "";
+    @observable team_b_id:string = "";
+    @observable logo_orga_path_a: string = "logo512.png";
+    @observable logo_orga_path_b: string = "logo512.png";
+    @observable logo_team_path_a: string = "logo512.png";
+    @observable logo_team_path_b: string = "logo512.png";
 
-    @observable team_name_b: string = "Team Name B";
-    @observable players_b: Player[] = [];
-    
+    getTeamWithId(teamId:string):Team|undefined{
+        return this.teams.find(e => e.teamId === teamId);
+    }
+
+    addTeam(team:Team){
+        console.log("Adding teams")
+        this.teams.forEach(e => {
+            if(e.teamId === team.teamId){
+                console.log("ALREADY IN ARRAY")
+                return;
+            }
+        })
+        console.log("ADDING: " + JSON.stringify(team))
+        this.teams.push(team);
+    }
 }
 
  export const teamStore = new TeamStore();

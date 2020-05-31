@@ -1,17 +1,26 @@
-import Player from "./Player";
-
 export default class Team{
-    private players: Player[];
+    
+    private _teamId:string;
+    private _name:string;
 
-    constructor(players: Player[]){
-        this.players = players;
+    constructor(teamId:string, name:string){
+        this._teamId = teamId;
+        this._name = name;
     }
 
-    get getPlayers():Player[]{
-        return this.players;
+    get teamId(): string{
+        return this._teamId;
     }
 
-    set setPlayers(players:Player[]){
-        this.players = players;
+    set id(teamId: string) {
+        this._teamId = teamId;
+    }
+
+    get name(): string{
+        return this._name;
+    }
+
+    set name(name: string) {
+        this._name = name;
     }
 }

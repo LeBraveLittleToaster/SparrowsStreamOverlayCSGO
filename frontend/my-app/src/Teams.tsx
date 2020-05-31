@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { observer } from "mobx-react";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -6,6 +6,9 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
 import {teamStore} from "./TeamStore";
+import { Button } from "@material-ui/core";
+import NetworkUtils from "./NetworkUtils";
+import Team from "./data/Team";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -24,15 +27,26 @@ const useStyles = makeStyles((theme) => ({
     },
     headerTeams: {
         marginBottom: theme.spacing(6)
+    },
+    submitBtn: {
+        marginTop: 20
     }
 }));
 
-const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    teamStore.team_name_a = e.target.value;
+interface ITeam{
+    name:string;
 }
 
 function Teams() {
     const classes = useStyles();
+    const [team, setTeam] = useState<ITeam>({name: ""});
+
+    function submitTeamName(name:string){
+        if(name.length > 5){
+            NetworkUtils.uploadTeam(new Team("", name));
+        }
+    }
+
     return (
         <div className={classes.root}>
             <Grid container spacing={3}>
@@ -42,20 +56,13 @@ function Teams() {
                         <form noValidate autoComplete="off">
                             <TextField id="outlined-helperText"
                                 label="Team Name A"
-                                defaultValue= {teamStore.team_name_a}
-                                onChange={onChange}
+                                defaultValue= {teamStore.getTeamWithId(teamStore.team_a_id)?.name}
+                                onChange={(e) => setTeam({name:e.target.value})}
                                 variant="outlined" />
                         </form>
-                    </Paper>
-                    <Paper className={classes.paper}>
-                        <h1 className={classes.headerTeams}>Configure Team B</h1>
-                        <form noValidate autoComplete="off">
-                            <TextField id="outlined-helperText"
-                                label="Team Name A"
-                                defaultValue= {teamStore.team_name_b}
-                                onChange={onChange}
-                                variant="outlined" />
-                        </form>
+                        <Button variant="outlined" className={classes.submitBtn} onClick={() => submitTeamName(team.name)}>
+                            Create
+                        </Button>
                     </Paper>
             </Grid>
         </div>
