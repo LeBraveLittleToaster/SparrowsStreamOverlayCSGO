@@ -1,6 +1,15 @@
 import express from 'express';
 var multer  = require('multer')
-var upload = multer({ dest: 'uploads/' })
+const storage = multer.diskStorage({
+  destination: function(req:any, file:any,cb:any){
+    cb(null, './uploads/');
+  },
+  filename: function(req:any,file:any,cb:any){
+    console.log(file)
+    cb(null, new Date().getTime().toFixed() + file.originalname)
+  }
+});
+var upload = multer({storage:storage })
 var bodyParser = require('body-parser')
 var cors = require('cors');
 import {teamHandler} from "./TeamHandler";

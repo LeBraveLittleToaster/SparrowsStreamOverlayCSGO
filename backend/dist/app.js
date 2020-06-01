@@ -24,7 +24,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 var multer = require('multer');
-var upload = multer({ dest: 'uploads/' });
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './uploads/');
+    },
+    filename: function (req, file, cb) {
+        console.log(file);
+        cb(null, new Date().getTime().toFixed() + file.originalname);
+    }
+});
+var upload = multer({ storage: storage });
 var bodyParser = require('body-parser');
 var cors = require('cors');
 const TeamHandler_1 = require("./TeamHandler");
@@ -58,8 +67,6 @@ const port = 5000;
 const csConfig = new CsConfig_1.default();
 app.post('/profile', upload.single('avatar'), (req, res) => {
     console.log(req.file);
-    // req.file is the `avatar` file
-    // req.body will hold the text fields, if there were any
     res.sendStatus(200);
 });
 function broadCast(type, data) {
