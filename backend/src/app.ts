@@ -1,4 +1,6 @@
 import express from 'express';
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
 var bodyParser = require('body-parser')
 var cors = require('cors');
 import {teamHandler} from "./TeamHandler";
@@ -35,6 +37,11 @@ const wss = new WebSocket.Server({ server });
 const port = 5000;
 
 const csConfig:CsConfig = new CsConfig();
+
+app.post('/profile', upload.single('avatar'), (req, res) => {
+  console.log(req.file)
+  res.sendStatus(200);
+})
 
 function broadCast(type: string, data: any){
   console.log("Broadcasting: " + JSON.stringify({type:type, data:data}))

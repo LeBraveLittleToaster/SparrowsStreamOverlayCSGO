@@ -22,7 +22,7 @@ NetworkUtils.getCurrentTeams().then((teams: Team[]) => {
 .catch(error => console.log(error));
 
 wsCon.connect().then(() => {
-    
+    console.log("Connected ws socket")
 });
 
 ReactDOM.render(

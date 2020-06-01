@@ -23,6 +23,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+var multer = require('multer');
+var upload = multer({ dest: 'uploads/' });
 var bodyParser = require('body-parser');
 var cors = require('cors');
 const TeamHandler_1 = require("./TeamHandler");
@@ -54,6 +56,12 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 const port = 5000;
 const csConfig = new CsConfig_1.default();
+app.post('/profile', upload.single('avatar'), (req, res) => {
+    console.log(req.file);
+    // req.file is the `avatar` file
+    // req.body will hold the text fields, if there were any
+    res.sendStatus(200);
+});
 function broadCast(type, data) {
     console.log("Broadcasting: " + JSON.stringify({ type: type, data: data }));
     wss.clients.forEach(client => {
