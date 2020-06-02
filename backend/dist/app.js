@@ -61,6 +61,7 @@ const CsConfig_1 = __importDefault(require("./data/cs/CsConfig"));
 const app = express_1.default();
 app.use(bodyParser.json());
 app.use(cors());
+app.use('/res', express_1.default.static('uploads'));
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 const port = 5000;
