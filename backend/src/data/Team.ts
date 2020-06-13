@@ -1,26 +1,14 @@
 export default class Team{
     
-    private _teamId:string;
-    private _name:string;
+    _teamId:string;
+    _name:string;
+    _logo_orga_path:string | undefined = undefined;
+    _logo_team_path:string | undefined = undefined;
 
-    constructor(teamId:string, name:string){
+    constructor(teamId:string, name:string, logo_orga_path:string | undefined, logo_team_path:string | undefined){
         this._teamId = teamId;
         this._name = name;
-    }
-
-    get teamId(): string{
-        return this._teamId;
-    }
-
-    set id(teamId: string) {
-        this._teamId = teamId;
-    }
-
-    get name(): string{
-        return this._name;
-    }
-
-    set name(name: string) {
-        this._name = name;
+        this._logo_orga_path = logo_orga_path;
+        this._logo_team_path = logo_team_path
     }
 }

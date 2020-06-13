@@ -23,6 +23,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 let process = require('process');
+const Utils_1 = __importDefault(require("./Utils"));
 const express_1 = __importDefault(require("express"));
 var multer = require('multer');
 const storage = multer.diskStorage({
@@ -30,8 +31,13 @@ const storage = multer.diskStorage({
         cb(null, './uploads/');
     },
     filename: function (req, file, cb) {
+        Utils_1.default.checkIfFilenameAlreadyExist(file.originalname, "./uploads/")
+            .then(() => cb(null, file.originalname))
+            .catch((err) => {
+            console.log("Name taken");
+            cb(new Error("Name taken"));
+        });
         console.log(file);
-        cb(null, new Date().getTime().toFixed() + file.originalname);
     }
 });
 var upload = multer({ storage: storage });
@@ -68,6 +74,13 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 const port = 5000;
 const csConfig = new CsConfig_1.default();
+filedb_1.fileDb.getTeams()
+    .then((teams) => TeamHandler_1.teamHandler.addTeams(teams))
+    .catch((err) => {
+    console.log(err);
+    process.exit();
+});
+filedb_1.fileDb.loadPictureUrls();
 app.post('/profile/', upload.single('avatar'), (req, res) => {
     console.log(req.file);
     res.sendStatus(200);
@@ -80,7 +93,7 @@ function broadCast(type, data) {
 }
 app.get('/config/cs/active_teams', (req, res) => {
     console.log("Retrieving active teams");
-    res.send(JSON.stringify({ success: true, data: { a: csConfig.activeTeamA, b: csConfig.activeTeamB } }));
+    res.send(JSON.stringify({ success: true, data: { a: csConfig._teamAId, b: csConfig._teamBId } }));
 });
 app.put('/config/cs/active_teams', (req, res) => {
     console.log("Setting active teams");
@@ -88,16 +101,22 @@ app.put('/config/cs/active_teams', (req, res) => {
     console.log(msg);
     if (msg["a"] !== undefined) {
         console.log("Updating active cs team A with " + msg.a);
-        csConfig.activeTeamA = msg.a;
+        csConfig._teamAId = msg.a;
     }
     if (msg["b"] !== undefined) {
         console.log("Updating active cs team B with " + msg.b);
-        csConfig.activeTeamB = msg.b;
+        csConfig._teamBId = msg.b;
     }
-    console.log("A: " + csConfig.activeTeamA);
-    console.log("B: " + csConfig.activeTeamB);
-    broadCast("CS_ACTIVE_TEAMS", JSON.stringify({ a: csConfig.activeTeamA, b: csConfig.activeTeamB }));
+    console.log("A: " + csConfig._teamAId);
+    console.log("B: " + csConfig._teamBId);
+    broadCast("CS_ACTIVE_TEAMS", JSON.stringify({ a: csConfig._teamAId, b: csConfig._teamBId }));
     res.sendStatus(200);
+});
+app.get("/pictureUrls", (req, res) => {
+    res.send({
+        type: "picUrls",
+        data: filedb_1.fileDb._pictureUrls
+    });
 });
 app.get("/teams", (req, res) => {
     res.send({
@@ -117,9 +136,7 @@ app.put("/teams/add", (req, res) => {
 });
 wss.on('connection', (ws) => {
     console.log("New Connection");
-    //connection is up, let's add a simple simple event
     ws.on('message', (message) => {
-        //log the received message and send it back to the client
         console.log('received: %s', message);
         ws.send(JSON.stringify({ success: true }));
     });
@@ -136,6 +153,9 @@ server.listen(process.env.PORT || 8999, () => {
 });
 process.on("SIGINT", function () {
     console.log("Shutting down, storing teams...");
+    console.log(TeamHandler_1.teamHandler.allTeams);
     filedb_1.fileDb.storeTeams(TeamHandler_1.teamHandler.allTeams);
+    app.listen().close();
+    process.exit(0);
 });
 //# sourceMappingURL=app.js.map

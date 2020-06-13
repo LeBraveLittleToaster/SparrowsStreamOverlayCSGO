@@ -11,13 +11,13 @@ class TeamStore {
     @observable logo_team_path_b: string = "logo512.png";
 
     getTeamWithId(teamId:string):Team|undefined{
-        return this.teams.find(e => e.teamId === teamId);
+        return this.teams.find(e => e._teamId === teamId);
     }
 
     addTeam(team:Team){
         console.log("Adding teams")
         this.teams.forEach(e => {
-            if(e.teamId === team.teamId){
+            if(e._teamId === team._teamId){
                 console.log("ALREADY IN ARRAY")
                 return;
             }

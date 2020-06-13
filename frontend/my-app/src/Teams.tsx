@@ -43,7 +43,7 @@ function Teams() {
 
     function submitTeamName(name: string) {
         if (name.length > 5) {
-            NetworkUtils.uploadTeam(new Team("", name));
+            NetworkUtils.uploadTeam(new Team("", name,undefined,undefined));
         }
     }
 
@@ -56,7 +56,7 @@ function Teams() {
                     <form noValidate autoComplete="off">
                         <TextField id="outlined-helperText"
                             label="Team Name A"
-                            defaultValue={teamStore.getTeamWithId(teamStore.team_a_id)?.name}
+                            defaultValue={teamStore.getTeamWithId(teamStore.team_a_id)?._name}
                             onChange={(e) => setTeam({ name: e.target.value })}
                             variant="outlined" />
                     </form>

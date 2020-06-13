@@ -17,7 +17,7 @@ function VsCsView() {
         <img src={"./../" + teamStore.logo_team_path_a} alt="ups..." className="picture-team" />
         <div className="team-name">
           <div className="team-name-container">
-            <div className="team-name-text">{teamStore.getTeamWithId(teamStore.team_a_id)?.name}</div>
+            <div className="team-name-text">{teamStore.getTeamWithId(teamStore.team_a_id)?._name}</div>
           </div>
         </div>
       </div>
@@ -27,7 +27,7 @@ function VsCsView() {
         <img src={"./../" + teamStore.logo_team_path_b} alt="ups..." className="picture-team" />
         <div className="team-name">
           <div className="team-name-container">
-            <div className="team-name-text">{teamStore.getTeamWithId(teamStore.team_b_id)?.name}</div>
+            <div className="team-name-text">{teamStore.getTeamWithId(teamStore.team_b_id)?._name}</div>
           </div>
         </div>
       </div>

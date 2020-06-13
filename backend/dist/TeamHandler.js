@@ -6,10 +6,13 @@ class TeamHandler {
     constructor() {
         this.teams = [];
     }
+    addTeams(teams) {
+        teams.forEach((t) => this.addTeam(t));
+    }
     addTeam(team) {
         let id = uuid_1.v4();
-        if (this.teams.filter(e => e.id === id).length <= 0) {
-            team.id = id;
+        if (this.teams.filter(e => e._teamId === id).length <= 0) {
+            team._teamId = id;
             this.teams.push(team);
             return team;
         }

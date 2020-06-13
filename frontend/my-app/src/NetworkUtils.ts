@@ -1,14 +1,31 @@
 import Team from "./data/Team";
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import ParseUtils from './ParseUtils';
 
 const baseUrl = "http://localhost:5000";
 
 class NetworkUtils {
 
+    static getAllPictureUrls(): Promise<string[]>{
+        return new Promise<string[]>((resolve, reject) => {
+            axios.get("http://localhost:5000/pictureUrls")
+                .then((v) => {
+                    resolve(v.data.data);
+                }).catch((err) => {
+                    reject(err);
+                });
+        });
+        
+    }
+
+    static uploadPicture(picture:File): Promise<AxiosResponse<any>>{
+        let bodyFromData = new FormData();
+        bodyFromData.append("avatar", picture);
+        return axios.post("http://localhost:5000/profile", bodyFromData, {headers:{'Content-Type':'multipart/form-data'}});
+    }
 
     static uploadTeam(team: Team) {
-        axios.put(baseUrl+"/teams/add", {name:team.name}).then(() => console.log("Uploaded team")).catch((error) => console.log(error));
+        axios.put(baseUrl+"/teams/add", {name:team._name}).then(() => console.log("Uploaded team")).catch((error) => console.log(error));
     }
 
     static uploadActiveCsTeam(isA:boolean, teamId:string){

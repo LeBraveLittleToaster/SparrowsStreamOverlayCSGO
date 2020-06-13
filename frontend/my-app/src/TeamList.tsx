@@ -46,6 +46,7 @@ function TeamList() {
         NetworkUtils.uploadActiveCsTeam(isA, teamId)
     }
 
+
     return (
         <div className={classes.root}>
             <TableContainer component={Paper}>
@@ -61,16 +62,16 @@ function TeamList() {
                         {teamStore.teams.map((row, index) => {
                             return (<TableRow key={index}>
                                 <TableCell>
-                                    {row.name}
+                                    {row._name}
                                 </TableCell>
                                 <TableCell 
-                                className={teamStore.team_a_id === row.teamId ? classes.listitem_selected : classes.listitem_unselected}
-                                onClick={() => setActiveRow(true, row.teamId)}>
+                                className={teamStore.team_a_id === row._teamId ? classes.listitem_selected : classes.listitem_unselected}
+                                onClick={() => setActiveRow(true, row._teamId)}>
                                     Click to activate
                                 </TableCell>
                                 <TableCell 
-                                className={teamStore.team_b_id === row.teamId ? classes.listitem_selected : classes.listitem_unselected}
-                                onClick={() => setActiveRow(false, row.teamId)}>
+                                className={teamStore.team_b_id === row._teamId ? classes.listitem_selected : classes.listitem_unselected}
+                                onClick={() => setActiveRow(false, row._teamId)}>
                                     Click to activate
                                 </TableCell>
                             </TableRow>);

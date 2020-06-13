@@ -35,7 +35,6 @@ ReactDOM.render(
         <Route path="/cs/console">
           <CsConsole />
         </Route>
-
       </Switch>
     </Router>
   </React.StrictMode>,

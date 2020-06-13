@@ -34,8 +34,8 @@ class WsCon {
     }
 
     addTeamToStore(msg:any){
-        if(msg["name"] && msg["id"]){
-            teamStore.addTeam(new Team(msg.id,msg.name))
+        if(msg["_name"] && msg["_teamId"]){
+            teamStore.addTeam(new Team(msg._teamId,msg.name, msg.logo_orga_path, msg.logo_team_path))
             console.log("Added new team to store")
         }else{
             console.log("Failed to team: " + JSON.stringify(msg))

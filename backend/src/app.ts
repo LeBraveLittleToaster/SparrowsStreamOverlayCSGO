@@ -1,4 +1,5 @@
 let process = require('process');
+import Utils from './Utils';
 import express from 'express';
 var multer  = require('multer')
 const storage = multer.diskStorage({
@@ -6,8 +7,13 @@ const storage = multer.diskStorage({
     cb(null, './uploads/');
   },
   filename: function(req:any,file:any,cb:any){
+    Utils.checkIfFilenameAlreadyExist(file.originalname, "./uploads/")
+      .then(() => cb(null, file.originalname))
+      .catch((err:any) => {
+        console.log("Name taken")
+        cb(new Error("Name taken"))
+      })
     console.log(file)
-    cb(null, new Date().getTime().toFixed() + file.originalname)
   }
 });
 var upload = multer({storage:storage })
@@ -56,6 +62,7 @@ fileDb.getTeams()
     console.log(err)
     process.exit();
   })
+fileDb.loadPictureUrls();
 
 app.post('/profile/', upload.single('avatar'), (req, res) => {
   console.log(req.file)
@@ -71,7 +78,7 @@ function broadCast(type: string, data: any){
 
 app.get('/config/cs/active_teams', (req,res) => {
   console.log("Retrieving active teams")
-  res.send(JSON.stringify({success:true,data:{a:csConfig.activeTeamA, b:csConfig.activeTeamB}}));
+  res.send(JSON.stringify({success:true,data:{a:csConfig._teamAId, b:csConfig._teamBId}}));
 });
 
 app.put('/config/cs/active_teams', (req,res) => {
@@ -80,16 +87,23 @@ app.put('/config/cs/active_teams', (req,res) => {
   console.log(msg);
   if(msg["a"] !== undefined){
     console.log("Updating active cs team A with " + msg.a)
-    csConfig.activeTeamA = msg.a
+    csConfig._teamAId = msg.a
   }
   if(msg["b"] !== undefined){
     console.log("Updating active cs team B with " + msg.b)
-    csConfig.activeTeamB = msg.b
+    csConfig._teamBId = msg.b
   }
-  console.log("A: " + csConfig.activeTeamA)
-  console.log("B: " + csConfig.activeTeamB)
-  broadCast("CS_ACTIVE_TEAMS", JSON.stringify({a:csConfig.activeTeamA, b:csConfig.activeTeamB}));
+  console.log("A: " + csConfig._teamAId)
+  console.log("B: " + csConfig._teamBId)
+  broadCast("CS_ACTIVE_TEAMS", JSON.stringify({a:csConfig._teamAId, b:csConfig._teamBId}));
   res.sendStatus(200);
+})
+
+app.get("/pictureUrls", (req,res) => {
+  res.send({
+    type: "picUrls",
+    data : fileDb._pictureUrls
+  })
 })
 
 app.get("/teams", (req,res) => {
@@ -133,5 +147,8 @@ server.listen(process.env.PORT || 8999, () => {
 
 process.on( "SIGINT", function() {
   console.log("Shutting down, storing teams...")
+  console.log(teamHandler.allTeams)
   fileDb.storeTeams(teamHandler.allTeams);
+  app.listen().close();
+  process.exit(0);
 } );
