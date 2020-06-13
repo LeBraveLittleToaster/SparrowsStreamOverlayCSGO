@@ -1,3 +1,4 @@
+let process = require('process');
 import express from 'express';
 var multer  = require('multer')
 const storage = multer.diskStorage({
@@ -17,6 +18,7 @@ import * as http from 'http';
 import * as WebSocket from 'ws';
 import Team from './data/Team';
 import CsConfig from './data/cs/CsConfig';
+import { fileDb } from './filedb';
 
 /**
  * Each request message is: 
@@ -36,7 +38,6 @@ import CsConfig from './data/cs/CsConfig';
  *    }
  * }
  */
-
 const app = express();
 app.use(bodyParser.json());
 app.use(cors())
@@ -47,7 +48,14 @@ const port = 5000;
 
 const csConfig:CsConfig = new CsConfig();
 
-app.post('/profile', upload.single('avatar'), (req, res) => {
+fileDb.getTeams()
+  .then((teams:Team[]) => teamHandler.addTeams(teams))
+  .catch((err) => {
+    console.log(err)
+    process.exit();
+  })
+
+app.post('/profile/', upload.single('avatar'), (req, res) => {
   console.log(req.file)
   res.sendStatus(200);
 })
@@ -102,9 +110,7 @@ app.put("/teams/add", (req,res) => {
 
 wss.on('connection', (ws: WebSocket) => {
   console.log("New Connection")
-  //connection is up, let's add a simple simple event
   ws.on('message', (message: string) => {
-      //log the received message and send it back to the client
       console.log('received: %s', message);
       ws.send(JSON.stringify({success: true}));
   });
@@ -122,3 +128,8 @@ app.listen(port, err => {
 server.listen(process.env.PORT || 8999, () => {
   console.log(`WS Server started on port ${(server.address() as WebSocket.AddressInfo).port}`);
 });
+
+process.on( "SIGINT", function() {
+  console.log("Shutting down, storing teams...")
+  fileDb.storeTeams(teamHandler.allTeams);
+} );

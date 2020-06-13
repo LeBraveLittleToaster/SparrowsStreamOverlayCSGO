@@ -22,6 +22,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+let process = require('process');
 const express_1 = __importDefault(require("express"));
 var multer = require('multer');
 const storage = multer.diskStorage({
@@ -40,6 +41,7 @@ const TeamHandler_1 = require("./TeamHandler");
 const http = __importStar(require("http"));
 const WebSocket = __importStar(require("ws"));
 const CsConfig_1 = __importDefault(require("./data/cs/CsConfig"));
+const filedb_1 = require("./filedb");
 /**
  * Each request message is:
  * {
@@ -65,7 +67,7 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 const port = 5000;
 const csConfig = new CsConfig_1.default();
-app.post('/profile', upload.single('avatar'), (req, res) => {
+app.post('/profile/', upload.single('avatar'), (req, res) => {
     console.log(req.file);
     res.sendStatus(200);
 });
@@ -130,5 +132,9 @@ app.listen(port, err => {
 //start our server
 server.listen(process.env.PORT || 8999, () => {
     console.log(`WS Server started on port ${server.address().port}`);
+});
+process.on("SIGINT", function () {
+    console.log("Shutting down, storing teams...");
+    filedb_1.fileDb.storeTeams(TeamHandler_1.teamHandler.allTeams);
 });
 //# sourceMappingURL=app.js.map
