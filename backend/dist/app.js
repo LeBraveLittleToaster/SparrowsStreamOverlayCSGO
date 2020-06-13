@@ -63,6 +63,7 @@ const filedb_1 = require("./filedb");
 const app = express_1.default();
 app.use(bodyParser.json());
 app.use(cors());
+app.use('/res', express_1.default.static('uploads'));
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 const port = 5000;

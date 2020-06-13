@@ -41,6 +41,8 @@ import { fileDb } from './filedb';
 const app = express();
 app.use(bodyParser.json());
 app.use(cors())
+app.use('/res', express.static('uploads'));
+
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
