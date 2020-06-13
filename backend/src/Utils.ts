@@ -18,7 +18,9 @@ module Utils {
         return new Promise<void>((resolve, reject) => {
             fs.readdir(folderPath, (err:any, files: string[]) => {
                 files.forEach((fileN:string) => {
-                    if(fileN === fileName) reject();
+                    if(fileN === fileName){
+                        reject();
+                    } 
                 })
                 resolve();
             })

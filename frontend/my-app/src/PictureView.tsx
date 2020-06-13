@@ -62,8 +62,8 @@ function PictureView() {
             <Grid container spacing={3}>
                 <Paper className={classes.paper}>
                     <h1 className={classes.headerTeams}>Upload picture</h1>
-                    <h4>{errorMessage === "" ?
-                        { errorMessage } :
+                    <h4>{ errorMessage === "" ?
+                        "Error occured" :
                         "Please name your file with the team or organame"}
                     </h4>
                     <ImageUploader

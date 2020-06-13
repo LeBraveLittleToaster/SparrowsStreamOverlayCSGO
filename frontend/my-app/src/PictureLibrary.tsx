@@ -7,6 +7,8 @@ import NetworkUtils from "./NetworkUtils";
 import 'fontsource-roboto';
 import Typography from '@material-ui/core/Typography';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from "@material-ui/core";
+import { pictureStore } from "./PictureStore";
+import { teamStore } from "./TeamStore";
 
 const baseUrl = "http://localhost:5000/res/";
 
@@ -28,11 +30,17 @@ const useStyles = makeStyles((theme) => ({
     headerTeams: {
         marginBottom: theme.spacing(6)
     },
+    listitem_selected: {
+        backgroundColor: "#18803c"
+    },
+    listitem_unselected: {
+        
+    },
     submitBtn: {
         marginTop: 20
     },
     picture: {
-        width: "25%",
+        width: "60%",
         objectFit: "cover"
     },
     table: {
@@ -44,23 +52,33 @@ function PictureLibrary() {
     const classes = useStyles();
     // 0 not loaded, 1 success, 2 failed
     const [loadingState, setLoadingState] = useState(0);
-    const [picUrls, setPicUrls] = useState<string[]>([]);
 
     useEffect(() => {
-        NetworkUtils.getAllPictureUrls()
+        NetworkUtils.getActiveLogos().then((data:any) => {
+            teamStore.setLogoPaths(data["logo_orga_path_a"],data["logo_team_path_a"],data["logo_orga_path_b"],data["logo_team_path_b"]);
+            NetworkUtils.getAllPictureUrls()
             .then((urls: string[]) => {
                 setLoadingState(1);
-                setPicUrls(urls);
+                pictureStore.picUrls = urls;
                 console.log(urls)
             }).catch(err => {
                 setLoadingState(2)
             });
+        }).catch((err) => {
+            console.log(err);
+        })
     }, [])
 
+    function setActiveRow(isA: boolean, isTeamLogo: boolean, picUrl: string |undefined) {
+        console.log("Selecting Team | isA=" + isA + " | isTeamLogo=" + isTeamLogo)
+        NetworkUtils.uploadActivePicture(isA, isTeamLogo, picUrl).then(v => {
+            console.log(v);
+        }).catch((err) => console.log("Error selecting team"));
+    }
 
     return (
+        
         <div className={classes.root}>
-            
             <Grid container spacing={3}>
                 <Paper className={classes.paper}>
                     <h1 className={classes.headerTeams}>Picture Library</h1>
@@ -69,16 +87,35 @@ function PictureLibrary() {
                             <TableHead>
                                 <TableRow>
                                     <TableCell align="left">Picture</TableCell>
-                                    <TableCell align="left">Name</TableCell>
-                                    <TableCell align="left">Set as </TableCell>
+                                    <TableCell align="left">Orga Logo A</TableCell>
+                                    <TableCell align="left">Team Logo A</TableCell>
+                                    <TableCell align="left">Orga Logo B</TableCell>
+                                    <TableCell align="left">Team Logo B</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {picUrls.map((row, index) => {
-                                    return (<TableRow key={index}>
-                                        <TableCell><img className={classes.picture} src={baseUrl + row}/></TableCell>
-                                        <TableCell>{row}</TableCell>
-                                        <TableCell></TableCell>
+                                <TableRow key={0}>
+                                        <TableCell>None</TableCell>
+                                        <TableCell className={teamStore.logo_orga_path_a === undefined ? classes.listitem_selected : classes.listitem_unselected}
+                                            onClick={() => setActiveRow(true, false ,undefined)}>Click</TableCell>
+                                        <TableCell className={teamStore.logo_team_path_a === undefined ? classes.listitem_selected : classes.listitem_unselected}
+                                            onClick={() => setActiveRow(true, true ,undefined)}>Click</TableCell>
+                                        <TableCell className={teamStore.logo_orga_path_b === undefined ? classes.listitem_selected : classes.listitem_unselected}
+                                            onClick={() => setActiveRow(false, false, undefined)}>Click</TableCell>
+                                        <TableCell className={teamStore.logo_team_path_b === undefined ? classes.listitem_selected : classes.listitem_unselected}
+                                            onClick={() => setActiveRow(false, true, undefined)}>Click</TableCell>
+                                    </TableRow>
+                                {pictureStore.picUrls.map((row, index) => {
+                                    return (<TableRow key={index + 1}>
+                                        <TableCell><img className={classes.picture} src={baseUrl + row} /></TableCell>
+                                        <TableCell className={teamStore.logo_orga_path_a === row ? classes.listitem_selected : classes.listitem_unselected}
+                                            onClick={() => setActiveRow(true, false ,row)}>Click</TableCell>
+                                        <TableCell className={teamStore.logo_team_path_a === row ? classes.listitem_selected : classes.listitem_unselected}
+                                            onClick={() => setActiveRow(true, true ,row)}>Click</TableCell>
+                                        <TableCell className={teamStore.logo_orga_path_b === row ? classes.listitem_selected : classes.listitem_unselected}
+                                            onClick={() => setActiveRow(false, false, row)}>Click</TableCell>
+                                        <TableCell className={teamStore.logo_team_path_b === row ? classes.listitem_selected : classes.listitem_unselected}
+                                            onClick={() => setActiveRow(false, true, row)}>Click</TableCell>
                                     </TableRow>);
                                 }
                                 )}

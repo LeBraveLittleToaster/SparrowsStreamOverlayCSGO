@@ -22,8 +22,9 @@ var Utils;
         return new Promise((resolve, reject) => {
             fs.readdir(folderPath, (err, files) => {
                 files.forEach((fileN) => {
-                    if (fileN === fileName)
+                    if (fileN === fileName) {
                         reject();
+                    }
                 });
                 resolve();
             });

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -40,6 +40,14 @@ const useStyles = makeStyles((theme) => ({
 
 function TeamList() {
     const classes = useStyles();
+
+    useEffect(() => {
+        NetworkUtils.getActiveTeams().then((data:any) => {
+            console.log("A:" + data.a + " | B:" + data.b)
+            teamStore.team_a_id = data.a;
+            teamStore.team_b_id = data.b;
+          }).catch((err) => console.log(err))
+    })
 
     function setActiveRow(isA:boolean, teamId:string){
         console.log("Selecting Team")

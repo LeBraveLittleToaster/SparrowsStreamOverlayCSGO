@@ -32,7 +32,10 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         Utils_1.default.checkIfFilenameAlreadyExist(file.originalname, "./uploads/")
-            .then(() => cb(null, file.originalname))
+            .then(() => {
+            cb(null, file.originalname);
+            broadCast("PICTURE_UPLOAD", JSON.stringify({ pic_path: file.originalname }));
+        })
             .catch((err) => {
             console.log("Name taken");
             cb(new Error("Name taken"));
@@ -95,6 +98,18 @@ app.get('/config/cs/active_teams', (req, res) => {
     console.log("Retrieving active teams");
     res.send(JSON.stringify({ success: true, data: { a: csConfig._teamAId, b: csConfig._teamBId } }));
 });
+app.get("/config/cs/active_logos", (req, res) => {
+    console.log("Retrieving active logos");
+    res.send(JSON.stringify({
+        success: true,
+        data: {
+            logo_orga_path_a: csConfig._logo_orga_path_a,
+            logo_team_path_a: csConfig._logo_team_path_a,
+            logo_orga_path_b: csConfig._logo_orga_path_b,
+            logo_team_path_b: csConfig._logo_team_path_b
+        }
+    }));
+});
 app.put('/config/cs/active_teams', (req, res) => {
     console.log("Setting active teams");
     let msg = req.body;
@@ -110,6 +125,27 @@ app.put('/config/cs/active_teams', (req, res) => {
     console.log("A: " + csConfig._teamAId);
     console.log("B: " + csConfig._teamBId);
     broadCast("CS_ACTIVE_TEAMS", JSON.stringify({ a: csConfig._teamAId, b: csConfig._teamBId }));
+    res.sendStatus(200);
+});
+app.put('/config/cs/active_logos', (req, res) => {
+    console.log("Setting active logos");
+    let msg = req.body;
+    console.log(msg);
+    console.log("is_a present " + msg["is_a"] !== undefined);
+    console.log("is_team present " + msg["is_team"] !== undefined);
+    if (msg["is_a"] !== undefined && msg["is_team"] !== undefined) {
+        console.log("Setting path " + msg["pic_path"]);
+        csConfig.setLogoPath(msg["is_a"], msg["is_team"], msg["pic_path"]);
+    }
+    else {
+        console.log("Failed to set paths");
+    }
+    broadCast("CS_ACTIVE_LOGOS", JSON.stringify({
+        logo_orga_path_a: csConfig._logo_orga_path_a,
+        logo_team_path_a: csConfig._logo_team_path_a,
+        logo_orga_path_b: csConfig._logo_orga_path_b,
+        logo_team_path_b: csConfig._logo_team_path_b
+    }));
     res.sendStatus(200);
 });
 app.get("/pictureUrls", (req, res) => {
