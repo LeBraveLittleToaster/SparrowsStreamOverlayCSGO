@@ -98,6 +98,10 @@ app.get('/config/cs/active_teams', (req, res) => {
     console.log("Retrieving active teams");
     res.send(JSON.stringify({ success: true, data: { a: csConfig._teamAId, b: csConfig._teamBId } }));
 });
+app.get('/config/cs/caster', (req, res) => {
+    console.log("Retrieving active teams");
+    res.send(JSON.stringify({ success: true, data: { caster: csConfig._caster } }));
+});
 app.get("/config/cs/active_logos", (req, res) => {
     console.log("Retrieving active logos");
     res.send(JSON.stringify({
@@ -109,6 +113,17 @@ app.get("/config/cs/active_logos", (req, res) => {
             logo_team_path_b: csConfig._logo_team_path_b
         }
     }));
+});
+app.put('/config/cs/caster', (req, res) => {
+    console.log("Setting caster");
+    let msg = req.body;
+    console.log(msg);
+    if (msg["caster"]) {
+        console.log("Updating caster to " + msg.caster);
+        csConfig._caster = msg["caster"];
+    }
+    broadCast("CS_CASTER", JSON.stringify({ caster: msg["caster"] }));
+    res.send(200);
 });
 app.put('/config/cs/active_teams', (req, res) => {
     console.log("Setting active teams");

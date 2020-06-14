@@ -14,12 +14,6 @@ import NetworkUtils from './NetworkUtils';
 import Team from './data/Team';
 import { teamStore } from './TeamStore';
 
-NetworkUtils.getCurrentTeams().then((teams: Team[]) => {
-  teams.forEach((team: Team) => {
-      teamStore.addTeam(team);
-  });
-})
-.catch(error => console.log(error));
 
 wsCon.connect().then(() => {
     console.log("Connected ws socket")

@@ -42,7 +42,7 @@ function Teams() {
     const [team, setTeam] = useState<ITeam>({ name: "" });
 
     function submitTeamName(name: string) {
-        if (name.length > 5) {
+        if (name.length > 1) {
             NetworkUtils.uploadTeam(new Team("", name,undefined,undefined));
         }
     }

@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import { teamStore } from "./TeamStore";
 import { TableContainer, Table, TableHead, TableCell, TableBody, TableRow} from "@material-ui/core";
 import NetworkUtils from "./NetworkUtils";
+import Team from "./data/Team";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -42,12 +43,20 @@ function TeamList() {
     const classes = useStyles();
 
     useEffect(() => {
+        NetworkUtils.getCurrentTeams().then((teams: Team[]) => {
+            console.log("Adding teams")
+            console.log(teams)
+            teams.forEach((team: Team) => {
+                teamStore.addTeam(team);
+            });
+          })
+          .catch(error => console.log(error));
         NetworkUtils.getActiveTeams().then((data:any) => {
             console.log("A:" + data.a + " | B:" + data.b)
             teamStore.team_a_id = data.a;
             teamStore.team_b_id = data.b;
           }).catch((err) => console.log(err))
-    })
+    },[])
 
     function setActiveRow(isA:boolean, teamId:string){
         console.log("Selecting Team")

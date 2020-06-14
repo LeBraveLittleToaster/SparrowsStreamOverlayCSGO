@@ -33,6 +33,8 @@ class FileDb{
                 let root;
                 try{
                     root = JSON.parse(data)    
+                    console.log("Loading teams:")
+                    console.log(root)
                     resolve(root.teams)
                 }catch(err){
                     console.log("No teams to load")
