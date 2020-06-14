@@ -1,10 +1,13 @@
-import React, { useState, FormEvent, ChangeEvent } from "react";
+import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { observer } from "mobx-react";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { settingsStore } from './SettingsStore';
-import { Checkbox, FormControlLabel } from "@material-ui/core";
+import { Checkbox, FormControlLabel, Typography, TextField, Button } from "@material-ui/core";
+import { teamStore } from "./TeamStore";
+import NetworkUtils from "./NetworkUtils";
+import { csStore } from "./CsStore";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,14 +26,41 @@ const useStyles = makeStyles((theme) => ({
     },
     headerTeams: {
         marginBottom: theme.spacing(6)
+    },
+    submitBtn: {
+        marginLeft: 10
     }
 }));
 
 function Settings() {
     const classes = useStyles();
 
-    function setUseTeamPictureSetting(event: React.ChangeEvent<HTMLInputElement>) {
-        settingsStore.isUsingTeamsPictureIfPresent = event.currentTarget.checked;
+    useEffect(() => {
+        NetworkUtils.getScore().then((data: any) => {
+            console.log(data);
+            if (data["score_a"]) csStore.score_a = Number(data["score_a"]);
+            if (data["score_b"]) csStore.score_b = Number(data["score_b"])
+        }).catch((err) => console.log(err))
+        NetworkUtils.getCaster().then((data: any) => {
+            console.log(data);
+            if (data["caster"]) teamStore.caster = data["caster"]
+        }).catch((err) => console.log(err))
+    }, [])
+
+    function setScore(isA: boolean, value: string) {
+        if (isA) { csStore.score_a = Number(value) } else { csStore.score_b = Number(value) }
+    }
+
+    function submitScore() {
+        NetworkUtils.uploadScore(csStore.score_a, csStore.score_b);
+    }
+
+    function setCaster(value: string) {
+        teamStore.caster = value;
+    }
+
+    function submitCaster() {
+        NetworkUtils.uploadCaster(teamStore.caster);
     }
 
     return (
@@ -39,19 +69,38 @@ function Settings() {
 
                 <Paper className={classes.paper}>
                     <h1 className={classes.headerTeams}>General Settings</h1>
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                checked={settingsStore.isUsingTeamsPictureIfPresent}
-                                onChange={setUseTeamPictureSetting}
-                                color="primary"
-                                disabled={true}
-                                name="Use Team picture"
-                                inputProps={{ 'aria-label': 'secondary checkbox' }}
-                            />
-                        }
-                        label="Use team picture"
-                    />
+                    <Grid container spacing={3}>
+                        <Grid item xs={12}>
+                            <TextField id="outlined-helperText"
+                                label="Score A"
+                                type="number"
+                                value={csStore.score_a}
+                                defaultValue={csStore.score_a === undefined ? 0 : csStore.score_a}
+                                onChange={(e) => setScore(true, e.target.value)}
+                                variant="outlined" />
+                            <TextField id="outlined-helperText"
+                                label="Score B"
+                                type="number"
+                                value={csStore.score_b}
+                                defaultValue={csStore.score_b === undefined ? 0 : csStore.score_b}
+                                onChange={(e) => setScore(false, e.target.value)}
+                                variant="outlined" />
+                            <Button variant="outlined" className={classes.submitBtn} onClick={() => submitScore()}>
+                                Set
+                        </Button>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField id="outlined-helperText"
+                                label="Caster names"
+                                defaultValue={teamStore.caster === undefined ? "" : teamStore.caster}
+                                onChange={(e) => setCaster(e.target.value)}
+                                variant="outlined" />
+
+                            <Button variant="outlined" className={classes.submitBtn} onClick={() => submitCaster()}>
+                                Set
+                        </Button>
+                        </Grid>
+                    </Grid>
                 </Paper>
             </Grid>
         </div>

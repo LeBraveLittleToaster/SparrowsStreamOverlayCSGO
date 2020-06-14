@@ -9,6 +9,8 @@ class CsConfig {
         this._logo_team_path_a = undefined;
         this._logo_team_path_b = undefined;
         this._caster = undefined;
+        this._score_a = undefined;
+        this._score_b = undefined;
     }
     setLogoPath(isA, isTeam, picPath) {
         if (isA) {

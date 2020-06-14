@@ -7,6 +7,28 @@ const baseUrl = "http://localhost:5000";
 
 class NetworkUtils {
 
+    static getScore():Promise<any>{
+        return new Promise<string>((resolve, reject) => {
+            axios.get("http://localhost:5000/config/cs/score")
+                .then((v) => {
+                    resolve(v.data.data);
+                }).catch((err) => {
+                    reject(err);
+                });
+        });
+    }
+
+    static uploadScore(score_a_new:number|undefined, score_b_new:number|undefined){
+        return new Promise<boolean>((resolve, reject) => {
+            axios.put("http://localhost:5000/config/cs/score", { score_a:score_a_new, score_b:score_b_new})
+                .then((v) => {
+                    resolve(true);
+                }).catch((err) => {
+                    reject(err);
+                });
+        });
+    }
+
     static uploadCaster(caster_new: string|undefined): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
             axios.put("http://localhost:5000/config/cs/caster", { caster:caster_new})
@@ -22,7 +44,7 @@ class NetworkUtils {
         return new Promise<string>((resolve, reject) => {
             axios.get("http://localhost:5000/config/cs/caster")
                 .then((v) => {
-                    resolve(v.data.data.caster);
+                    resolve(v.data.data);
                 }).catch((err) => {
                     reject(err);
                 });

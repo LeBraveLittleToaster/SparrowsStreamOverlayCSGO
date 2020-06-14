@@ -8,6 +8,8 @@ class CsConfig {
     _logo_team_path_a: string | undefined = undefined;
     _logo_team_path_b: string | undefined = undefined;
     _caster: string | undefined = undefined;
+    _score_a: number | undefined = undefined;
+    _score_b: number | undefined = undefined;
 
     setLogoPath(isA: boolean, isTeam: boolean, picPath: string|undefined) {
         if (isA) {

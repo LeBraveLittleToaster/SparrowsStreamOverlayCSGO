@@ -12,6 +12,7 @@ class TeamStore {
     @observable caster: string|undefined = undefined;
 
     getTeamWithId(teamId:string):Team|undefined{
+        console.log("TeamId: " + teamId + " | TEAMS:"); console.log(this.teams);
         return this.teams.find(e => e._teamId === teamId);
     }
 

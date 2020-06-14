@@ -86,7 +86,7 @@ filedb_1.fileDb.getTeams()
 filedb_1.fileDb.loadPictureUrls();
 app.post('/profile/', upload.single('avatar'), (req, res) => {
     console.log(req.file);
-    res.sendStatus(200);
+    res.send(200);
 });
 function broadCast(type, data) {
     console.log("Broadcasting: " + JSON.stringify({ type: type, data: data }));
@@ -94,6 +94,13 @@ function broadCast(type, data) {
         client.send(JSON.stringify({ type: type, data: data }));
     });
 }
+app.get("/some/test", (req, res) => {
+    res.send("Test");
+});
+app.get('/config/cs/score', (req, res) => {
+    console.log("Retrieving score");
+    res.send(JSON.stringify({ success: true, data: { score_a: csConfig._score_a, score_b: csConfig._score_b } }));
+});
 app.get('/config/cs/active_teams', (req, res) => {
     console.log("Retrieving active teams");
     res.send(JSON.stringify({ success: true, data: { a: csConfig._teamAId, b: csConfig._teamBId } }));
@@ -113,6 +120,21 @@ app.get("/config/cs/active_logos", (req, res) => {
             logo_team_path_b: csConfig._logo_team_path_b
         }
     }));
+});
+app.put('/config/cs/score', (req, res) => {
+    console.log("Setting caster");
+    let msg = req.body;
+    console.log(msg);
+    if (msg["score_a"]) {
+        console.log("Updating scora_a to " + msg.score_a);
+        csConfig._score_a = msg["score_a"];
+    }
+    if (msg["score_b"]) {
+        console.log("Updating score_b to " + msg.score_b);
+        csConfig._score_b = msg["score_b"];
+    }
+    broadCast("CS_SCORE", JSON.stringify({ score_a: csConfig._score_a, score_b: csConfig._score_b }));
+    res.send(200);
 });
 app.put('/config/cs/caster', (req, res) => {
     console.log("Setting caster");
@@ -140,7 +162,7 @@ app.put('/config/cs/active_teams', (req, res) => {
     console.log("A: " + csConfig._teamAId);
     console.log("B: " + csConfig._teamBId);
     broadCast("CS_ACTIVE_TEAMS", JSON.stringify({ a: csConfig._teamAId, b: csConfig._teamBId }));
-    res.sendStatus(200);
+    res.send(200);
 });
 app.put('/config/cs/active_logos', (req, res) => {
     console.log("Setting active logos");
@@ -161,7 +183,7 @@ app.put('/config/cs/active_logos', (req, res) => {
         logo_orga_path_b: csConfig._logo_orga_path_b,
         logo_team_path_b: csConfig._logo_team_path_b
     }));
-    res.sendStatus(200);
+    res.send(200);
 });
 app.get("/pictureUrls", (req, res) => {
     res.send({

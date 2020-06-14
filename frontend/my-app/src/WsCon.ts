@@ -1,6 +1,7 @@
 import { teamStore } from "./TeamStore";
 import Team from "./data/Team";
 import { pictureStore } from "./PictureStore";
+import { csStore } from "./CsStore";
 
 const URL = 'ws://localhost:8999'
 class WsCon {
@@ -26,6 +27,12 @@ class WsCon {
                     break;
                 case "PICTURE_UPLOAD":
                     this.addPicPath(JSON.parse(message.data));
+                    break;
+                case "CS_CASTER":
+                    this.setCaster(JSON.parse(message.data));
+                    break;
+                case "CS_SCORE":
+                    this.setScore(JSON.parse(message.data));
                     break;
             }
         }
@@ -68,6 +75,25 @@ class WsCon {
     addPicPath(msg: any) {
         if (msg["pic_path"]) {
             pictureStore.picUrls.push(msg["pic_path"]);
+        }
+    }
+
+    setCaster(msg:any){
+        if (msg["caster"]) {
+            teamStore.caster = msg["caster"];
+        }
+    }
+
+    setScore(msg:any){
+        if (msg["score_a"]) {
+            csStore.score_a = msg["score_a"]
+        }else{
+            csStore.score_a = 0;
+        }
+        if (msg["score_b"]) {
+            csStore.score_b = msg["score_b"]
+        }else{
+            csStore.score_b = 0;
         }
     }
 }

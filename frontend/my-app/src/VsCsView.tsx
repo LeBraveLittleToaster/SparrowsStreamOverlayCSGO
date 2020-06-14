@@ -4,12 +4,26 @@ import './VsCsView.scss';
 import { csStore } from './CsStore';
 import { teamStore } from './TeamStore';
 import NetworkUtils from './NetworkUtils';
+import Team from './data/Team';
 
 const baseUrl = "http://localhost:5000/res/";
 
 function VsCsView() {
 
   useEffect(() => {
+    NetworkUtils.getCurrentTeams().then((teams: Team[]) => {
+      console.log("Adding teams")
+      console.log(teams)
+      teams.forEach((team: Team) => {
+          teamStore.addTeam(team);
+      });
+    })
+    .catch(error => console.log(error));
+    NetworkUtils.getScore().then((data: any) => {
+      console.log(data);
+      if (data["score_a"]) csStore.score_a = Number(data["score_a"]);
+      if (data["score_b"]) csStore.score_b = Number(data["score_b"])
+  }).catch((err) => console.log(err))
     NetworkUtils.getActiveLogos().then((data:any) => {
       teamStore.setLogoPaths(data["logo_orga_path_a"],data["logo_team_path_a"],data["logo_orga_path_b"],data["logo_team_path_b"]);
     }).catch((err) => {
@@ -21,7 +35,7 @@ function VsCsView() {
       teamStore.team_b_id = data.b;
     }).catch((err) => console.log(err))
     NetworkUtils.getCaster().then((data:any) => {
-      csStore.caster_names = data.caster;
+      teamStore.caster = data.caster;
     }).catch((err) => console.log(err))
   }, [])
 
@@ -57,7 +71,7 @@ function VsCsView() {
         </div>
       </div>
       <div className="caster-text">
-        <a>Caster: {csStore.caster_names}</a>
+        <a>Caster: {teamStore.caster}</a>
       </div>
     </div>
   );
