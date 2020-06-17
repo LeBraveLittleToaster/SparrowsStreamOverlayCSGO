@@ -129,3 +129,45 @@ a {
     background: radial-gradient(circle, #6C8DBA 0%, #5A6F8C 100%);
     display: inline-block;
 }
+
+.sponsorContainerBottomMiddle{
+    position: absolute;
+    left: 50%;
+    bottom: 0px;
+    transform: translate(-50%, 0);
+    background-color:rgba(10,10,10,.5);
+    height: 110px;
+}
+
+.sponsorContainerBottomLeft{
+    position: absolute;
+    left: 0%;
+    bottom: 0px;
+    transform: translate(-0%, 0);
+    background-color:rgba(10,10,10,.5);
+    height: 110px;
+}
+.sponsorContainerBottomRight{
+    position: absolute;
+    right: 0%;
+    bottom: 0px;
+    transform: translate(-0%, 0);
+    background-color:rgba(10,10,10,.5);
+    height: 110px;
+}
+
+.sponsorContainerTopRight{
+    position: absolute;
+    right: 0%;
+    top: 0px;
+    transform: translate(-0%, 0);
+    background-color:rgba(10,10,10,.5);
+    height: 110px;
+}
+
+.sponsorPicture{
+    height: 60%;
+    margin-top: 25px;
+    margin-right: 25px;
+    margin-left: 25px;
+}

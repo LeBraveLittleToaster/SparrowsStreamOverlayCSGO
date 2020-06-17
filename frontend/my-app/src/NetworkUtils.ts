@@ -1,11 +1,32 @@
 import Team from "./data/Team";
 import axios, { AxiosResponse } from 'axios';
 import ParseUtils from './ParseUtils';
-import { csStore } from "./CsStore";
 
 const baseUrl = "http://localhost:5000";
 
 class NetworkUtils {
+
+    static getSettingDropTeamsOnClose():Promise<boolean>{
+        return new Promise<boolean>((resolve, reject) => {
+            axios.get("http://localhost:5000/teams/dropOnClose")
+                .then((v) => {
+                    resolve(v.data.data);
+                }).catch((err) => {
+                    reject(err);
+                });
+        });
+    }
+
+    static uploadSettingDropTeamsOnServerClose(dropTeamsOnClose:boolean):Promise<void>{
+        return new Promise<void>((resolve, reject) => {
+            axios.put("http://localhost:5000/teams/dropOnClose",{dropTeamsOnClose:dropTeamsOnClose})
+                .then(() => {
+                    resolve();
+                }).catch((err) => {
+                    reject(err);
+                });
+        });
+    }
 
     static getScore():Promise<any>{
         return new Promise<string>((resolve, reject) => {
@@ -72,6 +93,27 @@ class NetworkUtils {
                 });
         });
     }
+    static getActiveSponsorLogos():Promise<any> {
+        return new Promise<any>((resolve, reject) => {
+            axios.get("http://localhost:5000/config/cs/active_sponsor_logos")
+                .then((v) => {
+                    resolve(v.data.data);
+                }).catch((err) => {
+                    reject(err);
+                });
+        });
+    }
+
+    static uploadActiveSponsorPictures(logo_path:string|undefined): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) => {
+            axios.put("http://localhost:5000/config/cs/active_sponsor_logos", { logo_path:logo_path})
+                .then((v) => {
+                    resolve(true);
+                }).catch((err) => {
+                    reject(err);
+                });
+        });
+    }
 
     static uploadActivePicture(isA: boolean, isTeamLogo: boolean, picUrl: string|undefined): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
@@ -84,6 +126,18 @@ class NetworkUtils {
         });
     }
 
+    static getAllSponsorPictureUrls(): Promise<string[]> {
+        return new Promise<string[]>((resolve, reject) => {
+            axios.get("http://localhost:5000/sponsorUrls")
+                .then((v) => {
+                    resolve(v.data.data);
+                }).catch((err) => {
+                    reject(err);
+                });
+        });
+
+    }
+
     static getAllPictureUrls(): Promise<string[]> {
         return new Promise<string[]>((resolve, reject) => {
             axios.get("http://localhost:5000/pictureUrls")
@@ -94,6 +148,21 @@ class NetworkUtils {
                 });
         });
 
+    }
+
+    static getSponsorLogoPositionSetting(){
+        return new Promise<number>((resolve, reject) => {
+            axios.get("http://localhost:5000/setting/logoPos")
+                .then((v) => {
+                    resolve(v.data.data);
+                }).catch((err) => {
+                    reject(err);
+                });
+        });
+    }
+
+    static uploadSponsorLogoPositionSetting(posIndex:number){
+        axios.put(baseUrl + "/setting/logoPos", { logo_pos: posIndex }).then(() => console.log("Position uploaded")).catch((error) => console.log(error));
     }
 
     static uploadPicture(picture: File): Promise<AxiosResponse<any>> {

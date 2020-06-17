@@ -10,6 +10,7 @@ class TeamStore {
     @observable logo_team_path_a: string|undefined = undefined;
     @observable logo_team_path_b: string|undefined = undefined;
     @observable caster: string|undefined = undefined;
+    @observable sponsor_logo_paths: string[] = [];
 
     getTeamWithId(teamId:string):Team|undefined{
         console.log("TeamId: " + teamId + " | TEAMS:"); console.log(this.teams);
@@ -33,6 +34,10 @@ class TeamStore {
         this.logo_team_path_a = team_a;
         this.logo_orga_path_b = orga_b;
         this.logo_team_path_b = team_b;
+    }
+
+    setSponsorLogoPaths(orga_a:string[]){
+        this.sponsor_logo_paths = orga_a;
     }
 }
 

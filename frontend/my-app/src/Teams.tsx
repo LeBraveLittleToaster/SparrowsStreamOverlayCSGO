@@ -6,9 +6,10 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
 import { teamStore } from "./TeamStore";
-import { Button } from "@material-ui/core";
+import { Button} from "@material-ui/core";
 import NetworkUtils from "./NetworkUtils";
 import Team from "./data/Team";
+import { settingsStore } from "./SettingsStore";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,9 +44,11 @@ function Teams() {
 
     function submitTeamName(name: string) {
         if (name.length > 1) {
-            NetworkUtils.uploadTeam(new Team("", name,undefined,undefined));
+            NetworkUtils.uploadTeam(new Team("", name, undefined, undefined));
         }
     }
+
+    
 
     return (
         <div className={classes.root}>

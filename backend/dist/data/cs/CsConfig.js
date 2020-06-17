@@ -11,6 +11,8 @@ class CsConfig {
         this._caster = undefined;
         this._score_a = undefined;
         this._score_b = undefined;
+        this._sponsor_logo_paths = [];
+        this._sponsor_logo_pos = 0;
     }
     setLogoPath(isA, isTeam, picPath) {
         if (isA) {
@@ -29,6 +31,17 @@ class CsConfig {
                 this._logo_orga_path_b = picPath;
             }
         }
+    }
+    addOrRemoveIfPresentAndGetActiveSponsor(picUrl) {
+        if (picUrl !== undefined) {
+            if (this._sponsor_logo_paths.findIndex(s => s === picUrl) === -1) {
+                this._sponsor_logo_paths.push(picUrl);
+            }
+            else {
+                this._sponsor_logo_paths = this._sponsor_logo_paths.filter(s => s !== picUrl);
+            }
+        }
+        return this._sponsor_logo_paths;
     }
 }
 exports.default = CsConfig;

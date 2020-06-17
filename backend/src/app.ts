@@ -1,4 +1,5 @@
 let process = require('process');
+const args = require('minimist')(process.argv.slice(2));
 import Utils from './Utils';
 import express from 'express';
 var multer = require('multer')
@@ -51,6 +52,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors())
 app.use('/res', express.static('uploads'));
+app.use('/sponsors', express.static('sponsors'));
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
@@ -65,11 +67,13 @@ fileDb.getTeams()
     console.log(err)
     process.exit();
   })
+
 fileDb.loadPictureUrls();
+fileDb.loadSponsorUrls();
 
 app.post('/profile/', upload.single('avatar'), (req, res) => {
   console.log(req.file)
-  res.send(200);
+  res.sendStatus(200);
 })
 
 function broadCast(type: string, data: any) {
@@ -79,7 +83,7 @@ function broadCast(type: string, data: any) {
   })
 }
 
-app.get('/config/cs/score', (req,res) =>{
+app.get('/config/cs/score', (req, res) => {
   console.log("Retrieving score")
   res.send(JSON.stringify({ success: true, data: { score_a: csConfig._score_a, score_b: csConfig._score_b } }));
 });
@@ -89,9 +93,14 @@ app.get('/config/cs/active_teams', (req, res) => {
   res.send(JSON.stringify({ success: true, data: { a: csConfig._teamAId, b: csConfig._teamBId } }));
 });
 
+app.get('/config/cs/active_sponsor_logos', (req, res) => {
+  console.log("Retrieving active sponsor logos")
+  res.send(JSON.stringify({ success: true, data: { logo_paths: csConfig._sponsor_logo_paths } }));
+});
+
 app.get('/config/cs/caster', (req, res) => {
   console.log("Retrieving active teams")
-  res.send(JSON.stringify({ success: true, data: { caster:csConfig._caster } }));
+  res.send(JSON.stringify({ success: true, data: { caster: csConfig._caster } }));
 });
 
 app.get("/config/cs/active_logos", (req, res) => {
@@ -107,32 +116,32 @@ app.get("/config/cs/active_logos", (req, res) => {
   }));
 })
 
-app.put('/config/cs/score', (req,res) => {
+app.put('/config/cs/score', (req, res) => {
   console.log("Setting caster");
   let msg = req.body;
   console.log(msg);
-  if(msg["score_a"]){
+  if (msg["score_a"]) {
     console.log("Updating scora_a to " + msg.score_a);
     csConfig._score_a = msg["score_a"];
   }
-  if(msg["score_b"]){
+  if (msg["score_b"]) {
     console.log("Updating score_b to " + msg.score_b);
     csConfig._score_b = msg["score_b"];
   }
-  broadCast("CS_SCORE", JSON.stringify({ score_a:csConfig._score_a, score_b: csConfig._score_b}));
-  res.send(200);
+  broadCast("CS_SCORE", JSON.stringify({ score_a: csConfig._score_a, score_b: csConfig._score_b }));
+  res.sendStatus(200);
 })
 
-app.put('/config/cs/caster', (req,res) => {
+app.put('/config/cs/caster', (req, res) => {
   console.log("Setting caster");
   let msg = req.body;
   console.log(msg);
-  if(msg["caster"]){
+  if (msg["caster"]) {
     console.log("Updating caster to " + msg.caster);
     csConfig._caster = msg["caster"];
   }
   broadCast("CS_CASTER", JSON.stringify({ caster: msg["caster"] }));
-  res.send(200);
+  res.sendStatus(200);
 })
 
 app.put('/config/cs/active_teams', (req, res) => {
@@ -150,16 +159,14 @@ app.put('/config/cs/active_teams', (req, res) => {
   console.log("A: " + csConfig._teamAId)
   console.log("B: " + csConfig._teamBId)
   broadCast("CS_ACTIVE_TEAMS", JSON.stringify({ a: csConfig._teamAId, b: csConfig._teamBId }));
-  res.send(200);
+  res.sendStatus(200);
 })
 
 app.put('/config/cs/active_logos', (req, res) => {
   console.log("Setting active logos")
   let msg = req.body;
   console.log(msg)
-  console.log("is_a present " + msg["is_a"] !== undefined);
-  console.log("is_team present " + msg["is_team"] !== undefined )
-  if (msg["is_a"] !== undefined && msg["is_team"] !== undefined ) {
+  if (msg["is_a"] !== undefined && msg["is_team"] !== undefined) {
     console.log("Setting path " + msg["pic_path"]);
     csConfig.setLogoPath(msg["is_a"], msg["is_team"], msg["pic_path"]);
   } else {
@@ -171,7 +178,43 @@ app.put('/config/cs/active_logos', (req, res) => {
     logo_orga_path_b: csConfig._logo_orga_path_b,
     logo_team_path_b: csConfig._logo_team_path_b
   }));
-  res.send(200);
+  res.sendStatus(200);
+})
+
+app.put('/config/cs/active_sponsor_logos', (req, res) => {
+  console.log("Setting active sponsors")
+  let msg = req.body;
+  console.log(msg)
+  if (msg["logo_path"] !== undefined) {
+    csConfig.addOrRemoveIfPresentAndGetActiveSponsor(msg["logo_path"])
+  } else {
+    csConfig._sponsor_logo_paths = [];
+  }
+  broadCast("CS_ACTIVE_SPONSORS", JSON.stringify({
+    logo_paths: csConfig._sponsor_logo_paths
+  }))
+  res.sendStatus(200)
+})
+
+app.get("/teams/dropOnClose", (req, res) => {
+  res.send({
+    type: "dropOnClose",
+    data: fileDb._dropTeamsOnClose
+  })
+})
+
+app.put("/teams/dropOnClose", (req, res) => {
+  if(req.body.dropTeamsOnClose !== undefined)
+  fileDb._dropTeamsOnClose = req.body.dropTeamsOnClose;
+  broadCast("SETTING_IS_DROPPING_TEAMS", req.body.dropTeamsOnClose);
+  res.sendStatus(200);
+})
+
+app.get("/sponsorUrls", (req, res) => {
+  res.send({
+    type: "sponsorUrls",
+    data: fileDb._sponsorUrls
+  })
 })
 
 app.get("/pictureUrls", (req, res) => {
@@ -186,6 +229,23 @@ app.get("/teams", (req, res) => {
     "type": "teams",
     "data": teamHandler.allTeams
   })
+});
+
+app.get("/setting/logoPos", (req, res) => {
+  res.send({
+    "type": "logo_pos",
+    "data": csConfig._sponsor_logo_pos
+  })
+});
+
+app.put("/setting/logoPos", (req, res) => {
+  let msg = req.body;
+  console.log("Got new team..." + JSON.stringify(msg))
+  if (msg["logo_pos"] !== undefined) {
+    csConfig._sponsor_logo_pos = msg["logo_pos"];
+  }
+  broadCast("CS_LOGO_POS", msg["logo_pos"])
+  res.sendStatus(200);
 });
 
 app.put("/teams/add", (req, res) => {
@@ -223,7 +283,12 @@ server.listen(process.env.PORT || 8999, () => {
 process.on("SIGINT", function () {
   console.log("Shutting down, storing teams...")
   console.log(teamHandler.allTeams)
-  fileDb.storeTeams(teamHandler.allTeams);
+  if(!fileDb._dropTeamsOnClose) {
+    fileDb.storeTeams(teamHandler.allTeams);
+    console.log("Storing teams");
+  }else{
+    console.log("Dropping teams");
+  }
   app.listen().close();
   process.exit(0);
 });

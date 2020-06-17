@@ -1,3 +1,2 @@
-start cmd.exe /k "cd cs_config && npm install && npm start"
-start cmd.exe /k "cd render_server\sparrowsrenderer && npm install && npm start"
-pause
+start cmd.exe /k "cd backend\ && npm install && npm start"
+start cmd.exe /k "cd frontend\my-app\ && npm install && npm start"

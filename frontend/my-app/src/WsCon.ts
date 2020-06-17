@@ -2,6 +2,7 @@ import { teamStore } from "./TeamStore";
 import Team from "./data/Team";
 import { pictureStore } from "./PictureStore";
 import { csStore } from "./CsStore";
+import { settingsStore } from "./SettingsStore";
 
 const URL = 'ws://localhost:8999'
 class WsCon {
@@ -25,6 +26,9 @@ class WsCon {
                 case "CS_ACTIVE_LOGOS":
                     this.setActiveLogos(JSON.parse(message.data));
                     break;
+                case "CS_ACTIVE_SPONSORS":
+                    this.setActiveSponsorLogos(JSON.parse(message.data));
+                    break;
                 case "PICTURE_UPLOAD":
                     this.addPicPath(JSON.parse(message.data));
                     break;
@@ -33,6 +37,12 @@ class WsCon {
                     break;
                 case "CS_SCORE":
                     this.setScore(JSON.parse(message.data));
+                    break;
+                case "CS_LOGO_POS":
+                    this.setLogoPos(JSON.parse(message.data));
+                    break;
+                case "SETTING_IS_DROPPING_TEAMS":
+                    this.setSettingIsDroppingTeams(JSON.parse(message.data));
                     break;
             }
         }
@@ -72,28 +82,45 @@ class WsCon {
         teamStore.logo_team_path_b = msg["logo_team_path_b"]
     }
 
+    setActiveSponsorLogos(msg: any) {
+        if (msg["logo_paths"] !== undefined) {
+            teamStore.sponsor_logo_paths = msg["logo_paths"];
+        }
+    }
+
     addPicPath(msg: any) {
         if (msg["pic_path"]) {
             pictureStore.picUrls.push(msg["pic_path"]);
         }
     }
 
-    setCaster(msg:any){
+    setCaster(msg: any) {
         if (msg["caster"]) {
             teamStore.caster = msg["caster"];
         }
     }
 
-    setScore(msg:any){
+    setScore(msg: any) {
         if (msg["score_a"]) {
             csStore.score_a = msg["score_a"]
-        }else{
+        } else {
             csStore.score_a = 0;
         }
         if (msg["score_b"]) {
             csStore.score_b = msg["score_b"]
-        }else{
+        } else {
             csStore.score_b = 0;
+        }
+    }
+    setLogoPos(msg:any){
+        if(msg !== undefined){
+            settingsStore.sponsor_logo_position = msg
+        }
+    }
+
+    setSettingIsDroppingTeams(msg:any){
+        if(msg !== undefined){
+            settingsStore.isDroppingTeamsOnClose = msg;
         }
     }
 }

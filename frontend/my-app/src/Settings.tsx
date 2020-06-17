@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { settingsStore } from './SettingsStore';
-import { Checkbox, FormControlLabel, Typography, TextField, Button } from "@material-ui/core";
+import { Checkbox, FormControlLabel, Typography, TextField, Button, Switch } from "@material-ui/core";
 import { teamStore } from "./TeamStore";
 import NetworkUtils from "./NetworkUtils";
 import { csStore } from "./CsStore";
@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
 
         textAlign: 'center',
         color: theme.palette.text.secondary,
+    },
+    formcontrol: {
+        marginTop: 30
     },
     headerTeams: {
         marginBottom: theme.spacing(6)
@@ -45,7 +48,14 @@ function Settings() {
             console.log(data);
             if (data["caster"]) teamStore.caster = data["caster"]
         }).catch((err) => console.log(err))
+        NetworkUtils.getSettingDropTeamsOnClose().then((isDropping:boolean) => {
+            settingsStore.isDroppingTeamsOnClose = isDropping;
+        }).catch((err) => console.log(err))
     }, [])
+
+    function handleChange(event:React.ChangeEvent<HTMLInputElement>){
+        NetworkUtils.uploadSettingDropTeamsOnServerClose(event.target.checked);
+    }
 
     function setScore(isA: boolean, value: string) {
         if (isA) { csStore.score_a = Number(value) } else { csStore.score_b = Number(value) }
@@ -101,6 +111,17 @@ function Settings() {
                         </Button>
                         </Grid>
                     </Grid>
+                    <FormControlLabel className={classes.formcontrol}
+                        control={
+                            <Switch
+                                checked={settingsStore.isDroppingTeamsOnClose}
+                                onChange={(e) => handleChange(e)}
+                                name="Drop Teams"
+                                color="primary"
+                            />
+                        }
+                        label="Deleting Teams on shut down"
+                    />
                 </Paper>
             </Grid>
         </div>

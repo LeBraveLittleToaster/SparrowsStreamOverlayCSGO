@@ -4,9 +4,23 @@ exports.fileDb = void 0;
 const fs = require('fs');
 const teamsFileName = "teams.json";
 const pictureFolder = "./uploads/";
+const sponsorsFolder = "./sponsors/";
 class FileDb {
     constructor() {
         this._pictureUrls = [];
+        this._sponsorUrls = [];
+        this._dropTeamsOnClose = false;
+    }
+    loadSponsorUrls() {
+        fs.readdir(sponsorsFolder, (err, files) => {
+            let names = [];
+            console.log(files);
+            files.forEach((file) => {
+                console.log(file);
+                names.push(file);
+            });
+            this._sponsorUrls = names;
+        });
     }
     loadPictureUrls() {
         fs.readdir(pictureFolder, (err, files) => {

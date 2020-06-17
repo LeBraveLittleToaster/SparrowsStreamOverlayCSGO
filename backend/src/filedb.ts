@@ -3,11 +3,26 @@ import Team from './data/Team';
 
 const teamsFileName = "teams.json";
 const pictureFolder = "./uploads/";
+const sponsorsFolder = "./sponsors/";
 
 class FileDb{   
     
     _pictureUrls:string[] = [];
-    
+    _sponsorUrls:string[] = [];
+    _dropTeamsOnClose:boolean = false;
+
+    loadSponsorUrls(){
+        fs.readdir(sponsorsFolder, (err:any, files:any) => {
+            let names:string[] = [];
+            console.log(files)
+            files.forEach((file:any) => {
+                console.log(file)
+                names.push(file)
+            });
+            this._sponsorUrls = names;
+        })
+    }
+
     loadPictureUrls(){
         fs.readdir(pictureFolder, (err:any, files:any) => {
             let names:string[] = [];
