@@ -24,4 +24,4 @@ Following two urls are important:
 
 Open Streamlabs and create a new Browsersource shown below:
 
-[Browser Source](docu/BrowserQuelle.PNG)
+![docu/BrowserQuelle.PNG][https://github.com/LeBraveLittleToaster/SparrowsStreamOverlayCSGO/blob/develop/docu/BrowserQuelle.PNG]
