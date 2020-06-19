@@ -12,6 +12,10 @@ class FileDb {
         this._dropTeamsOnClose = false;
     }
     loadSponsorUrls() {
+        if (!fs.existsSync(sponsorsFolder)) {
+            console.log("Sponsorsfolder not existing...");
+            fs.mkdirSync(sponsorsFolder);
+        }
         fs.readdir(sponsorsFolder, (err, files) => {
             let names = [];
             console.log(files);
@@ -23,6 +27,10 @@ class FileDb {
         });
     }
     loadPictureUrls() {
+        if (!fs.existsSync(pictureFolder)) {
+            console.log("uploads folder not existing...");
+            fs.mkdirSync(pictureFolder);
+        }
         fs.readdir(pictureFolder, (err, files) => {
             let names = [];
             console.log(files);
