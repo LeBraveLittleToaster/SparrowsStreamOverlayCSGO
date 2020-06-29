@@ -129,11 +129,11 @@ app.put('/config/cs/score', (req, res) => {
     console.log("Setting caster");
     let msg = req.body;
     console.log(msg);
-    if (msg["score_a"]) {
+    if (msg["score_a"] !== undefined) {
         console.log("Updating scora_a to " + msg.score_a);
         csConfig._score_a = msg["score_a"];
     }
-    if (msg["score_b"]) {
+    if (msg["score_b"] !== undefined) {
         console.log("Updating score_b to " + msg.score_b);
         csConfig._score_b = msg["score_b"];
     }

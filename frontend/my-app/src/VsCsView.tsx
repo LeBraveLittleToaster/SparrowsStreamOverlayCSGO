@@ -6,6 +6,7 @@ import { teamStore } from './TeamStore';
 import NetworkUtils from './NetworkUtils';
 import Team from './data/Team';
 import { settingsStore } from './SettingsStore';
+import SponsorView from './SponsorView';
 
 const baseUrl = "http://localhost:5000/res/";
 const sponsorUrl = "http://localhost:5000/sponsors/";
@@ -67,16 +68,10 @@ function VsCsView() {
 
   return (
     <div>
-      <div className={logoPos}>
-        {teamStore.sponsor_logo_paths !== undefined ?
-          teamStore.sponsor_logo_paths.map((row, index) => {
-            console.log(row)
-            return (
-              <img className="sponsorPicture" src={sponsorUrl + row} />
-            );
-          })
-          : <div />}
-      </div>
+      <SponsorView
+        isLocalUrlsOnly={false}
+        sponsor_logo_position={settingsStore.sponsor_logo_position}
+        sponsor_logo_paths={teamStore.sponsor_logo_paths} />
       <div className="container">
         <div className="vs-text">vs</div>
         <div className="announce-text">
