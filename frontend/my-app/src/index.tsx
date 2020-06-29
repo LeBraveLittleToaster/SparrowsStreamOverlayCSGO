@@ -3,16 +3,12 @@ import ReactDOM from 'react-dom';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  withRouter
-} from "react-router-dom";
+  Route} from "react-router-dom";
 import './index.css';
 import VsCsView from './VsCsView';
 import CsConsole from './CsConsole';
 import { wsCon } from './WsCon';
-import NetworkUtils from './NetworkUtils';
-import Team from './data/Team';
-import { teamStore } from './TeamStore';
+import IngameCsView from './IngameCsView';
 
 
 wsCon.connect().then(() => {
@@ -28,6 +24,9 @@ ReactDOM.render(
         </Route>
         <Route path="/cs/console">
           <CsConsole />
+        </Route>
+        <Route path="/cs/ingame">
+          <IngameCsView />
         </Route>
       </Switch>
     </Router>
