@@ -7,7 +7,6 @@ const sponsorUrl = "http://localhost:5000/sponsors/";
 function SponsorView(props:any) {
 
   let logoPos: string = "";
-  //switch (settingsStore.sponsor_logo_position) {
     switch (props.sponsor_logo_position) {
     case 0:
       logoPos = "sponsorContainerBottomMiddle";

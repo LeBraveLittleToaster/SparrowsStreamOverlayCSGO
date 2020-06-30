@@ -44,6 +44,10 @@ class WsCon {
                 case "SETTING_IS_DROPPING_TEAMS":
                     this.setSettingIsDroppingTeams(JSON.parse(message.data));
                     break;
+                case "TEAM_B_COLOR_RAMP":{
+                    this.setTeamBColorRampIndex(JSON.parse(message.data));
+                    break;
+                }
             }
         }
 
@@ -121,6 +125,12 @@ class WsCon {
     setSettingIsDroppingTeams(msg:any){
         if(msg !== undefined){
             settingsStore.isDroppingTeamsOnClose = msg;
+        }
+    }
+
+    setTeamBColorRampIndex(msg:any){
+        if(msg !== undefined){
+            teamStore.team_b_color_ramp_index = msg;
         }
     }
 }

@@ -12,6 +12,7 @@
     "@types/node": "^12.12.39",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
+    "@types/react-helmet": "^6.0.0",
     "@types/react-router-dom": "^5.1.5",
     "@types/ws": "^7.2.4",
     "axios": "^0.19.2",
@@ -20,8 +21,10 @@
     "mobx-react": "^6.2.2",
     "mox": "0.0.16",
     "node-sass": "^4.14.1",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-helmet": "^6.1.0",
     "react-images-upload": "^1.2.8",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
@@ -49,5 +52,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/prop-types": "^15.7.3"
   }
 }

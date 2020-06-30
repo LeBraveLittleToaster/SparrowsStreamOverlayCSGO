@@ -11,7 +11,8 @@ import { csStore } from "./CsStore";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1,
+        
+        width: "100%"
     },
     paper: {
         paddingLeft: theme.spacing(6),
@@ -31,7 +32,11 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(6)
     },
     submitBtn: {
-        marginLeft: 10
+        height: "100%",
+        width: "100%"
+    },
+    casterTxt:{
+        width: "100%"
     }
 }));
 
@@ -48,12 +53,12 @@ function Settings() {
             console.log(data);
             if (data["caster"]) teamStore.caster = data["caster"]
         }).catch((err) => console.log(err))
-        NetworkUtils.getSettingDropTeamsOnClose().then((isDropping:boolean) => {
+        NetworkUtils.getSettingDropTeamsOnClose().then((isDropping: boolean) => {
             settingsStore.isDroppingTeamsOnClose = isDropping;
         }).catch((err) => console.log(err))
     }, [])
 
-    function handleChange(event:React.ChangeEvent<HTMLInputElement>){
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         NetworkUtils.uploadSettingDropTeamsOnServerClose(event.target.checked);
     }
 
@@ -75,40 +80,42 @@ function Settings() {
 
     return (
         <div className={classes.root}>
-            <Grid container spacing={3}>
-
                 <Paper className={classes.paper}>
                     <h1 className={classes.headerTeams}>General Settings</h1>
                     <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <TextField id="outlined-helperText"
-                                label="Score A"
-                                type="number"
-                                value={csStore.score_a}
-                                defaultValue={csStore.score_a === undefined ? 0 : csStore.score_a}
-                                onChange={(e) => setScore(true, e.target.value)}
-                                variant="outlined" />
-                            <TextField id="outlined-helperText"
-                                label="Score B"
-                                type="number"
-                                value={csStore.score_b}
-                                defaultValue={csStore.score_b === undefined ? 0 : csStore.score_b}
-                                onChange={(e) => setScore(false, e.target.value)}
-                                variant="outlined" />
-                            <Button variant="outlined" className={classes.submitBtn} onClick={() => submitScore()}>
-                                Set
-                        </Button>
+                        <Grid item xs={5}>
+                                    <TextField id="outlined-helperText"
+                                        label="Score A"
+                                        type="number"
+                                        value={csStore.score_a}
+                                        defaultValue={csStore.score_a === undefined ? 0 : csStore.score_a}
+                                        onChange={(e) => setScore(true, e.target.value)}
+                                        variant="outlined" />
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField id="outlined-helperText"
-                                label="Caster names"
-                                defaultValue={teamStore.caster === undefined ? "" : teamStore.caster}
-                                onChange={(e) => setCaster(e.target.value)}
-                                variant="outlined" />
-
-                            <Button variant="outlined" className={classes.submitBtn} onClick={() => submitCaster()}>
-                                Set
-                        </Button>
+                        <Grid item xs={5}>
+                                    <TextField id="outlined-helperText"
+                                        label="Score B"
+                                        type="number"
+                                        value={csStore.score_b}
+                                        defaultValue={csStore.score_b === undefined ? 0 : csStore.score_b}
+                                        onChange={(e) => setScore(false, e.target.value)}
+                                        variant="outlined" />
+                        </Grid>
+                        <Grid item xs={2}>
+                                    <Button variant="outlined" className={classes.submitBtn} onClick={() => submitScore()}>Set</Button>
+                        </Grid>
+                        <Grid item xs={10}>
+                                <TextField id="outlined-helperText"
+                                    className={classes.casterTxt}
+                                    label="Caster names"
+                                    defaultValue={teamStore.caster === undefined ? "" : teamStore.caster}
+                                    onChange={(e) => setCaster(e.target.value)}
+                                    variant="outlined" />
+                        </Grid>
+                        <Grid item xs={2}>
+                                    <Button variant="outlined" className={classes.submitBtn} onClick={() => submitCaster()}>
+                                        Set
+                                    </Button>
                         </Grid>
                     </Grid>
                     <FormControlLabel className={classes.formcontrol}
@@ -123,7 +130,6 @@ function Settings() {
                         label="Deleting Teams on shut down"
                     />
                 </Paper>
-            </Grid>
         </div>
     );
 }

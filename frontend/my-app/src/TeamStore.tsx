@@ -1,10 +1,11 @@
-import {observable} from 'mobx';
+import {observable, action} from 'mobx';
 import Team from "./data/Team";
 
 class TeamStore {
     @observable teams:Team[] = [];
     @observable team_a_id:string = "";
     @observable team_b_id:string = "";
+    @observable team_b_color_ramp_index: number = 0;
     @observable logo_orga_path_a: string|undefined = undefined;
     @observable logo_orga_path_b: string|undefined = undefined;
     @observable logo_team_path_a: string|undefined = undefined;
@@ -38,6 +39,11 @@ class TeamStore {
 
     setSponsorLogoPaths(orga_a:string[]){
         this.sponsor_logo_paths = orga_a;
+    }
+
+    @action
+    setTeamBColorRampIndex(index:number){
+        this.team_b_color_ramp_index = index;
     }
 }
 

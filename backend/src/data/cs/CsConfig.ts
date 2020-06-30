@@ -3,6 +3,7 @@ import Team from "../Team";
 class CsConfig {
     _teamAId: string | undefined = undefined;
     _teamBId: string | undefined = undefined;
+    _team_b_color_ramp_index: number | undefined = undefined;
     _logo_orga_path_a: string | undefined = undefined;
     _logo_orga_path_b: string | undefined = undefined;
     _logo_team_path_a: string | undefined = undefined;

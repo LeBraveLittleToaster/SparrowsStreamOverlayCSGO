@@ -11,6 +11,7 @@ import Team from "./data/Team";
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        maxWidth: 500
     },
     paper: {
         paddingLeft: theme.spacing(6),
@@ -66,7 +67,9 @@ function TeamList() {
 
     return (
         <div className={classes.root}>
-            <TableContainer component={Paper}>
+
+            <TableContainer component={Paper} className={classes.paper}>
+            <h1 className={classes.headerTeams}>Team List</h1>
                 <Table className={classes.table} aria-label="Teams">
                     <TableHead>
                         <TableRow>

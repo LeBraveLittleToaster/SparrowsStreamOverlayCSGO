@@ -9,11 +9,10 @@ import { teamStore } from "./TeamStore";
 import { Button} from "@material-ui/core";
 import NetworkUtils from "./NetworkUtils";
 import Team from "./data/Team";
-import { settingsStore } from "./SettingsStore";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1,
+        flexGrow: 1
     },
     paper: {
         paddingLeft: theme.spacing(6),

@@ -93,6 +93,11 @@ app.get('/config/cs/active_teams', (req, res) => {
   res.send(JSON.stringify({ success: true, data: { a: csConfig._teamAId, b: csConfig._teamBId } }));
 });
 
+app.get('/config/cs/team_b_color_ramp_index', (req, res) => {
+  console.log("Retrieving team b color ramp index")
+  res.send(JSON.stringify({ success: true, data: csConfig._team_b_color_ramp_index } ));
+});
+
 app.get('/config/cs/active_sponsor_logos', (req, res) => {
   console.log("Retrieving active sponsor logos")
   res.send(JSON.stringify({ success: true, data: { logo_paths: csConfig._sponsor_logo_paths } }));
@@ -245,6 +250,14 @@ app.put("/setting/logoPos", (req, res) => {
     csConfig._sponsor_logo_pos = msg["logo_pos"];
   }
   broadCast("CS_LOGO_POS", msg["logo_pos"])
+  res.sendStatus(200);
+});
+
+app.put("/config/cs/team_b_color_ramp_index", (req,res) =>{
+  let msg = req.body;
+  console.log("Got new team b color ramp index..." + JSON.stringify(msg))
+  csConfig._team_b_color_ramp_index = msg["index"];
+  broadCast("TEAM_B_COLOR_RAMP", msg["index"])
   res.sendStatus(200);
 });
 

@@ -108,7 +108,7 @@ a {
     grid-auto-flow: column;
 }
 
-.team-bottom {
+.team-bottom-default {
     display: grid;
     height: 300px;
     width: 100%;
@@ -118,7 +118,62 @@ a {
     grid-template-columns: 20% 30% 30% 20%; 
     grid-auto-flow: column;
 }
-
+.team-bottom-3 {
+    display: grid;
+    height: 300px;
+    width: 100%;
+    background: radial-gradient(circle, #89d2dc 0%, #6564db 100%);
+    
+    grid-template-rows: 100fr; 
+    grid-template-columns: 20% 30% 30% 20%; 
+    grid-auto-flow: column;
+}
+.team-bottom-2 {
+    display: grid;
+    height: 300px;
+    width: 100%;
+    background: radial-gradient(circle, #B6720B 0%, #7c561c 100%);
+    
+    grid-template-rows: 100fr; 
+    grid-template-columns: 20% 30% 30% 20%; 
+    grid-auto-flow: column;
+}.team-bottom-1 {
+    display: grid;
+    height: 300px;
+    width: 100%;
+    background: radial-gradient(circle, #a13e3e 0%, #B21717 100%);
+    
+    grid-template-rows: 100fr; 
+    grid-template-columns: 20% 30% 30% 20%; 
+    grid-auto-flow: column;
+}.team-bottom-4 {
+    display: grid;
+    height: 300px;
+    width: 100%;
+    background: radial-gradient(circle, #FAFAFF 0%, #30343f 100%);
+    
+    grid-template-rows: 100fr; 
+    grid-template-columns: 20% 30% 30% 20%; 
+    grid-auto-flow: column;
+}.team-bottom-5 {
+    display: grid;
+    height: 300px;
+    width: 100%;
+    background: radial-gradient(circle, #CAE7B9 0%, #F3DE8A 100%);
+    
+    grid-template-rows: 100fr; 
+    grid-template-columns: 20% 30% 30% 20%; 
+    grid-auto-flow: column;
+}.team-bottom-6 {
+    display: grid;
+    height: 300px;
+    width: 100%;
+    background: radial-gradient(circle, #2E1F27 0%, #854D27 100%);
+    
+    grid-template-rows: 100fr; 
+    grid-template-columns: 20% 30% 30% 20%; 
+    grid-auto-flow: column;
+}
 .announce-text {
     display: inline-block;
     margin-bottom: 3px;

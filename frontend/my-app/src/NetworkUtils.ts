@@ -6,6 +6,28 @@ const baseUrl = "http://localhost:5000";
 
 class NetworkUtils {
 
+    static getTeamBColorRampIndex():Promise<number>{
+        return new Promise<number>((resolve, reject) => {
+            axios.get("http://localhost:5000/config/cs/team_b_color_ramp_index")
+                .then((v) => {
+                    resolve(parseInt(v.data.data));
+                }).catch((err) => {
+                    reject(err);
+                });
+        });
+    }
+
+    static uploadTeamBColorRampIndex(index:number):Promise<void>{
+        return new Promise<void>((resolve, reject) => {
+            axios.put("http://localhost:5000/config/cs/team_b_color_ramp_index",{index:index})
+                .then(() => {
+                    resolve();
+                }).catch((err) => {
+                    reject(err);
+                });
+        });
+    }
+
     static getSettingDropTeamsOnClose():Promise<boolean>{
         return new Promise<boolean>((resolve, reject) => {
             axios.get("http://localhost:5000/teams/dropOnClose")
