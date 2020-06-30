@@ -12,7 +12,8 @@ import Team from "./data/Team";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1
+        flexGrow: 1,
+        maxWidth: 500
     },
     paper: {
         paddingLeft: theme.spacing(6),
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: theme.spacing(2),
         paddingBottom: theme.spacing(6),
 
-        margin: theme.spacing(2),
+        margin: theme.spacing(1.5),
 
         textAlign: 'center',
         color: theme.palette.text.secondary,

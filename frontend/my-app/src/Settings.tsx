@@ -11,16 +11,13 @@ import { csStore } from "./CsStore";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        
-        width: "100%"
+        maxWidth: 500
     },
     paper: {
         paddingLeft: theme.spacing(6),
         paddingRight: theme.spacing(6),
         paddingTop: theme.spacing(2),
         paddingBottom: theme.spacing(6),
-
-        margin: theme.spacing(2),
 
         textAlign: 'center',
         color: theme.palette.text.secondary,

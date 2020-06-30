@@ -12,6 +12,7 @@ import NetworkUtils from "./NetworkUtils";
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        maxWidth: 500
     },
     paper: {
         paddingLeft: theme.spacing(6),
