@@ -18,6 +18,7 @@ You can run the current build by running the "StartOverlay.bat" file in the root
 Following two urls are important:
 
 - http://localhost:3000/cs/vs , used together with streamlabs Browser Source feature
+- http://localhost:3000/cs/ingame , ingame view to show sponsor data 
 - http://localhost:3000/cs/console , console for casters to manipulate values shown
 
 ## Setup Streamlabs
