@@ -9,7 +9,6 @@ import VsCsView from './VsCsView';
 import CsConsole from './CsConsole';
 import { wsCon } from './WsCon';
 import IngameCsView from './IngameCsView';
-import { teamStore } from './TeamStore';
 
 
 wsCon.connect().then(() => {

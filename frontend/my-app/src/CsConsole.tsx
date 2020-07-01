@@ -28,7 +28,8 @@ function CsConsole() {
                 flexWrap="wrap"
                 p={1}
                 m={1}
-                css={{ maxWidth: 1100 }}>
+                justifyContent="center"
+                >
                 <Box p={1}>
                     <Teams />
                 </Box>
@@ -39,15 +40,14 @@ function CsConsole() {
                     <PictureView />                
                 </Box>
                 <Box p={1}>
-                    <TeamList />
-                </Box>
-                <Box p={1}>
                     <SponsorLibrary />
                 </Box>
                 <Box p={1}>
                     <PictureLibrary />
                 </Box>
-
+                <Box p={1}>
+                    <TeamList />
+                </Box>
             </Box>
 
 

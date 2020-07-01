@@ -68,7 +68,8 @@ function TeamList() {
     return (
         <div className={classes.root}>
 
-            <TableContainer component={Paper} className={classes.paper}>
+<Paper className={classes.paper}>
+            <TableContainer>
             <h1 className={classes.headerTeams}>Team List</h1>
                 <Table className={classes.table} aria-label="Teams">
                     <TableHead>
@@ -100,6 +101,7 @@ function TeamList() {
                     </TableBody>
                 </Table>
             </TableContainer>
+            </Paper>
         </div>
     );
 }
