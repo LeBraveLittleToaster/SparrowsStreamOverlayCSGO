@@ -40,11 +40,13 @@
 <br>
 <br>
 
+[see Pre-In-Post](#pre-in-post)
+
 #### Top-Structure
     {
         "best_of_only" : [
             "long" : [see Pre-In-Post](#pre_in_post)
-            "short" : [see Pre-In-Post](#Pre-In-Post)
+            "short" : [see Pre-In-Post](#pre-in-post)
         ],
         "fixed_count_only" : [
             "long" : [see Pre-In-Post](#Pre-In-Post)
