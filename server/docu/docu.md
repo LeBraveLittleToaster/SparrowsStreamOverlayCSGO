@@ -43,7 +43,7 @@
 #### Top-Structure
     {
         "best_of_only" : [
-            "long" : [see Pre-In-Post](#pre-in-post)
+            "long" : [see Pre-In-Post](#pre_in_post)
             "short" : [see Pre-In-Post](#Pre-In-Post)
         ],
         "fixed_count_only" : [
