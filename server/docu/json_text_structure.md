@@ -16,9 +16,9 @@
 
     Game
         Which game is played, currently we decide between CSGO and LOL, other games will get an other static overlay
+<br>
 
 ## Structure
-<br>
 
 ### Counterstrike Sentences
 
@@ -35,12 +35,11 @@
     - $score_maps_enemy - amount of won rounds from enemy in the series
     - $map_next_count - upcoming map number
     - $map_next_name - upcoming map name 
+    - $map_chained_names - string with maps in the order they are played formattet: "map 1, map2, ... mapN-1 und mapN"
     - [best of only] $best_of - best of number (Best of 5 -> $best_of = 5)
     - [fixed count only] $map_fixed_count - how many maps are played
 <br>
 <br>
-
-[see Pre-In-Post](#pre-in-post)
 
 #### Top-Structure
     {
