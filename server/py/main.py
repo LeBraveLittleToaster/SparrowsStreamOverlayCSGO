@@ -1,54 +1,18 @@
-import time, jsonify
+import asyncio, os, websockets
 from flask import Flask, request
-from updater import TextUpdater
-from queue import Queue
-from data import Data
-from updatewrapper import UpdateWrapper
-app = Flask(__name__)
+from subscriber import Subscriber 
 
-POSITION_TOP = "top"
-POSITION_BOTTOM = "bottom"
+subSys = Subscriber()
 
-q = Queue()
-upt = [
-    TextUpdater("top.txt", 10), 
-    TextUpdater("bottom.txt", 10)
-]
+#++++++++++++++++TEST+++++++++++++++++++++
+subSys.addSubscribable("123")
+subSys.addSubscribable("321")
+#++++++++++++++++TEST+++++++++++++++++++++
 
-updater = UpdateWrapper(q, upt, args=())
+async def connector(websocket, path):
+    await websocket.send("Hello client")
 
-data = Data()
-f = open("lines.json", "r")
-data.availableLines = f.readlines()
-f.close()
+start_server = websockets.serve(connector, "localhost", 8765)
 
-@app.route('/names/set', methods=["GET"])
-def setNames():
-    rsp = { "enemy":False, "friendly":False }
-    enemy = request.args.get('enemy', type=str)
-    if enemy is not None and len(enemy) > 0:
-        data.enemy = enemy
-        rsp["enemy"] = True
-    friendly = request.args.get('friendly', type=str)
-    if friendly is not None and len(friendly) > 0:
-        data.friendly = friendly
-        rsp["friendly"] = True
-    return jsonify(rsp)
-
-@app.route('/names', methods=["GET"])
-def getNames():
-    return jsonify({"enemy":data.enemy, "friendly": data.friendly})
-
-@app.route('/lines', methods=["GET"])
-def getLines():
-    return jsonify({"lines": data.availableLines})
-
-@app.route('/lines/<string:position>/set', methods=["POST"])
-def setLinesActive(top):
-    json = request.get_json()
-    print(json)
-
-if __name__ == '__main__':
-    updater.start()
-    time.sleep(0.1)
-    app.run()
+asyncio.get_event_loop().run_until_complete(start_server)
+asyncio.get_event_loop().run_forever()

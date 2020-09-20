@@ -33,7 +33,7 @@
     - $score_enemy - number of rounds enemy from last map
     - $score_maps_friendly - amount of won rounds from friendly in the series
     - $score_maps_enemy - amount of won rounds from enemy in the series
-    - $map_next_count - upcoming map number
+    - $map_next_number - upcoming map number
     - $map_next_name - upcoming map name 
     - $map_chained_names - string with maps in the order they are played formattet: "map 1, map2, ... mapN-1 und mapN"
     - [best of only] $best_of - best of number (Best of 5 -> $best_of = 5)
