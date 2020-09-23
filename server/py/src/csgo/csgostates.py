@@ -2,9 +2,10 @@ from src.states.state import State
 from src.csgo.csgodata import CsgoMap
 
 
-class PreState(State):
-    def __init__(self):
+class PreCsgoState(State):
+    def __init__(self, map_count):
         State.__init__(self, 1)
+        self.map_count = map_count
         self.maps_picked = []
 
     def update(self, update_dicts):
@@ -12,10 +13,13 @@ class PreState(State):
             self.add_map(u)
 
     def get_updater(self):
-        return [dict({
-            "map": str,
-            "isPickedByFriendly": bool
-        })]
+        dicts = []
+        for i in range(self.map_count):
+            dicts.append(dict({
+                "map": str,
+                "isPickedByFriendly": bool
+            }))
+        return dicts
 
     def add_map(self, update_dict):
         print("add_map dict: " + str(update_dict))
@@ -37,7 +41,7 @@ class PreState(State):
         return msg
 
 
-class InState(State):
+class InCsgoState(State):
     def __init__(self):
         State.__init__(self, 2)
         self.result = ()

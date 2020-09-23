@@ -2,15 +2,20 @@ import sys
 
 
 class CsgoTerminal:
-    def __init__(self, map_count, available_map_names, state_machine):
+    def __init__(self, map_count, available_map_names, state_machine, text_engine):
         self.map_count = map_count
         self.available_map_names = available_map_names
         self.sm = state_machine
+        self.te = text_engine
 
     def wait_for_command(self):
-        command = input("Enter command: ")
+        command = input("Enter command ('help' for a list of commands) ")
         if command == "next" or command == "n":
-            self.process_next()
+            return self.process_next()
+        elif command == "help":
+            print("next | n : Switch state to next")
+            print("exit     : Stop programm")
+            print("help     : List of commands")
         elif command == "exit":
             sys.exit(0)
 

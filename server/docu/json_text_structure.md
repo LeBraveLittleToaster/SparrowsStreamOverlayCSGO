@@ -70,10 +70,10 @@
 #### Long-Short
 
     {
-        "long_sentence" : [
+        "long" : [
 
         ],
-        "short_sentence" : [
+        "short" : [
 
         ]     
     }
@@ -90,19 +90,47 @@
         },
         "shared" : {
             "long" : {
-                "pre" : [
-                    "Upcoming match - $friendly face off against $enemy",
-                    "...",
-                    "..."
-                ],
-                "in" : [
-                    "Map $map_next_count is coming up",
-                    "Our next map is $map_next_name",
-                    "..."
-                ],
-                "post" : [
-                    "Game is over, the final score is $score_maps_friendly to $score_maps_enemy",
-                    "..."
+                "pre" : { 
+                    "generic" :[
+                        "Upcoming match - $friendly face off against $enemy",
+                        "...",
+                        "..."
+                    ]
+                },
+                "in" : {
+                    "generic" : [
+                        "Map $map_next_count is coming up",
+                        "Our next map is $map_next_name",
+                        "..."
+                    ]
+                },
+                "post" : {
+                    "generic" : [
+                        "Game is over, the final score is $score_maps_friendly to $score_maps_enemy",
+                        "..."
+                    ]
+                    "1" : [
+
+                    ],
+                    "2" : [
+
+                    ],
+                    "3" : [
+
+                    ],
+                    "3" : [
+
+                    ],
+                    "4" : [
+
+                    ],
+                    "5" : [
+
+                    ],
+                    "6" : [
+
+                    ]
+                }
                 ]
             },
             "short" : {

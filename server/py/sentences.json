@@ -1,0 +1,82 @@
+{
+  "lol" : {
+
+  },
+  "csgo" : {
+        "best_of_only" : {
+
+        },
+        "fixed_count_only" : {
+
+        },
+        "shared" : {
+            "long" : {
+                "pre" : {
+                    "generic" :[
+                        "LONG Upcoming match - $friendly face off against $enemy",
+                        "LONG Wrong sentence, $not_defined_variable",
+                        "LONG Pre Test String without vars"
+                    ]
+                },
+                "in" : {
+                    "generic" : [
+                        "LONG Map $map_next_count is coming up",
+                        "LONG Our next map is $map_next_name",
+                        "LONG In Test without Vars"
+                    ]
+                },
+                "post" : {
+                  "generic": [
+                    "LONGGame is over, the final score is $score_maps_friendly to $score_maps_enemy",
+                    "LONG Post test string"
+                  ],
+                  "1": [
+                  ],
+                  "2": [
+                  ],
+                  "3": [
+                  ],
+                  "4": [
+                  ],
+                  "5": [
+                  ],
+                  "6": [
+                  ]
+                }
+            },
+            "short" : {
+              "pre" : {
+                    "generic" :[
+                        "Upcoming match - $friendly face off against $enemy",
+                        "Pre Test String without vars"
+                    ]
+                },
+                "in" : {
+                    "generic" : [
+                        "Map $map_next_count is coming up",
+                        "Our next map is $map_next_name",
+                        "In Test without Vars"
+                    ]
+                },
+                "post" : {
+                  "generic": [
+                    "Game is over, the final score is $score_maps_friendly to $score_maps_enemy",
+                    "Post test string"
+                  ],
+                  "1": [
+                  ],
+                  "2": [
+                  ],
+                  "3": [
+                  ],
+                  "4": [
+                  ],
+                  "5": [
+                  ],
+                  "6": [
+                  ]
+                }
+            }
+        }
+    }
+}
