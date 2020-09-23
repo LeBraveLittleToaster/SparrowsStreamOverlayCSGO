@@ -1,18 +1,16 @@
-import asyncio, os, websockets
-from flask import Flask, request
-from subscriber import Subscriber 
+# This is a sample Python script.
 
-subSys = Subscriber()
+# Press Umschalt+F10 to execute it or replace it with your code.
+# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
-#++++++++++++++++TEST+++++++++++++++++++++
-subSys.addSubscribable("123")
-subSys.addSubscribable("321")
-#++++++++++++++++TEST+++++++++++++++++++++
 
-async def connector(websocket, path):
-    await websocket.send("Hello client")
+def print_hi(name):
+    # Use a breakpoint in the code line below to debug your script.
+    print(f'Hi, {name}')  # Press Strg+F8 to toggle the breakpoint.
 
-start_server = websockets.serve(connector, "localhost", 8765)
 
-asyncio.get_event_loop().run_until_complete(start_server)
-asyncio.get_event_loop().run_forever()
+# Press the green button in the gutter to run the script.
+if __name__ == '__main__':
+    print_hi('PyCharm')
+
+# See PyCharm help at https://www.jetbrains.com/help/pycharm/
