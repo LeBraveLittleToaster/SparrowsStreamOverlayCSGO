@@ -1,7 +1,8 @@
-from src.csgo.csgostates import PreCsgoState, InCsgoState
+from src.csgo.csgostates import PreCsgoState, InCsgoState, PostCsgoState
 from src.states.state import StateMachine
 from src.terminal import CsgoTerminal
 from src.textengine.textengine import TextEngine
+from src.textengine.textupdater import TextUpdater
 import json
 
 variable_dict = dict({
@@ -17,6 +18,7 @@ def generate_states(var_dict):
     states = [PreCsgoState(var_dict["map_fixed_count"])]
     for i in range(var_dict["map_fixed_count"]):
         states.append(InCsgoState())
+    states.append(PostCsgoState())
     return states
 
 
@@ -42,16 +44,14 @@ inUpdater2 = {
 
 sm = StateMachine(generate_states(variable_dict), variable_dict)
 te = TextEngine(data)
+tu = TextUpdater("top.txt", "bottom.txt", 10)
 
-# print("Last state: " + str(sm.next(preUpdater)))
-# sm.print_states()
-# print("Last state: " + str(sm.next(inUpdater1)))
-# sm.print_states()
-# print("Last state: " + str(sm.next(inUpdater2)))
-# sm.print_states()
+tu.start()
 
-terminal = CsgoTerminal(2, ["Mirage", "Inferno", "Overpass", "Nuke", "Train"], sm, te)
-print(str(te.get_sentences_for_state(PreCsgoState(3), variable_dict)))
+terminal = CsgoTerminal(2, ["Mirage", "Inferno", "Overpass", "Nuke", "Train"], sm, te, tu)
+
 while not terminal.wait_for_command():
+    breakpoint()
     print("Next command...\n")
+    breakpoint()
 

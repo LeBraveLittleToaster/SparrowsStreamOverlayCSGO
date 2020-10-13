@@ -2,10 +2,13 @@ class State(object):
     def __init__(self, state_type):
         self.state_type = state_type
 
-    def update(self, update_dict):
+    def update(self, states, update_dict):
         raise Exception("Not implemented")
 
     def get_updater(self):
+        raise Exception("Not implemented")
+
+    def is_updated(self):
         raise Exception("Not implemented")
 
 
@@ -15,11 +18,12 @@ class StateMachine:
         self.curStateIndex = 0
         self.variable_dict = variable_dict
 
-    def next(self, updater):
-        self.states[self.curStateIndex].update(updater)
+    def next(self, updater_dict):
+        self.states[self.curStateIndex].update(self.states, updater_dict)
         self.curStateIndex += 1
         is_last_element = self.curStateIndex == len(self.states)
         self.update_variables()
+        breakpoint()
         return is_last_element
 
     def get_current_state(self):
