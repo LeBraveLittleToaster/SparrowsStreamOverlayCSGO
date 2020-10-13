@@ -26,21 +26,6 @@ with open('../sentences.json') as sentences:
     data = json.load(sentences)
     print(str(data))
 
-preUpdater = [{
-    "isPickedByFriendly": True,
-    "map": "Inferno"
-}, {
-    "isPickedByFriendly": False,
-    "map": "Nuke"
-}]
-inUpdater1 = {
-    "scoreFriendly": 16,
-    "scoreEnemy": 10
-}
-inUpdater2 = {
-    "scoreFriendly": 5,
-    "scoreEnemy": 16
-}
 
 sm = StateMachine(generate_states(variable_dict), variable_dict)
 te = TextEngine(data)
